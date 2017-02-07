@@ -13,6 +13,7 @@ namespace TLC.Teams
         protected TeamRepository tmRepo = new TeamRepository();
         protected void Page_Load(object sender, EventArgs e)
         {
+            hdfShowModal.Value = "0";
             if (!Page.IsPostBack)
             {
                 LoadGrid();
