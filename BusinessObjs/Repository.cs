@@ -17,7 +17,9 @@ namespace TLC.Data
     }
     public interface ITeamMemberRepository : IRepository<TeamMember> { }
 
-    public class TeamRepository : RepositoryBase<Team>, ITeamRepository { }
+    public class TeamRepository : RepositoryBase<Team>, ITeamRepository
+    {
+    }
     public interface ITeamRepository : IRepository<Team> { }
 
     public class UserRepository : RepositoryBase<User>, IUserRepository {

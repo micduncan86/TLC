@@ -49,6 +49,42 @@ namespace TLC.Teams {
         protected global::System.Web.UI.WebControls.ListView lstMembers;
         
         /// <summary>
+        /// pnlNewTeam control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlNewTeam;
+        
+        /// <summary>
+        /// txtNewTeamName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtNewTeamName;
+        
+        /// <summary>
+        /// txtNewTeamGroupNumber control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtNewTeamGroupNumber;
+        
+        /// <summary>
+        /// ddlNewTeamLeader control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlNewTeamLeader;
+        
+        /// <summary>
         /// lnkManageMembers control.
         /// </summary>
         /// <remarks>
@@ -56,6 +92,15 @@ namespace TLC.Teams {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HyperLink lnkManageMembers;
+        
+        /// <summary>
+        /// lnkAddNewTeam control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton lnkAddNewTeam;
         
         /// <summary>
         /// hdfShowModal control.

@@ -11,9 +11,16 @@ namespace TLC.Teams
     public partial class Index : System.Web.UI.Page
     {
         protected TeamRepository tmRepo = new TeamRepository();
+        protected int _teamId;
         protected void Page_Load(object sender, EventArgs e)
         {
             hdfShowModal.Value = "0";
+            //Temporarily using a querystring for filtering viewable teams.
+            //end goal will be to read from logged in user and what access they have to.
+            if (!string.IsNullOrEmpty(Request.QueryString["Id"]))
+            {
+                _teamId = Convert.ToInt32(Request.QueryString["Id"].ToString());
+            }
             if (!Page.IsPostBack)
             {
                 LoadGrid();
@@ -24,13 +31,9 @@ namespace TLC.Teams
         {
             if (Equals(datasource, null))
             {
-                grdTeams.DataSource = tmRepo.GetAll();
+                datasource = _teamId > 0 ? tmRepo.GetAll().Where(x => x.TeamId == _teamId).ToList() : tmRepo.GetAll();
             }
-            else
-            {
-                grdTeams.DataSource = datasource;
-            }
-            
+            grdTeams.DataSource = datasource;
             grdTeams.DataBind();
         }
 
@@ -55,7 +58,7 @@ namespace TLC.Teams
             switch (e.CommandName)
             {
                 case DataControlCommands.EditCommandName:
-                             grdTeams.EditIndex = rowIndex;
+                    grdTeams.EditIndex = rowIndex;
                     LoadGrid();
                     break;
                 case DataControlCommands.CancelCommandName:
@@ -63,11 +66,11 @@ namespace TLC.Teams
                     LoadGrid();
                     break;
                 case DataControlCommands.UpdateCommandName:
-                     grdTeams.UpdateRow(rowIndex, true);
+                    grdTeams.UpdateRow(rowIndex, true);
                     grdTeams.EditIndex = -1;
                     LoadGrid();
                     break;
-                case DataControlCommands.DeleteCommandName:                    
+                case DataControlCommands.DeleteCommandName:
                     teamId = Convert.ToInt32(((GridView)sender).DataKeys[rowIndex][0]);
                     DeleteTeam(teamId);
                     LoadGrid();
@@ -76,10 +79,13 @@ namespace TLC.Teams
 
                     break;
                 case "LoadMembers":
-                    teamId = Convert.ToInt32(((GridView)sender).DataKeys[rowIndex][0]);             
+                    teamId = Convert.ToInt32(((GridView)sender).DataKeys[rowIndex][0]);
                     lnkManageMembers.NavigateUrl = "Members.aspx?Id=" + teamId;
                     Team myTeam = tmRepo.FindBy(teamId);
                     LoadMemberGrid(myTeam.Members);
+                    pnlMembers.Visible = true;
+                    lnkAddNewTeam.Visible = false;
+                    lnkManageMembers.Visible = true;
                     hdfShowModal.Value = "1";
                     break;
                 default:
@@ -88,16 +94,18 @@ namespace TLC.Teams
             e.Handled = true;
         }
 
-        void LoadMemberDropDownList(DropDownList ddl,int memberId = -1)
+        void LoadMemberDropDownList(DropDownList ddl, int memberId = -1)
         {
             if (!Equals(ddl, null))
-            {                
+            {
                 ddl.DataSource = new TeamMemberRepository().GetAll();
                 ddl.DataTextField = "FullName";
                 ddl.DataValueField = "TeamMemberId";
                 ddl.DataBind();
 
+                if (memberId != -1) {
                 ddl.SelectedValue = memberId.ToString();
+                }
             }
         }
 
@@ -122,7 +130,7 @@ namespace TLC.Teams
 
         protected void grdTeams_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
-            Team editedTeam = Convert.ToInt32(e.Keys[0]) == 0 ? new Team() : tmRepo.FindBy(e.Keys[0]);           
+            Team editedTeam = Convert.ToInt32(e.Keys[0]) == 0 ? new Team() : tmRepo.FindBy(e.Keys[0]);
             editedTeam.GroupNumber = e.NewValues["GroupNumber"].ToString();
             int newLeaderId = Convert.ToInt32(((DropDownList)((GridView)sender).Rows[e.RowIndex].FindControl("ddlLeader")).SelectedValue);
             string name = ((TextBox)((GridView)sender).Rows[e.RowIndex].FindControl("txtName")).Text;
@@ -141,11 +149,30 @@ namespace TLC.Teams
 
         protected void lnkAdd_Click(object sender, EventArgs e)
         {
-            List<Team> Teams = tmRepo.GetAll().ToList();
-            var blank = new Team();
-            Teams.Add(blank);
-            grdTeams.EditIndex = Teams.IndexOf(blank);
-            LoadGrid(Teams);
+            //List<Team> Teams = tmRepo.GetAll().ToList();
+            //var blank = new Team();
+            //Teams.Add(blank);
+            //grdTeams.EditIndex = Teams.IndexOf(blank);
+            //LoadGrid(Teams);
+            pnlNewTeam.Visible = true;
+            pnlMembers.Visible = false;
+            hdfShowModal.Value = "1";
+            LoadMemberDropDownList(ddlNewTeamLeader, -1);
+            lnkAddNewTeam.Visible = true;
+            lnkManageMembers.Visible = false;
+        }
+
+        protected void lnkAddNewTeam_OnClick(object sender, EventArgs e)
+        {
+            Team newTeam = new Team();
+            newTeam.Name = txtNewTeamName.Text;
+            newTeam.GroupNumber = txtNewTeamGroupNumber.Text;
+            newTeam.TeamLeaderId = Convert.ToInt32(ddlNewTeamLeader.SelectedValue);
+
+            tmRepo.Add(newTeam);
+            tmRepo.Save();
+            LoadGrid();
+            //throw new NotImplementedException();
         }
     }
 }

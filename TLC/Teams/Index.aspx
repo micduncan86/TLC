@@ -93,12 +93,30 @@
                             </ItemTemplate>
                         </asp:ListView>
                     </asp:Panel>
+                    <asp:Panel id="pnlNewTeam" runat="server" Visible="False">
+                        <p>
+                            <label>Team Name:</label>
+                            <asp:TextBox runat="server" id="txtNewTeamName" CssClass="form-control"></asp:TextBox>
+                        </p>
+                        <p>
+                            <label>Group Number:</label>
+                            <asp:TextBox runat="server" id="txtNewTeamGroupNumber" CssClass="form-control"></asp:TextBox>
+                        </p>
+                        <p>
+                            <label>Team Leader:</label>
+                             <asp:DropDownList ID="ddlNewTeamLeader" runat="server" CssClass="form-control"></asp:DropDownList>
+                        </p>
+                    </asp:Panel>
                 </div>
                 <div class="modal-footer">
                     <asp:HyperLink ID="lnkManageMembers" runat="server" CssClass="btn btn-sm btn-success">
                         <span class="glyphicon glyphicon-circle"></span>
                         Manage Members
                     </asp:HyperLink>
+                    <asp:LinkButton runat="server" id="lnkAddNewTeam" CssClass="btn btn-sm btn-success" Visible="False" OnClick="lnkAddNewTeam_OnClick">
+                        <span class="glyphicon glyphicon-plus"></span>
+                        Add Team
+                    </asp:LinkButton>
                 </div>
             </div>
         </div>
