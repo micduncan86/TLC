@@ -76,7 +76,8 @@ namespace TLC.Teams
 
                     break;
                 case "LoadMembers":
-                    teamId = Convert.ToInt32(((GridView)sender).DataKeys[rowIndex][0]);
+                    teamId = Convert.ToInt32(((GridView)sender).DataKeys[rowIndex][0]);             
+                    lnkManageMembers.NavigateUrl = "Members.aspx?Id=" + teamId;
                     Team myTeam = tmRepo.FindBy(teamId);
                     LoadMemberGrid(myTeam.Members);
                     hdfShowModal.Value = "1";
@@ -121,10 +122,11 @@ namespace TLC.Teams
 
         protected void grdTeams_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
-            Team editedTeam = Convert.ToInt32(e.Keys[0]) == 0 ? new Team() : tmRepo.FindBy(e.Keys[0]);
-            editedTeam.Name = e.NewValues["Name"].ToString();
+            Team editedTeam = Convert.ToInt32(e.Keys[0]) == 0 ? new Team() : tmRepo.FindBy(e.Keys[0]);           
             editedTeam.GroupNumber = e.NewValues["GroupNumber"].ToString();
             int newLeaderId = Convert.ToInt32(((DropDownList)((GridView)sender).Rows[e.RowIndex].FindControl("ddlLeader")).SelectedValue);
+            string name = ((TextBox)((GridView)sender).Rows[e.RowIndex].FindControl("txtName")).Text;
+            editedTeam.Name = name;
             editedTeam.TeamLeaderId = newLeaderId;
             if (Convert.ToInt32(e.Keys[0]) == 0)
             {

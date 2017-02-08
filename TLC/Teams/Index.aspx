@@ -13,7 +13,7 @@
     <p>
         <asp:GridView ID="grdTeams" runat="server" AutoGenerateColumns="False" CssClass="table table-condensed" RowStyle-CssClass="row" HeaderStyle-CssClass="row" BorderWidth="0" OnRowCommand="grdTeams_RowCommand" DataKeyNames="TeamId" OnRowDataBound="grdTeams_RowDataBound" OnRowUpdating="grdTeams_RowUpdating">
             <Columns>
-                <asp:BoundField DataField="TeamId" HeaderText="Team ID" HeaderStyle-CssClass="col-md-1" ControlStyle-CssClass="form-control" ReadOnly="true" />
+                <asp:BoundField DataField="TeamId" HeaderText="Team ID" HeaderStyle-CssClass="col-md-1" ControlStyle-CssClass="form-control" ReadOnly="true" Visible="false" />
                 <asp:BoundField DataField="GroupNumber" HeaderText="Group #" HeaderStyle-CssClass="col-md-1" ControlStyle-CssClass="form-control" />
                 <asp:TemplateField HeaderStyle-CssClass="col-md-2" HeaderText="Team Leader">
                     <ItemTemplate>
@@ -23,7 +23,7 @@
                         <asp:DropDownList ID="ddlLeader" runat="server" CssClass="form-control"></asp:DropDownList>
                     </EditItemTemplate>
                 </asp:TemplateField>
-                <asp:TemplateField HeaderStyle-CssClass="col-md-7" HeaderText="Name">
+                <asp:TemplateField HeaderStyle-CssClass="col-md-8" HeaderText="Name">
                     <ItemTemplate>
                         <asp:Literal ID="ltrName" runat="server" Text='<%# Eval("Name") %>'></asp:Literal>
                         <p>
@@ -73,7 +73,6 @@
                     <h4 class="modal-title">Team Members</h4>
                 </div>
                 <div class="modal-body">
-
                     <asp:Panel ID="pnlMembers" runat="server">
                         <asp:ListView ID="lstMembers" runat="server" GroupPlaceholderID="grpContent" ItemPlaceholderID="itmContent">
                             <EmptyDataTemplate>
@@ -96,10 +95,10 @@
                     </asp:Panel>
                 </div>
                 <div class="modal-footer">
-                    <a class="btn btn-sm btn-success" href="../Members/index.aspx">
+                    <asp:HyperLink ID="lnkManageMembers" runat="server" CssClass="btn btn-sm btn-success">
                         <span class="glyphicon glyphicon-circle"></span>
                         Manage Members
-                    </a>
+                    </asp:HyperLink>
                 </div>
             </div>
         </div>

@@ -10,7 +10,16 @@
 namespace TLC.Teams {
     
     
-    public partial class Index {
+    public partial class Members {
+        
+        /// <summary>
+        /// ltrHeader control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal ltrHeader;
         
         /// <summary>
         /// lnkAdd control.
@@ -22,22 +31,22 @@ namespace TLC.Teams {
         protected global::System.Web.UI.WebControls.LinkButton lnkAdd;
         
         /// <summary>
-        /// grdTeams control.
+        /// grdMembers control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView grdTeams;
+        protected global::System.Web.UI.WebControls.GridView grdMembers;
         
         /// <summary>
-        /// pnlMembers control.
+        /// pnlNewMembers control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlMembers;
+        protected global::System.Web.UI.WebControls.Panel pnlNewMembers;
         
         /// <summary>
         /// lstMembers control.
@@ -49,13 +58,13 @@ namespace TLC.Teams {
         protected global::System.Web.UI.WebControls.ListView lstMembers;
         
         /// <summary>
-        /// lnkManageMembers control.
+        /// lnkAddMember control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink lnkManageMembers;
+        protected global::System.Web.UI.WebControls.LinkButton lnkAddMember;
         
         /// <summary>
         /// hdfShowModal control.
