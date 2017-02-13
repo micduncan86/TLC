@@ -38,23 +38,41 @@ namespace TLC
             return new Team();
         }
 
-        // PUT api/<controller>/5
-        public Team Put(int id, [FromBody]string formdata)
+        public Team Put(int id,Team updateTeam)
         {
             var TeamRepo = new TeamRepository();
-            if (formdata != string.Empty)
+            if (id > 0)
             {
-                var formValues = formdata.Split('&').Select(s => s.Split('=')).ToDictionary(key => key[0].Trim(), value => value[1].Trim());
+                //var formValues = formdata.Split('&').Select(s => s.Split('=')).ToDictionary(key => key[0].Trim(), value => value[1].Trim());
                 var team = TeamRepo.FindBy(id);
-                team.Name = formValues["TeamName"].Replace("+", " ");
-                team.GroupNumber = formValues["GroupNumber"];
-                team.TeamLeaderId = Convert.ToInt32(formValues["TeamLeaderId"]);
+                team.Name = updateTeam.Name;
+                team.GroupNumber = updateTeam.GroupNumber;
+                team.TeamLeaderId = updateTeam.TeamLeaderId;
+
                 TeamRepo.Update(team);
                 TeamRepo.Save();
                 return team;
             }
             return new Team();
         }
+
+        // PUT api/<controller>/5
+        //public Team Put(int id, [FromBody]string formdata)
+        //{
+        //    var TeamRepo = new TeamRepository();
+        //    if (formdata != string.Empty)
+        //    {
+        //        var formValues = formdata.Split('&').Select(s => s.Split('=')).ToDictionary(key => key[0].Trim(), value => value[1].Trim());
+        //        var team = TeamRepo.FindBy(id);
+        //        team.Name = formValues["TeamName"].Replace("+", " ");
+        //        team.GroupNumber = formValues["GroupNumber"];
+        //        team.TeamLeaderId = Convert.ToInt32(formValues["TeamLeaderId"]);
+        //        TeamRepo.Update(team);
+        //        TeamRepo.Save();
+        //        return team;
+        //    }
+        //    return new Team();
+        //}
 
         // DELETE api/<controller>/5
         public void Delete(int id)
@@ -63,5 +81,7 @@ namespace TLC
             repos.Delete(id);
             repos.Save();
         }
+
+        
     }
 }

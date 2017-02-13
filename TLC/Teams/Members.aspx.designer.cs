@@ -58,6 +58,33 @@ namespace TLC.Teams {
         protected global::System.Web.UI.WebControls.ListView lstMembers;
         
         /// <summary>
+        /// txtnewMemberName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtnewMemberName;
+        
+        /// <summary>
+        /// txtnewMemberPhone control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl txtnewMemberPhone;
+        
+        /// <summary>
+        /// txtnewMemberEmail control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl txtnewMemberEmail;
+        
+        /// <summary>
         /// lnkAddMember control.
         /// </summary>
         /// <remarks>

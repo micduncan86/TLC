@@ -11,52 +11,67 @@
         </asp:LinkButton>
     </h3>
     <p>
-        <asp:GridView ID="grdTeams" runat="server" AutoGenerateColumns="False" CssClass="table table-condensed" RowStyle-CssClass="row" HeaderStyle-CssClass="row" BorderWidth="0" OnRowCommand="grdTeams_RowCommand" DataKeyNames="TeamId" OnRowDataBound="grdTeams_RowDataBound" OnRowUpdating="grdTeams_RowUpdating">
+        <asp:GridView ID="grdTeams" runat="server" AutoGenerateColumns="False" CssClass="table table-condensed" RowStyle-CssClass="row" HeaderStyle-CssClass="row" BorderWidth="0" OnRowCommand="grdTeams_RowCommand" DataKeyNames="TeamId"  ShowHeader="false">
             <Columns>
-                <asp:BoundField DataField="TeamId" HeaderText="Team ID" HeaderStyle-CssClass="col-md-1" ControlStyle-CssClass="form-control" ReadOnly="true" Visible="false" />
-                <asp:BoundField DataField="GroupNumber" HeaderText="Group #" HeaderStyle-CssClass="col-md-1" ControlStyle-CssClass="form-control" />
-                <asp:TemplateField HeaderStyle-CssClass="col-md-2" HeaderText="Team Leader">
+                <asp:TemplateField ItemStyle-Width="90px">
                     <ItemTemplate>
-                        <asp:Literal ID="ltrTeamLeader" runat="server" Text='<%# Eval("TeamLeader.FullName") %>'></asp:Literal>
+                        <div class="dropdown">
+                            <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                                Actions <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li role="presentation">
+                                    <asp:LinkButton ID="lnkEdit" runat="server" CommandArgument='<%# DataBinder.Eval(Container,"RowIndex") %>' CommandName="Edit">Edit
+                                    </asp:LinkButton>
+                                </li>
+                                <li role="presentation">
+                                    <a href='<%# "Members.aspx?Id=" + ((TLC.Data.Team)DataBinder.GetDataItem(Container)).TeamId %>' >Members</a>  
+                                </li>
+                                <li role="presentation">
+                                    <a href='<%# "Events.aspx?Id=" + ((TLC.Data.Team)DataBinder.GetDataItem(Container)).TeamId %>' >Events</a>  
+                                </li>
+                                <li role="presentation" class="divider"></li>
+                                <li role="presentation">
+                                    <asp:LinkButton ID="lnkDelete" runat="server" CommandArgument='<%# DataBinder.Eval(Container,"RowIndex") %>' CommandName="Delete" OnClientClick="javascript: return confirm('Are you sure you want to delete this team?');">Delete
+                                    </asp:LinkButton>
+                                </li>
+                            </ul>
+                        </div>
                     </ItemTemplate>
-                    <EditItemTemplate>
-                        <asp:DropDownList ID="ddlLeader" runat="server" CssClass="form-control"></asp:DropDownList>
-                    </EditItemTemplate>
                 </asp:TemplateField>
-                <asp:TemplateField HeaderStyle-CssClass="col-md-8" HeaderText="Name">
+                <asp:TemplateField ItemStyle-CssClass="col-md-12" HeaderText="Name">
                     <ItemTemplate>
-                        <asp:Literal ID="ltrName" runat="server" Text='<%# Eval("Name") %>'></asp:Literal>
-                        <p>
-                            <asp:LinkButton ID="lnkMembers" runat="server" CssClass="btn btn-sm btn-default" CommandArgument='<%# DataBinder.Eval(Container,"RowIndex") %>' CommandName="LoadMembers">
-                                 <span class="glyphicon glyphicon-user"></span>
+                        <h4>
+                            <asp:Literal ID="ltrName" runat="server" Text='<%# Eval("Name") %>'></asp:Literal></h4>
+                            <div class="dropdown">
+                                <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown">
+                                    Info <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu" style="padding:5px;">
+                                    <li role="presentation">
+                                        <label>Team Leader:</label>
+                                        <asp:Literal ID="Literal2" runat="server" Text='<%# Eval("TeamLeader.FullName") %>'></asp:Literal>
+                                    </li>
+                                    <li role="presentation">
+                                        <label>Group Number:</label>
+                                        <asp:Literal ID="Literal3" runat="server" Text='<%# Eval("GroupNumber") %>'></asp:Literal>
+                                    </li>
+                                    <li role="presentation">    
+                                        <label>Members:</label>
+                                        <asp:LinkButton ID="lnkMembers" runat="server" style="display:inline-block;" CommandArgument='<%# DataBinder.Eval(Container,"RowIndex") %>' CommandName="LoadMembers">
                                 <span class="badge">
-                                    <%# Eval("Members.Count") %>
+                                    <span class="glyphicon glyphicon-user"></span> <%# Eval("Members.Count") %>
                                 </span>
-                            </asp:LinkButton>
-                        </p>
+                                        </asp:LinkButton>
+                                    </li>
+                                </ul>
+                            </div>
                     </ItemTemplate>
                     <EditItemTemplate>
                         <asp:TextBox ID="txtName" runat="server" CssClass="form-control" Text='<%# Eval("Name") %>'></asp:TextBox>
                     </EditItemTemplate>
                 </asp:TemplateField>
-                <asp:TemplateField HeaderStyle-CssClass="col-md-1">
-                    <ItemTemplate>
-                        <asp:LinkButton ID="lnkEdit" runat="server" CommandArgument='<%# DataBinder.Eval(Container,"RowIndex") %>' CommandName="Edit" CssClass="btn btn-sm btn-primary">
-                        <span class="glyphicon glyphicon-pencil"></span>
-                        </asp:LinkButton>
-                        <asp:LinkButton ID="lnkDelete" runat="server" CommandArgument='<%# DataBinder.Eval(Container,"RowIndex") %>' CommandName="Delete" CssClass="btn btn-sm btn-warning">
-                        <span class="glyphicon glyphicon-trash" onclick="javascript: return confirm('Are you sure you want to delete this team?');"></span>
-                        </asp:LinkButton>
-                    </ItemTemplate>
-                    <EditItemTemplate>
-                        <asp:LinkButton ID="lnkUpdate" runat="server" CommandArgument='<%# DataBinder.Eval(Container,"RowIndex") %>' CommandName="Update" CssClass="btn btn-sm btn-success">
-                        <span class="glyphicon glyphicon-ok"></span>
-                        </asp:LinkButton>
-                        <asp:LinkButton ID="lnkCancel" runat="server" CommandArgument='<%# DataBinder.Eval(Container,"RowIndex") %>' CommandName="Cancel" CssClass="btn btn-sm btn-danger">
-                        <span class="glyphicon glyphicon-remove"></span>
-                        </asp:LinkButton>
-                    </EditItemTemplate>
-                </asp:TemplateField>
+
 
 
             </Columns>
@@ -70,7 +85,8 @@
                     <button type="button" class="close" data-dismiss="modal">
                         &times;
                     </button>
-                    <h4 class="modal-title">Team Members</h4>
+                    <h4 class="modal-title">
+                        <asp:Literal ID="ltrModalTitle" runat="server">Team Members</asp:Literal></h4>
                 </div>
                 <div class="modal-body">
                     <asp:Panel ID="pnlMembers" runat="server">
@@ -93,18 +109,18 @@
                             </ItemTemplate>
                         </asp:ListView>
                     </asp:Panel>
-                    <asp:Panel id="pnlNewTeam" runat="server" Visible="False">
+                    <asp:Panel ID="pnlNewTeam" runat="server" Visible="False">
                         <p>
                             <label>Team Name:</label>
-                            <asp:TextBox runat="server" id="txtNewTeamName" CssClass="form-control"></asp:TextBox>
+                            <asp:TextBox runat="server" ID="txtNewTeamName" CssClass="form-control"></asp:TextBox>
                         </p>
                         <p>
                             <label>Group Number:</label>
-                            <asp:TextBox runat="server" id="txtNewTeamGroupNumber" CssClass="form-control"></asp:TextBox>
+                            <asp:TextBox runat="server" ID="txtNewTeamGroupNumber" CssClass="form-control"></asp:TextBox>
                         </p>
                         <p>
                             <label>Team Leader:</label>
-                             <asp:DropDownList ID="ddlNewTeamLeader" runat="server" CssClass="form-control"></asp:DropDownList>
+                            <asp:DropDownList ID="ddlNewTeamLeader" runat="server" CssClass="form-control"></asp:DropDownList>
                         </p>
                     </asp:Panel>
                 </div>
@@ -113,7 +129,7 @@
                         <span class="glyphicon glyphicon-circle"></span>
                         Manage Members
                     </asp:HyperLink>
-                    <asp:LinkButton runat="server" id="lnkAddNewTeam" CssClass="btn btn-sm btn-success" Visible="False" OnClick="lnkAddNewTeam_OnClick">
+                    <asp:LinkButton runat="server" ID="lnkAddNewTeam" CommandName="New" CssClass="btn btn-sm btn-success" Visible="False" OnClick="lnkAddNewTeam_OnClick">
                         <span class="glyphicon glyphicon-plus"></span>
                         Add Team
                     </asp:LinkButton>

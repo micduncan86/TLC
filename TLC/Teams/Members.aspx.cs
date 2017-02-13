@@ -37,7 +37,7 @@ namespace TLC.Teams
         void LoadMembers(int teamid)
         {
             var myTeam = new TeamRepository().FindBy(teamid);
-            ltrHeader.Text = myTeam.Name + " Team Members";
+            ltrHeader.Text = myTeam.Name + " Members";
             LoadMembers(myTeam.Members);
         }
 
@@ -53,6 +53,9 @@ namespace TLC.Teams
         protected void lnkAdd_Click(object sender, EventArgs e)
         {
             hdfShowModal.Value = "1";
+            txtnewMemberEmail.Value = "";
+            txtnewMemberPhone.Value = "";
+            txtnewMemberName.Text = "";
             LoadAddMembersList();
         }
 
@@ -91,6 +94,18 @@ namespace TLC.Teams
                     teamMember.TeamId = teamId;
                     tmmbRepo.Update(teamMember);
                 }
+            }
+            if (!string.IsNullOrEmpty(txtnewMemberName.Text)){
+
+                TeamMember newMember = new TeamMember();
+                List<string> name = txtnewMemberName.Text.Split(' ').ToList();
+                newMember.FirstName = name.First();
+                name.RemoveAt(0);
+                newMember.LastName = string.Join(" ", name.ToArray());
+                newMember.Phone = txtnewMemberPhone.Value;
+                newMember.Email = txtnewMemberEmail.Value;
+                newMember.TeamId = teamId;
+                tmmbRepo.Add(newMember);
             }
             tmmbRepo.Save();
             LoadMembers(teamId);

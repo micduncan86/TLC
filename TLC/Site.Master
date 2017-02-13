@@ -56,8 +56,23 @@
                         <AnonymousTemplate>
                             <ul class="nav navbar-nav navbar-right">
                                 <li><a runat="server" href="~/teams/index">Teams</a></li>
-                                <li><a runat="server" href="~/Account/Register">Register</a></li>
-                                <li><a runat="server" href="~/Account/Login">Log in</a></li>
+                                <li><a runat="server" href="~/members/index">Members</a></li>
+                                <li class="dropdown">                     
+                                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                            Actions <span class="caret"></span>
+                                        </a>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li role="presentation">
+                                                     <a runat="server" href="~/Account/Register">Register</a>                                           
+                                            </li>
+                                            <li role="presentation" class="divider"></li>
+                                            <li role="presentation">
+                                                <a runat="server" href="~/Account/Login">Log in</a>
+                                            </li>
+                                        </ul>
+                                    
+                                </li>
+                                
                             </ul>
                         </AnonymousTemplate>
                         <LoggedInTemplate>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Data.Entity.ModelConfiguration.Conventions;
 
 namespace TLC.Data
 {
@@ -15,24 +16,108 @@ namespace TLC.Data
         }
 
     }
-    public interface ITeamMemberRepository : IRepository<TeamMember> { }
+
 
     public class TeamRepository : RepositoryBase<Team>, ITeamRepository
     {
     }
-    public interface ITeamRepository : IRepository<Team> { }
+
+    public class TokenRepository : RepositoryBase<Token>, ITokenRepository
+    {
+        public Token GenerateToken(int userId)
+        {
+            string token = Guid.NewGuid().ToString();
+            DateTime issuedOn = DateTime.Now;
+
+            //ConfigurationManager.AppSettings["AuthTokenExpiry"]
+            DateTime expiredOn = DateTime.Now.AddSeconds(
+                                              Convert.ToDouble(60 * 3));
+            var tokendomain = new Token
+            {
+                UserId = userId,
+                AuthToken = token,
+                IssuedOn = issuedOn,
+                ExpiresOn = expiredOn
+            };
+
+            var tokenRepo = new TokenRepository();
+
+            tokenRepo.Add(tokendomain);
+            tokenRepo.Save();
+            var tokenModel = new Token()
+            {
+                UserId = userId,
+                IssuedOn = issuedOn,
+                ExpiresOn = expiredOn,
+                AuthToken = token
+            };
+
+            return tokenModel;
+        }
+
+        public bool ValidateToken(string tokenId)
+        {
+            var tokenRepo = new TokenRepository();
+            var token = (from tokens in tokenRepo.GetAll()
+                         where tokens.AuthToken == tokenId && tokens.ExpiresOn > DateTime.Now
+                         select tokens).FirstOrDefault();
+            if (token != null && !(DateTime.Now > token.ExpiresOn))
+            {
+                //ConfigurationManager.AppSettings["AuthTokenExpiry"]
+                token.ExpiresOn = token.ExpiresOn.AddSeconds(
+                                              Convert.ToDouble(60 * 3));
+                tokenRepo.Update(token);
+                tokenRepo.Save();
+                return true;
+            }
+            return false;
+        }
+
+        public bool Kill(string tokenId)
+        {
+            var tokenRepo = new TokenRepository();
+            var t = tokenRepo.GetAll().Where(x => x.AuthToken == tokenId).Select(s => s.TokenId);
+            tokenRepo.Delete(t);
+            tokenRepo.Save();
+            var isNotDeleted = tokenRepo.GetAll().Select(x => x.AuthToken == tokenId).Any();
+            if (isNotDeleted) { return false; }
+            return true;
+        }
+        public bool DeleteByUserId(int userId)
+        {
+            var tokenRepo = new TokenRepository();
+            tokenRepo.Delete(tokenRepo.GetAll().Where(x => x.UserId == userId).Select(x => x.TokenId));
+            tokenRepo.Save();
+
+            var isNotDeleted = tokenRepo.GetAll().Select(x => x.UserId == userId).Any();
+            return !isNotDeleted;
+        }
+    }
+
 
     public class UserRepository : RepositoryBase<User>, IUserRepository {
         
-        public User FindByUserName(string email)
+        //public User FindByUserName(string email)
+        //{
+        //    return (from users in _dbSet
+        //            where users.Email == email
+        //            select users).FirstOrDefault();
+        //}
+
+        public int Authenticate(string userName, string password)
         {
-            return (from users in _dbSet
-                    where users.Email == email
-                    select users).FirstOrDefault();
+            User myuser = (from user in _dbSet
+                       where user.Username.Equals(userName) && user.Password.Equals(password)
+                       select user).FirstOrDefault();
+            if (myuser != null && myuser.UserId > 0)
+            {
+                return myuser.UserId;
+            }
+            return 0;
         }
 
     }
-    public interface IUserRepository : IRepository<User> { }
+
 
     public class EventRepository : RepositoryBase<Event>, IEventRepository {
 
@@ -43,7 +128,7 @@ namespace TLC.Data
                     select events).ToList();
         }
     }
-    public interface IEventRepository : IRepository<Event> { }
+
 
     public class CheckUpRepository : RepositoryBase<CheckUp>, ICheckUpRepository {
 
@@ -60,18 +145,7 @@ namespace TLC.Data
                     select checkups).ToList();
         }
     }
-    public interface ICheckUpRepository : IRepository<CheckUp> { }
 
-    public interface IRepository<T> where T : class
-    {
-        IEnumerable<T> GetAll();
-        T FindBy(object id);
-        void Add(T Entity);
-        void Update(T Entity);
-        void Delete(object id);
-        void Save();
-
-    }
     public abstract class RepositoryBase<T> where T : class
     {
        protected DataContext _context;
@@ -117,11 +191,17 @@ namespace TLC.Data
 
     public class DataContext : DbContext
     {
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+        }
+
         public DataContext() : base("DataDb") { }
-       // public DbSet<User> Users { get; set; }
+        public DbSet<User> Users { get; set; }
         public DbSet<Team> Teams { get; set; }
         public DbSet<Event> Events { get; set; }
         public DbSet<TeamMember> TeamMembers { get; set; }
+        public DbSet<Token> Tokens { get; set; }
         //public DbSet<CheckUp> CheckUps { get; set; }
     }
 }

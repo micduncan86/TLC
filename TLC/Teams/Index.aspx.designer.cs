@@ -31,6 +31,15 @@ namespace TLC.Teams {
         protected global::System.Web.UI.WebControls.GridView grdTeams;
         
         /// <summary>
+        /// ltrModalTitle control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal ltrModalTitle;
+        
+        /// <summary>
         /// pnlMembers control.
         /// </summary>
         /// <remarks>

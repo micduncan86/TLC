@@ -50,6 +50,31 @@ namespace TLC.Data
             State = state;
             ZipCode = zipcode;
         }
+
+        public bool Copy()
+        {
+            if (TeamMemberId > 0)
+            {
+                TeamMember copyMember = new TeamMember
+                {
+                    FirstName = FirstName,
+                    LastName = LastName,
+                    Phone = Phone,
+                    Email = Email,
+                    Address = Address,
+                    City = City,
+                    State = State,
+                    ZipCode = ZipCode,
+                    Notes = Notes,
+                    TeamId = -1
+                };
+                var tmRepo = new TeamMemberRepository();
+                tmRepo.Add(copyMember);
+                tmRepo.Save();
+                return true;
+            }
+            return false;     
+        }
         #endregion
 
     }

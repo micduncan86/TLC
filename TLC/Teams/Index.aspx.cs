@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using TLC.Data;
@@ -23,10 +27,55 @@ namespace TLC.Teams
             }
             if (!Page.IsPostBack)
             {
+
+                //LoadGrid(GetTeams("api/team"));
                 LoadGrid();
             }
         }
 
+        private HttpResponseMessage ApiCall(string path, string method = "get", object content = null)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(Request.Url.GetLeftPart(UriPartial.Authority));
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                switch (method)
+                {
+                    case "Get":
+                    case "get":
+                        return client.GetAsync(path).Result;
+                        break;
+                    case "Post":
+                    case "post":
+                        return client.PostAsJsonAsync(path, content).Result;
+                    case "Put":
+                    case "put":
+                        return client.PutAsJsonAsync(path, content).Result;
+                    default:
+                        return null;
+                        break;
+
+                }
+            }
+        }
+
+        /// <summary>
+        /// Calls the api controller TeamController to retrieve all teams
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        protected List<Team> GetTeams(string path)
+        {
+            List<Team> Teams = null;
+            var response = ApiCall(path);
+            if (response.IsSuccessStatusCode)
+            {
+                Teams = response.Content.ReadAsAsync<List<Team>>().Result;
+            }
+            return Teams;
+        }
         void LoadGrid(object datasource = null)
         {
             if (Equals(datasource, null))
@@ -58,7 +107,21 @@ namespace TLC.Teams
             switch (e.CommandName)
             {
                 case DataControlCommands.EditCommandName:
-                    grdTeams.EditIndex = rowIndex;
+                    //grdTeams.EditIndex = rowIndex;
+                    teamId = Convert.ToInt32(((GridView)sender).DataKeys[rowIndex][0]);
+                    Team myTeam = tmRepo.FindBy(teamId);
+                    pnlNewTeam.Visible = true;
+                    pnlMembers.Visible = false;
+                    hdfShowModal.Value = "1";
+                    LoadMemberDropDownList(ddlNewTeamLeader, myTeam.TeamLeaderId);
+                    txtNewTeamGroupNumber.Text = myTeam.GroupNumber;
+                    txtNewTeamName.Text = myTeam.Name;
+                    lnkAddNewTeam.Visible = true;
+                    ltrModalTitle.Text = "Update Team :" + myTeam.Name;
+                    lnkAddNewTeam.CommandName = "Update";
+                    lnkAddNewTeam.CommandArgument = myTeam.TeamId.ToString();
+                    lnkAddNewTeam.Text = "Update Team";
+                    lnkManageMembers.Visible = false;
                     LoadGrid();
                     break;
                 case DataControlCommands.CancelCommandName:
@@ -81,9 +144,10 @@ namespace TLC.Teams
                 case "LoadMembers":
                     teamId = Convert.ToInt32(((GridView)sender).DataKeys[rowIndex][0]);
                     lnkManageMembers.NavigateUrl = "Members.aspx?Id=" + teamId;
-                    Team myTeam = tmRepo.FindBy(teamId);
+                    myTeam = tmRepo.FindBy(teamId);
                     LoadMemberGrid(myTeam.Members);
                     pnlMembers.Visible = true;
+                    pnlNewTeam.Visible = false;
                     lnkAddNewTeam.Visible = false;
                     lnkManageMembers.Visible = true;
                     hdfShowModal.Value = "1";
@@ -94,17 +158,19 @@ namespace TLC.Teams
             e.Handled = true;
         }
 
-        void LoadMemberDropDownList(DropDownList ddl, int memberId = -1)
+        void LoadMemberDropDownList(DropDownList ddl, int memberId = -1, object datasource = null)
         {
             if (!Equals(ddl, null))
             {
-                ddl.DataSource = new TeamMemberRepository().GetAll();
+
+                ddl.DataSource = Equals(datasource, null) ? new TeamMemberRepository().GetAll() : datasource;
                 ddl.DataTextField = "FullName";
                 ddl.DataValueField = "TeamMemberId";
                 ddl.DataBind();
 
-                if (memberId != -1) {
-                ddl.SelectedValue = memberId.ToString();
+                if (memberId != -1)
+                {
+                    ddl.SelectedValue = memberId.ToString();
                 }
             }
         }
@@ -116,17 +182,6 @@ namespace TLC.Teams
             tmRepo.Save();
         }
 
-        protected void grdTeams_RowDataBound(object sender, GridViewRowEventArgs e)
-        {
-            if (e.Row.RowType == DataControlRowType.DataRow)
-            {
-                if ((e.Row.RowState == DataControlRowState.Edit) || e.Row.RowState == (DataControlRowState.Alternate | DataControlRowState.Edit))
-                {
-                    var ddl = e.Row.FindControl("ddlLeader");
-                    LoadMemberDropDownList((DropDownList)ddl, ((Team)e.Row.DataItem).TeamLeaderId);
-                }
-            }
-        }
 
         protected void grdTeams_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
@@ -149,30 +204,63 @@ namespace TLC.Teams
 
         protected void lnkAdd_Click(object sender, EventArgs e)
         {
-            //List<Team> Teams = tmRepo.GetAll().ToList();
-            //var blank = new Team();
-            //Teams.Add(blank);
-            //grdTeams.EditIndex = Teams.IndexOf(blank);
-            //LoadGrid(Teams);
             pnlNewTeam.Visible = true;
             pnlMembers.Visible = false;
             hdfShowModal.Value = "1";
             LoadMemberDropDownList(ddlNewTeamLeader, -1);
             lnkAddNewTeam.Visible = true;
+            ltrModalTitle.Text = "Add New Team";
+            txtNewTeamName.Text = "";
+            txtNewTeamGroupNumber.Text = "";
+            lnkAddNewTeam.CommandName = "New";
+            lnkAddNewTeam.CommandArgument = string.Empty;
+            lnkAddNewTeam.Text = "Add New Team";
             lnkManageMembers.Visible = false;
         }
 
         protected void lnkAddNewTeam_OnClick(object sender, EventArgs e)
         {
-            Team newTeam = new Team();
-            newTeam.Name = txtNewTeamName.Text;
-            newTeam.GroupNumber = txtNewTeamGroupNumber.Text;
-            newTeam.TeamLeaderId = Convert.ToInt32(ddlNewTeamLeader.SelectedValue);
+            var btn = sender as LinkButton;
+            Team updateTeam = new Team()
+            {
+                Name = txtNewTeamName.Text,
+                GroupNumber = txtNewTeamGroupNumber.Text,
+                TeamLeaderId = ddlNewTeamLeader.SelectedValue.Equals(string.Empty) ? -1 : Convert.ToInt32(ddlNewTeamLeader.SelectedValue)
+            };
+            int id = 0;
+            if (!string.IsNullOrEmpty(btn.CommandArgument))
+                id = Convert.ToInt32(btn.CommandArgument);         
+            var TeamRepo = new TeamRepository();
 
-            tmRepo.Add(newTeam);
-            tmRepo.Save();
+            switch (btn.CommandName)
+            {
+                case "New":
+                    TeamRepo.Add(updateTeam);
+                    TeamRepo.Save();
+                    //var response = ApiCall("api/team", "post", newTeam);
+                    //if (response.IsSuccessStatusCode)
+                    //{
+
+                    //}
+                    break;
+                case "Update":
+                    //response = ApiCall("api/team/" + btn.CommandArgument, "put", newTeam);
+                    //if (response.IsSuccessStatusCode)
+                    //{
+                    //}     
+                    var team = TeamRepo.FindBy(id);
+                    team.Name = updateTeam.Name;
+                    team.GroupNumber = updateTeam.GroupNumber;
+                    team.TeamLeaderId = updateTeam.TeamLeaderId;
+
+                    TeamRepo.Update(team);
+                    TeamRepo.Save();
+                    break;
+                default:
+                    break;
+            }
             LoadGrid();
-            //throw new NotImplementedException();
+            //LoadGrid(GetTeams("api/team"));
         }
     }
 }
