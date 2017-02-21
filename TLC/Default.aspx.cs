@@ -13,7 +13,7 @@ namespace TLC
         {
             if (!Page.IsPostBack)
             {
-                Console.WriteLine("hi");
+                Console.WriteLine("bye");
             }
         }
         
