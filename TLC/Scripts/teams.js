@@ -1,121 +1,110 @@
-﻿var teams = {
+﻿var app = {};
+var teams = {
+    myteam: null,
+    list: [],
     getTeams: function (callback) {
+        teams.myteam = isNaN(parseInt(teams.myteam)) ? -1 : parseInt(teams.myteam);
+        var url = "api/team" + (teams.myteam < 0 ? "" : "/" + teams.myteam);
         var jqXHR = $.ajax({
-            url: "api/team",
+            url: url,
             type: "GET",
             dataType: "json",
             success: function (response) {
-                callback(response);
+                teams.list = response;
+                if (callback) {
+                    callback(response);
+                }                
             }
         });
     },
-    deleteTeam: function (TeamId, callback) {
-        var jqXHR = $.ajax({
-            url: "api/team/" + TeamId,
-            type: "DELETE",
-            success: function (results) {
+    init: function (callback) {
+        if (teams.list.length == 0) {
+            teams.getTeams(callback);
+        } else {
+            if (callback) {
                 callback();
             }
-        });
-    },
-    addTeam: function (postdata,callback) {
-        var uri = "api/team"
-        $.ajax({
-            url: uri,
-            data: { "": postdata },
-            type: "POST",
-            success: function (results) {
-                callback(results);
-            },
-            error: function (xhr, ajaxOption, thrownError) {
-                alert(xhr.status + ":" + thrownError);
-            }
-        });            
-    },
-    editTeam: function (url, teamid, callback) {
-        //"teams/add"
-        var body = $("#myModal").find(".modal-body").html("Loading....");
-        $(".modal-title").html("Edit Team");
-        if (teamid) {
-            url += (!isNaN(teamid) ? "?id=" + teamid : "");
         }
-        $.get(url, function (data, status) {
-            var d = $(data).find(".form-group").html();
-            var form = $("<form/>", { html: d });
-            body.html("").append(form);
-            $("<button/>", { class: "btn btn-success btn-sm", html: "Update Team" }).appendTo($("#myModal").find(".modal-footer").empty())
-                .click(function (e) {
-                    e.preventDefault();
-                    var uri = "api/team/" + teamid;
-                    $.ajax({
-                        url: uri,
-                        data: { "": body.find("form").serialize() },
-                        type: "PUT",
-                        success: function (results) {
-                            callback(results);
-                        },
-                        error: function (xhr, ajaxOption, thrownError) {
-                            alert(xhr.status + ":" + thrownError);
-                        }
-                    });
-                });
-        });
-    },
-    modalFunction: function (modalTitle, modalContent, modalButton) {
-        var modal = $("#myModal");
-        $(".modal-title").html(modalTitle);
-        modal.find(".modal-body").html(modalContent);
-        $(modalButton).appendTo($("#myModal").find(".modal-footer").empty());
-    },
-    newTeamListItem: function (data, callback) {
-        var li = $("<li/>", { class: "list-group-item list-group-item-info" });
-        $("<h4/>", { class: "list-group-item-heading pull-left", html: data.Name }).appendTo(li);
-        var idiv = $("<div/>", { class: "pull-right" }).appendTo(li);
-        $("<span/>", { class: "label label-success", html: "<label>Members:</label><span class='badge'>" + data.Members.length + "</span>" }).appendTo(idiv);
-        $("<button/>", { class: "btn btn-xs btn-warning btn-teamedit", "data-team-id": data.TeamId, "data-toggle": "modal", "data-target": "#myModal" }).append("<span class='glyphicon glyphicon-pencil'></span>")
-            .click(function (e) {
-                var teamId = $(this).attr("data-team-id");
-                var originLi = $(this).closest("li");
-                e.preventDefault();
-                teams.editTeam("teams/add", teamId, function (data) {
-                    originLi.replaceWith(teams.newTeamListItem(data, function (li) {
-                        $("#myModal").modal("hide");
-                    }));
-                });
-            })
-         .appendTo(idiv);
-        $("<button/>", { class: "btn btn-xs btn-warning", "data-team-id": data.TeamId, "data-team-name": data.Name, "data-toggle": "modal", "data-target": "#myModal" }).append("<span class='glyphicon glyphicon-trash'></span>")
-            .click(function (e) {
-                var btn = $(this);
-                var teamId = btn.attr("data-team-id");
-                var teamName = btn.attr("data-team-name");
-                teams.modalFunction("Delete Team", function () {
-                    var s = "<strong>Are you sure you want to remove " + teamName + "</strong>";
-                    s += "<p>Enter team name to verify removal</p>";
-                    s += "<input type='text' id='verify' class='form-control' placeholder='" + teamName + "' />";
-                    return s;
-                }, $("<button>", { class: "btn btn-success btn-sm", html: "Delete Team", "data-id":teamId }).click(function (e) {
-                    e.preventDefault();
-                    if ($("#myModal").find("#verify").val() == teamName) {
-                        teams.deleteTeam($(this).attr("data-id"), function () { btn.closest("li").remove();$("#myModal").modal("hide"); });
-                    }
-                }));
-            })
-            .appendTo(idiv);
+        
+    }
+};
 
-        var displayFields = { "Group Number:": data.GroupNumber, "Leader:": data.TeamLeader.FullName, "Events:": data.Events.length };
-        var ulfields = $("<ul/>", { class: "list-group" }).appendTo($("<div/>", { style: "clear:both" }).appendTo(li));
-        $.each(displayFields, function (k, v) {
-            $("<li/>", { class: "label label-primary" })
-                .append($("<label/>", { html: k }))
-                .append($("<span/>", { class: "badge", html: v }))
-            .appendTo(ulfields);
-        });
-        //li.appendTo(ul);
-        if (callback) {
-            callback(li);
-        }
-        return li;
+app.LoadTeamData = function (teamdata,callback) {
+    var pnl = $("#pnlTeamInfo");
+    if (!pnl){
+        return;
+    }
+    pnl.find(".panel-heading").find(".teamName").html(teamdata.TeamName);
+    pnl.find(".panel-heading").find(".badge").find("span:first-child").text(teamdata.Members.length);
+    pnl.find(".panel-body").find(".teamNumber").html(teamdata.TeamNumber);
+    pnl.find(".panel-body").find(".teamLeader").html(function () {
+        var rtn = teamdata.TeamLeader.FullName + teamdata.TeamLeader.Email;
+        return $("<p>").append($("<a>", { href: "members/index.aspx?Id=" + teamdata.TeamLeader.MemberId, html: rtn })).html();
+    });
+    if (callback) {
+        callback();
+    }
+    //app.LoadMembers(teamdata.Members);
+};
+app.LoadMembers = function (membersdata,callback) {
+    var pnl = $("#pnlTeamMembers");
+    if (!pnl) {
+        return;
+    }
+    var tbody = pnl.find("table > tbody");
+    if (!membersdata || membersdata.length == 0) {
+        tbody.empty();
+        $("<tr>", { html: "<td colspan='5'>No Data</td>" }).appendTo(tbody);
+    }
+    var rows = [];
+    $.each(membersdata, function (indx, ele) {
+        var row = $("<tr>");
+        $("<td>", { html: ele.FullName }).appendTo(row);
+        $("<td>", { html: ele.Email }).appendTo(row);
+        $("<td>", { html: ele.Phone }).appendTo(row);
+        $("<td>", { html: ele.Address }).appendTo(row);
+        var actionCol = $("<td>", { html: "" }).appendTo(row);
+        $("<button>", { class: "btn btn-xs btn-info", title: "Record Note" }).append($("<span>", { class: "glyphicon glyphicon-comment" })).appendTo(actionCol);
+        $("<button>", { class: "btn btn-xs btn-danger", title: "Remove Member" }).append($("<span>", { class: "glyphicon glyphicon-remove" })).appendTo(actionCol);
+        rows.push(row);
+    });
+    tbody.empty();
+    tbody.append(rows);
+    var runTime = new Date().toJSON();
+    pnl.find(".panel-heading").find("label").remove();
+    pnl.find(".panel-heading").append($("<label>", { html: "Loaded: " + runTime + " ", id: "lbltime", style: "float:right;" }));
+    if (callback) {
+        callback();
+    }
+};
+app.LoadEvent = function (eventsdata,callback) {
+    var pnl = $("#pnlTeamEvents");
+    if (!pnl) {
+        return;
+    }
+    var tbody = pnl.find("table > tbody");
+    if (!eventsdata || eventsdata.length == 0) {
+        tbody.empty();
+        $("<tr>", { html: "<td colspan='5'>No Data</td>" }).appendTo(tbody);
+    }
+    var rows = [];
+    $.each(eventsdata, function (indx, ele) {
+        var row = $("<tr>");
+        $("<td>", { html: ele.Title }).appendTo(row);
+        $("<td>", { html: ele.EventDate }).appendTo(row);
+        $("<td>", { html: ele.Description }).appendTo(row);
+        $("<td>", { html: ele.Status }).appendTo(row);
+        var actionCol = $("<td>", { html: "" }).appendTo(row);
+        $("<button>", { class: "btn btn-xs btn-danger", title: "Remove Event" }).append($("<span>", { class: "glyphicon glyphicon-remove" })).appendTo(actionCol);
+        rows.push(row);
+    });
+    tbody.empty();
+    tbody.append(rows);
+    var runTime = new Date().toJSON();
+    pnl.find(".panel-heading").find("label").remove();
+    pnl.find(".panel-heading").append($("<label>", { html: "Loaded: " + runTime + " ", id: "lbltime", style: "float:right;" }));
+    if (callback) {
+        callback();
     }
 }
 

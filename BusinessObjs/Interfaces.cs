@@ -7,8 +7,6 @@ using TLC.Data;
 
 namespace TLC.Data
 {
-    public interface ICheckUpRepository : IRepository<CheckUp> { }
-
     public interface IRepository<T> where T : class
     {
         IEnumerable<T> GetAll();
@@ -19,11 +17,13 @@ namespace TLC.Data
         void Save();
 
     }
+
+    public interface ICheckUpRepository : IRepository<CheckUp> { }
     public interface IEventRepository : IRepository<Event> { }
-    public interface ITeamMemberRepository : IRepository<TeamMember> { }
+    public interface IMemberRepository : IRepository<Member> { }
     public interface IUserRepository : IRepository<User>
     {
-        int Authenticate(string userName, string password);
+        User Authenticate(string userName, string password);
     }
     public interface ITeamRepository : IRepository<Team> { }
 

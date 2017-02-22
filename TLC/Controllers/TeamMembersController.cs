@@ -17,16 +17,16 @@ namespace TLC.Controllers
         private DataContext db = new DataContext();
 
         // GET: api/TeamMembers
-        public IQueryable<TeamMember> GetTeamMembers()
+        public IQueryable<Member> GetTeamMembers()
         {
             return db.TeamMembers;
         }
 
         // GET: api/TeamMembers/5
-        [ResponseType(typeof(TeamMember))]
+        [ResponseType(typeof(Member))]
         public IHttpActionResult GetTeamMember(int id)
         {
-            TeamMember teamMember = db.TeamMembers.Find(id);
+            Member teamMember = db.TeamMembers.Find(id);
             if (teamMember == null)
             {
                 return NotFound();
@@ -37,14 +37,14 @@ namespace TLC.Controllers
 
         // PUT: api/TeamMembers/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutTeamMember(int id, TeamMember teamMember)
+        public IHttpActionResult PutTeamMember(int id, Member teamMember)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != teamMember.TeamMemberId)
+            if (id != teamMember.MemberId)
             {
                 return BadRequest();
             }
@@ -71,8 +71,8 @@ namespace TLC.Controllers
         }
 
         // POST: api/TeamMembers
-        [ResponseType(typeof(TeamMember))]
-        public IHttpActionResult PostTeamMember(TeamMember teamMember)
+        [ResponseType(typeof(Member))]
+        public IHttpActionResult PostTeamMember(Member teamMember)
         {
             if (!ModelState.IsValid)
             {
@@ -82,14 +82,14 @@ namespace TLC.Controllers
             db.TeamMembers.Add(teamMember);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = teamMember.TeamMemberId }, teamMember);
+            return CreatedAtRoute("DefaultApi", new { id = teamMember.MemberId }, teamMember);
         }
 
         // DELETE: api/TeamMembers/5
-        [ResponseType(typeof(TeamMember))]
+        [ResponseType(typeof(Member))]
         public IHttpActionResult DeleteTeamMember(int id)
         {
-            TeamMember teamMember = db.TeamMembers.Find(id);
+            Member teamMember = db.TeamMembers.Find(id);
             if (teamMember == null)
             {
                 return NotFound();
@@ -112,7 +112,7 @@ namespace TLC.Controllers
 
         private bool TeamMemberExists(int id)
         {
-            return db.TeamMembers.Count(e => e.TeamMemberId == id) > 0;
+            return db.TeamMembers.Count(e => e.MemberId == id) > 0;
         }
     }
 }

@@ -11,7 +11,7 @@ namespace TLC.Teams
     public partial class Members : System.Web.UI.Page
     {
         protected int teamId;
-        protected TeamMemberRepository tmmbRepo = new TeamMemberRepository();
+        protected MemberRepository tmmbRepo = new MemberRepository();
         protected void Page_Load(object sender, EventArgs e)
         {
             hdfShowModal.Value = "0";
@@ -37,7 +37,7 @@ namespace TLC.Teams
         void LoadMembers(int teamid)
         {
             var myTeam = new TeamRepository().FindBy(teamid);
-            ltrHeader.Text = myTeam.Name + " Members";
+            ltrHeader.Text = myTeam.TeamName + " Members";
             LoadMembers(myTeam.Members);
         }
 
@@ -97,7 +97,7 @@ namespace TLC.Teams
             }
             if (!string.IsNullOrEmpty(txtnewMemberName.Text)){
 
-                TeamMember newMember = new TeamMember();
+                Member newMember = new Member();
                 List<string> name = txtnewMemberName.Text.Split(' ').ToList();
                 newMember.FirstName = name.First();
                 name.RemoveAt(0);

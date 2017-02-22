@@ -10,7 +10,7 @@ namespace TLC.Members
 {
     public partial class INdex : System.Web.UI.Page
     {
-        protected TeamMemberRepository memberRepo = new TeamMemberRepository();
+        protected MemberRepository memberRepo = new MemberRepository();
         protected int memberId;
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -30,7 +30,7 @@ namespace TLC.Members
         {
             if (Equals(datasource, null))
             {
-                datasource = memberId > 0 ? memberRepo.GetAll().Where(x => x.TeamMemberId == memberId).ToList() : memberRepo.GetAll();
+                datasource = memberId > 0 ? memberRepo.GetAll().Where(x => x.MemberId == memberId).ToList() : memberRepo.GetAll();
             }
             grdMembers.DataSource = datasource;
             grdMembers.DataBind();
@@ -42,7 +42,7 @@ namespace TLC.Members
             ModalMemberWindow(null);
         }
 
-        private void ModalMemberWindow(TeamMember curMember)
+        private void ModalMemberWindow(Member curMember)
         {
             pnlNewTeam.Visible = true;
             hdfShowModal.Value = "1";
@@ -66,7 +66,7 @@ namespace TLC.Members
 
 
             lnkAddUpdateMember.CommandName = curMember == null ? "New" : "Update";
-            lnkAddUpdateMember.CommandArgument = curMember == null ? string.Empty : curMember.TeamMemberId.ToString();
+            lnkAddUpdateMember.CommandArgument = curMember == null ? string.Empty : curMember.MemberId.ToString();
             lnkAddUpdateMember.Text = curMember == null ? "Add New Member" : "Update Member";
         }
 
@@ -75,7 +75,7 @@ namespace TLC.Members
             var btn = sender as LinkButton;
 
             List<string> name = txtNewMemberName.Text.Split(' ').ToList();
-            TeamMember member = new TeamMember()
+            Member member = new Member()
             {
                 FirstName = name.First(),
                 Phone = txtNewMemberPhone.Text,
@@ -98,7 +98,7 @@ namespace TLC.Members
                 case "Update":
                     if (!string.IsNullOrEmpty(btn.CommandArgument))
                     {
-                        member.TeamMemberId = Convert.ToInt32(btn.CommandArgument);
+                        member.MemberId = Convert.ToInt32(btn.CommandArgument);
                         memberRepo.Update(member);
                     }
                   
@@ -123,7 +123,7 @@ namespace TLC.Members
                     break;
                 case "Copy":
 
-                    TeamMember curMember = memberRepo.FindBy(teamMemberId);
+                    Member curMember = memberRepo.FindBy(teamMemberId);
                     curMember.Copy();
                     break;
                 case "Delete":

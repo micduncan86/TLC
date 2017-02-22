@@ -4,13 +4,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TLC.Data
 {
-    [Table("Teams")]
     public class Team : BaseEntity
     {
         #region Properties
         public int TeamId { get; set; }
-        public string Name { get; set; }
+        public string TeamName { get; set; }
         public int TeamLeaderId { get; set; }
+        public int CoTeamLeaderId { get; set; }
+        public string TeamNumber { get; set; }
 
         [NotMapped]
         public List<Event> Events {
@@ -23,23 +24,31 @@ namespace TLC.Data
 
 
         [NotMapped]
-        public TeamMember TeamLeader
+        public Member TeamLeader
         {
             get {
-                return new TeamMemberRepository().FindBy(TeamLeaderId);
+                return new MemberRepository().FindBy(TeamLeaderId);
             }
             private set { }
         }
-        public string GroupNumber { get; set; }
-
 
         [NotMapped]
-        public List<TeamMember> Members
+        public Member CoTeamLeader
+        {
+            get
+            {
+                return new MemberRepository().FindBy(CoTeamLeaderId);
+            }
+            private set { }
+        }
+
+        [NotMapped]
+        public List<Member> Members
         {
 
             get
             {
-                return new TeamMemberRepository().GetMembersByTeamId(TeamId);
+                return new MemberRepository().GetMembersByTeamId(TeamId);
             }
             private set { }
         }
@@ -54,10 +63,10 @@ namespace TLC.Data
 
         public Team(string name, string groupnumber)
         {
-            Name = name;
-            GroupNumber = groupnumber;
-            TeamLeader = new TeamMember();
-            Members = new List<TeamMember>();
+            TeamName = name;
+            TeamNumber = groupnumber;
+            TeamLeader = new Member();
+            Members = new List<Member>();
             Events = new List<Event>();
         }
         #endregion

@@ -1,14 +1,75 @@
 ﻿using System;
+using System.Text;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Data.Entity.ModelConfiguration.Conventions;
+using System.Web.Security;
 
 namespace TLC.Data
 {
-    public class TeamMemberRepository : RepositoryBase<TeamMember>, ITeamMemberRepository {
 
-        public List<TeamMember> GetMembersByTeamId(int teamid)
+    public abstract class RepositoryBase<T> where T : class
+    {
+        protected DataContext _context;
+        protected DbSet<T> _dbSet;
+
+        public RepositoryBase()
+        {
+            this._context = new DataContext();
+            _dbSet = _context.Set<T>();
+        }
+        public RepositoryBase(DataContext _dataContext)
+        {
+            this._context = _dataContext;
+            _dbSet = _dataContext.Set<T>();
+        }
+        public virtual IEnumerable<T> GetAll()
+        {
+            return _dbSet.ToList();
+        }
+        public T FindBy(object id)
+        {
+            return _dbSet.Find(id);
+        }
+        public virtual void Add(T obj)
+        {
+            _dbSet.Add(obj);
+        }
+        public virtual void Update(T obj)
+        {
+            _dbSet.Attach(obj);
+            _context.Entry(obj).State = EntityState.Modified;
+        }
+        public virtual void Delete(object id)
+        {
+            T existing = _dbSet.Find(id);
+            _dbSet.Remove(existing);
+        }
+        public virtual void Save()
+        {
+            _context.SaveChanges();
+        }
+    }
+
+    public class DataContext : DbContext
+    {
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+        }
+
+        public DataContext() : base("DataDb") { }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Team> Teams { get; set; }
+        public DbSet<Event> Events { get; set; }
+        public DbSet<Member> TeamMembers { get; set; }
+        public DbSet<Token> Tokens { get; set; }
+        //public DbSet<CheckUp> CheckUps { get; set; }
+    }
+    public class MemberRepository : RepositoryBase<Member>, IMemberRepository {
+
+        public List<Member> GetMembersByTeamId(int teamid)
         {
             return (from members in _dbSet
                     where members.TeamId == teamid
@@ -95,25 +156,40 @@ namespace TLC.Data
     }
 
 
-    public class UserRepository : RepositoryBase<User>, IUserRepository {
-        
-        //public User FindByUserName(string email)
-        //{
-        //    return (from users in _dbSet
-        //            where users.Email == email
-        //            select users).FirstOrDefault();
-        //}
-
-        public int Authenticate(string userName, string password)
+    public class UserRepository : RepositoryBase<User>, IUserRepository {      
+        //protected string algo = System.Configuration.ConfigurationManager.AppSettings["userAlgorithm"].ToString();
+        public User Authenticate(string email, string password)
         {
+            var hashLookUP = returnHash(password);
             User myuser = (from user in _dbSet
-                       where user.Username.Equals(userName) && user.Password.Equals(password)
+                       where user.Email.Equals(email) && user.PasswordHashCode.Equals(hashLookUP)
                        select user).FirstOrDefault();
             if (myuser != null && myuser.UserId > 0)
             {
-                return myuser.UserId;
+               
+                return myuser; 
             }
-            return 0;
+            return null;
+        }
+        private string returnHash(string password)
+        {
+            var encodeHash = FormsAuthentication.HashPasswordForStoringInConfigFile(password, "SHA1");
+            return Convert.ToBase64String(Encoding.Default.GetBytes(encodeHash));
+        }
+               
+        public bool AddUser(string email, string password)
+        {
+            var nUser = new User();
+            nUser.Email = email;
+            nUser.Role = "User";
+            nUser.AddedById = -1;
+            nUser.AddedDate = DateTime.Now;
+            nUser.UserName = email;
+            nUser.PasswordHashCode = returnHash(password);
+            nUser.MyTeamId = -1;
+            _dbSet.Add(nUser);
+            _context.SaveChanges();
+            return false;
         }
 
     }
@@ -146,62 +222,5 @@ namespace TLC.Data
         }
     }
 
-    public abstract class RepositoryBase<T> where T : class
-    {
-       protected DataContext _context;
-        protected DbSet<T> _dbSet;
-
-        public RepositoryBase()
-        {
-            this._context = new DataContext();
-            _dbSet = _context.Set<T>();
-        }
-        public RepositoryBase(DataContext _dataContext)
-        {
-            this._context = _dataContext;
-            _dbSet = _dataContext.Set<T>();
-        }
-        public virtual IEnumerable<T> GetAll()
-        {
-             return _dbSet.ToList();
-          }
-        public T FindBy(object id)
-        {
-             return _dbSet.Find(id);
-           }
-        public virtual void Add(T obj)
-        {
-            _dbSet.Add(obj);
-        }
-        public virtual void Update(T obj)
-        {
-            _dbSet.Attach(obj);
-            _context.Entry(obj).State = EntityState.Modified;
-        }
-        public virtual void Delete(object id)
-        {
-            T existing = _dbSet.Find(id);
-            _dbSet.Remove(existing);
-        }
-        public virtual void Save()
-        {
-            _context.SaveChanges();
-        }
-    }
-
-    public class DataContext : DbContext
-    {
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
-        }
-
-        public DataContext() : base("DataDb") { }
-        public DbSet<User> Users { get; set; }
-        public DbSet<Team> Teams { get; set; }
-        public DbSet<Event> Events { get; set; }
-        public DbSet<TeamMember> TeamMembers { get; set; }
-        public DbSet<Token> Tokens { get; set; }
-        //public DbSet<CheckUp> CheckUps { get; set; }
-    }
+   
 }

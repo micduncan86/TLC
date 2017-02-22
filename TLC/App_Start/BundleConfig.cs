@@ -35,6 +35,14 @@ namespace TLC
                             "~/Scripts/modernizr-*"));
 
             ScriptManager.ScriptResourceMapping.AddDefinition(
+                "app",
+                new ScriptResourceDefinition
+                {
+                    Path = "~/Scripts/app.js",
+                    DebugPath = "~/Scripts/app.js",
+                });
+
+            ScriptManager.ScriptResourceMapping.AddDefinition(
                 "respond",
                 new ScriptResourceDefinition
                 {

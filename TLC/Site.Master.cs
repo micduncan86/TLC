@@ -15,6 +15,7 @@ namespace TLC
         private const string AntiXsrfTokenKey = "__AntiXsrfToken";
         private const string AntiXsrfUserNameKey = "__AntiXsrfUserName";
         private string _antiXsrfTokenValue;
+        private const string _TlcTeamIdKey = "__TlcTeamIdKey";
 
         protected void Page_Init(object sender, EventArgs e)
         {
@@ -44,7 +45,12 @@ namespace TLC
                 }
                 Response.Cookies.Set(responseCookie);
             }
-
+            if (Request.Cookies.Get(_TlcTeamIdKey) != null)
+            {
+               // var jsTeamId = string.Format("teams.myteam = {0};", Request.Cookies[_TlcTeamIdKey].Value);
+                //ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "teamID", jsTeamId, true);
+            }
+           
             Page.PreLoad += master_Page_PreLoad;
         }
 
@@ -74,7 +80,7 @@ namespace TLC
 
         protected void Unnamed_LoggingOut(object sender, LoginCancelEventArgs e)
         {
-            Context.GetOwinContext().Authentication.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+            //Context.GetOwinContext().Authentication.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
         }
     }
 

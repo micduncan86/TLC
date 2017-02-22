@@ -11,7 +11,7 @@
         </asp:LinkButton>
     </h3>
     <p>
-        <asp:GridView ID="grdMembers" runat="server" AutoGenerateColumns="False" CssClass="table table-condensed" RowStyle-CssClass="row" HeaderStyle-CssClass="row" BorderWidth="0"  DataKeyNames="TeamMemberId" OnRowCommand="grdMembers_RowCommand" ShowHeader="false">
+        <asp:GridView ID="grdMembers" runat="server" AutoGenerateColumns="False" CssClass="table table-condensed" RowStyle-CssClass="row" HeaderStyle-CssClass="row" BorderWidth="0"  DataKeyNames="MemberId" OnRowCommand="grdMembers_RowCommand" ShowHeader="false">
             <EmptyDataTemplate>
                 No Members.
             </EmptyDataTemplate>

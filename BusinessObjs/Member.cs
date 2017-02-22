@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations.Schema;
 namespace TLC.Data
 {
-    public class TeamMember: BaseEntity
+    public class Member: BaseEntity
     {
         #region Properties
-        public int TeamMemberId { get; set; }
+        public int MemberId { get; set; }
         public int TeamId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -28,11 +28,11 @@ namespace TLC.Data
         #endregion
 
         #region Constructors
-        public TeamMember() : this (string.Empty,string.Empty,string.Empty)
+        public Member() : this (string.Empty,string.Empty,string.Empty)
         {
 
         }
-        public TeamMember(string firstname,string lastname,string phone)
+        public Member(string firstname,string lastname,string phone)
         {
             FirstName = firstname;
             LastName = lastname;
@@ -53,9 +53,9 @@ namespace TLC.Data
 
         public bool Copy()
         {
-            if (TeamMemberId > 0)
+            if (MemberId > 0)
             {
-                TeamMember copyMember = new TeamMember
+                Member copyMember = new Member
                 {
                     FirstName = FirstName,
                     LastName = LastName,
@@ -68,7 +68,7 @@ namespace TLC.Data
                     Notes = Notes,
                     TeamId = -1
                 };
-                var tmRepo = new TeamMemberRepository();
+                var tmRepo = new MemberRepository();
                 tmRepo.Add(copyMember);
                 tmRepo.Save();
                 return true;

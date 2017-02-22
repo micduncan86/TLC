@@ -13,7 +13,7 @@
     </h3>
     <hr />
     <p>
-        <asp:GridView ID="grdMembers" runat="server" AutoGenerateColumns="False" CssClass="table table-condensed" RowStyle-CssClass="row" HeaderStyle-CssClass="row" BorderWidth="0" DataKeyNames="TeamMemberId" OnRowCommand="grdMembers_RowCommand" ShowHeader="false">
+        <asp:GridView ID="grdMembers" runat="server" AutoGenerateColumns="False" CssClass="table table-condensed" RowStyle-CssClass="row" HeaderStyle-CssClass="row" BorderWidth="0" DataKeyNames="MemberId" OnRowCommand="grdMembers_RowCommand" ShowHeader="false">
             <Columns>
                              <asp:CommandField ShowDeleteButton="true" ControlStyle-CssClass="btn btn-sm btn-danger" DeleteText="<span class='glyphicon glyphicon-remove'></span>" />
                 <asp:TemplateField ItemStyle-CssClass="col-md-12">
@@ -48,7 +48,7 @@
                 </div>
                 <div class="modal-body">
                     <asp:Panel ID="pnlNewMembers" runat="server" Style="max-height: 350px; overflow-y: scroll;">
-                        <asp:ListView ID="lstMembers" runat="server" GroupPlaceholderID="grpContent" ItemPlaceholderID="itmContent" DataKeyNames="TeamMemberId">
+                        <asp:ListView ID="lstMembers" runat="server" GroupPlaceholderID="grpContent" ItemPlaceholderID="itmContent" DataKeyNames="MemberId">
                             <EmptyDataTemplate>
                                 No Members
                             </EmptyDataTemplate>

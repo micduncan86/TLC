@@ -7,99 +7,99 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TLC.Account {
+namespace TLC {
     
     
-    public partial class TwoFactorAuthenticationSignIn {
+    public partial class Home {
         
         /// <summary>
-        /// sendcode control.
+        /// ddlTeams control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder sendcode;
+        protected global::System.Web.UI.WebControls.DropDownList ddlTeams;
         
         /// <summary>
-        /// Providers control.
+        /// ltrTeamName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList Providers;
+        protected global::System.Web.UI.WebControls.Literal ltrTeamName;
         
         /// <summary>
-        /// ProviderSubmit control.
+        /// ltrMemberCount control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button ProviderSubmit;
+        protected global::System.Web.UI.WebControls.Literal ltrMemberCount;
         
         /// <summary>
-        /// verifycode control.
+        /// lblTeamNumber control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder verifycode;
+        protected global::System.Web.UI.WebControls.Label lblTeamNumber;
         
         /// <summary>
-        /// SelectedProvider control.
+        /// lblCoLeader control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField SelectedProvider;
+        protected global::System.Web.UI.WebControls.Label lblCoLeader;
         
         /// <summary>
-        /// ErrorMessage control.
+        /// ltrEventCount control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder ErrorMessage;
+        protected global::System.Web.UI.WebControls.Literal ltrEventCount;
         
         /// <summary>
-        /// FailureText control.
+        /// lnkAddEvent control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal FailureText;
+        protected global::System.Web.UI.WebControls.LinkButton lnkAddEvent;
         
         /// <summary>
-        /// Code control.
+        /// lstEvents control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Code;
+        protected global::System.Web.UI.WebControls.ListView lstEvents;
         
         /// <summary>
-        /// RememberBrowser control.
+        /// lnkAddMember control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox RememberBrowser;
+        protected global::System.Web.UI.WebControls.LinkButton lnkAddMember;
         
         /// <summary>
-        /// CodeSubmit control.
+        /// lstMembers control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button CodeSubmit;
+        protected global::System.Web.UI.WebControls.ListView lstMembers;
     }
 }

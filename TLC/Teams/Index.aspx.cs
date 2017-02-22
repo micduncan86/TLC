@@ -114,10 +114,10 @@ namespace TLC.Teams
                     pnlMembers.Visible = false;
                     hdfShowModal.Value = "1";
                     LoadMemberDropDownList(ddlNewTeamLeader, myTeam.TeamLeaderId);
-                    txtNewTeamGroupNumber.Text = myTeam.GroupNumber;
-                    txtNewTeamName.Text = myTeam.Name;
+                    txtNewTeamGroupNumber.Text = myTeam.TeamNumber;
+                    txtNewTeamName.Text = myTeam.TeamName;
                     lnkAddNewTeam.Visible = true;
-                    ltrModalTitle.Text = "Update Team :" + myTeam.Name;
+                    ltrModalTitle.Text = "Update Team :" + myTeam.TeamName;
                     lnkAddNewTeam.CommandName = "Update";
                     lnkAddNewTeam.CommandArgument = myTeam.TeamId.ToString();
                     lnkAddNewTeam.Text = "Update Team";
@@ -163,7 +163,7 @@ namespace TLC.Teams
             if (!Equals(ddl, null))
             {
 
-                ddl.DataSource = Equals(datasource, null) ? new TeamMemberRepository().GetAll() : datasource;
+                ddl.DataSource = Equals(datasource, null) ? new MemberRepository().GetAll() : datasource;
                 ddl.DataTextField = "FullName";
                 ddl.DataValueField = "TeamMemberId";
                 ddl.DataBind();
@@ -186,10 +186,10 @@ namespace TLC.Teams
         protected void grdTeams_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
             Team editedTeam = Convert.ToInt32(e.Keys[0]) == 0 ? new Team() : tmRepo.FindBy(e.Keys[0]);
-            editedTeam.GroupNumber = e.NewValues["GroupNumber"].ToString();
+            editedTeam.TeamNumber = e.NewValues["GroupNumber"].ToString();
             int newLeaderId = Convert.ToInt32(((DropDownList)((GridView)sender).Rows[e.RowIndex].FindControl("ddlLeader")).SelectedValue);
             string name = ((TextBox)((GridView)sender).Rows[e.RowIndex].FindControl("txtName")).Text;
-            editedTeam.Name = name;
+            editedTeam.TeamName = name;
             editedTeam.TeamLeaderId = newLeaderId;
             if (Convert.ToInt32(e.Keys[0]) == 0)
             {
@@ -223,8 +223,8 @@ namespace TLC.Teams
             var btn = sender as LinkButton;
             Team updateTeam = new Team()
             {
-                Name = txtNewTeamName.Text,
-                GroupNumber = txtNewTeamGroupNumber.Text,
+                TeamName = txtNewTeamName.Text,
+                TeamNumber = txtNewTeamGroupNumber.Text,
                 TeamLeaderId = ddlNewTeamLeader.SelectedValue.Equals(string.Empty) ? -1 : Convert.ToInt32(ddlNewTeamLeader.SelectedValue)
             };
             int id = 0;
@@ -249,8 +249,8 @@ namespace TLC.Teams
                     //{
                     //}     
                     var team = TeamRepo.FindBy(id);
-                    team.Name = updateTeam.Name;
-                    team.GroupNumber = updateTeam.GroupNumber;
+                    team.TeamName = updateTeam.TeamName;
+                    team.TeamNumber = updateTeam.TeamNumber;
                     team.TeamLeaderId = updateTeam.TeamLeaderId;
 
                     TeamRepo.Update(team);

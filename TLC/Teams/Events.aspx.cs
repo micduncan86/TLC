@@ -53,7 +53,7 @@ namespace TLC.Teams
             txtEventTitle.Text = myevent == null ? "" : myevent.Title;
             txtEventDate.Text = myevent == null ? "" : myevent.EventDate.ToShortDateString();
             txtEventNotes.Text = myevent == null ? "" : myevent.Notes;
-            chkIsComplete.Checked = myevent == null ? false : myevent.isComplete;
+            chkIsComplete.Checked = myevent == null ? false : myevent.Completed;
             LoadTeams(ddlTeam, null);
             ddlTeam.SelectedIndex = myevent == null ? -1 : ddlTeam.Items.IndexOf(ddlTeam.Items.FindByValue(myevent.TeamId.ToString()));
         }
@@ -102,7 +102,7 @@ namespace TLC.Teams
                 Title = txtEventTitle.Text,
                 EventDate = Convert.ToDateTime(txtEventDate.Text),
                 Notes = txtEventNotes.Text,
-                isComplete = chkIsComplete.Checked,
+                Completed = chkIsComplete.Checked,
                 TeamId = ddlTeam.SelectedValue.Equals(string.Empty) ? 0 : Convert.ToInt32(ddlTeam.SelectedValue)
             };
 

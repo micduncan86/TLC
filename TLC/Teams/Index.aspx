@@ -42,7 +42,7 @@
                 <asp:TemplateField ItemStyle-CssClass="col-md-12" HeaderText="Name">
                     <ItemTemplate>
                         <h4>
-                            <asp:Literal ID="ltrName" runat="server" Text='<%# Eval("Name") %>'></asp:Literal></h4>
+                            <asp:Literal ID="ltrName" runat="server" Text='<%# Eval("TeamName") %>'></asp:Literal></h4>
                             <div class="dropdown">
                                 <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown">
                                     Info <span class="caret"></span>
@@ -54,7 +54,7 @@
                                     </li>
                                     <li role="presentation">
                                         <label>Group Number:</label>
-                                        <asp:Literal ID="Literal3" runat="server" Text='<%# Eval("GroupNumber") %>'></asp:Literal>
+                                        <asp:Literal ID="Literal3" runat="server" Text='<%# Eval("TeamNumber") %>'></asp:Literal>
                                     </li>
                                     <li role="presentation">    
                                         <label>Members:</label>
@@ -68,7 +68,7 @@
                             </div>
                     </ItemTemplate>
                     <EditItemTemplate>
-                        <asp:TextBox ID="txtName" runat="server" CssClass="form-control" Text='<%# Eval("Name") %>'></asp:TextBox>
+                        <asp:TextBox ID="txtName" runat="server" CssClass="form-control" Text='<%# Eval("TeamName") %>'></asp:TextBox>
                     </EditItemTemplate>
                 </asp:TemplateField>
 

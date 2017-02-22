@@ -45,8 +45,8 @@ namespace TLC
             {
                 //var formValues = formdata.Split('&').Select(s => s.Split('=')).ToDictionary(key => key[0].Trim(), value => value[1].Trim());
                 var team = TeamRepo.FindBy(id);
-                team.Name = updateTeam.Name;
-                team.GroupNumber = updateTeam.GroupNumber;
+                team.TeamName = updateTeam.TeamName;
+                team.TeamNumber = updateTeam.TeamNumber;
                 team.TeamLeaderId = updateTeam.TeamLeaderId;
 
                 TeamRepo.Update(team);
