@@ -20,7 +20,7 @@ namespace TLC
                     return;
                 }
                 var mylogin = Session["mylogin"] as User;
-                if (User.IsInRole("Administrator"))
+                if (User.IsInRole(UserRepository.ReturnUserRole(Data.User.enumRole.Administrater)))
                 {
                     LoadTeams(String.IsNullOrEmpty(HttpUtility.ParseQueryString(Request.Url.Query).Get("Team")) ? mylogin.MyTeamId : Convert.ToInt32(HttpUtility.ParseQueryString(Request.Url.Query).Get("Team")));
                 }

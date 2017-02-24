@@ -13,7 +13,7 @@ namespace TLC
         {
             if (!Page.IsPostBack)
             {
-                Console.WriteLine("hello");
+                Response.Redirect("Home.aspx");
             }
         }
         

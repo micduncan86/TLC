@@ -30,12 +30,16 @@ namespace TLC.Members
                 list = (from member in new MemberRepository().GetAll()
                             where (member.TeamId == -1)
                             && (
-                            (member.FullName ?? "").Contains(searchTerm)
-                            || (member.Email ?? "").Contains(searchTerm)
+                            (member.FullName.ToLower() ?? "").Contains(searchTerm.ToLower())
+                            || (member.Email.ToLower() ?? "").Contains(searchTerm.ToLower())
                             || (member.Phone ?? "").Contains(searchTerm)
                             )
                             orderby member.FullName
                             select member).ToList();
+            }
+            else
+            {
+                list = new MemberRepository().GetAll().Where(x => x.TeamId == -1).OrderBy(y => y.FullName).ToList();
             }
            
             lstMembers.DataSource = list;

@@ -239,13 +239,6 @@
     <Compile Include="Site.Master.designer.cs">
       <DependentUpon>Site.Master</DependentUpon>
     </Compile>
-    <Compile Include="Site.Mobile.Master.cs">
-      <DependentUpon>Site.Mobile.Master</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Site.Mobile.Master.designer.cs">
-      <DependentUpon>Site.Mobile.Master</DependentUpon>
-    </Compile>
     <Compile Include="Startup.cs" />
     <Compile Include="Teams\Events.aspx.cs">
       <DependentUpon>Events.aspx</DependentUpon>
@@ -268,12 +261,12 @@
     <Compile Include="Teams\Members.aspx.designer.cs">
       <DependentUpon>Members.aspx</DependentUpon>
     </Compile>
-    <Compile Include="ViewSwitcher.ascx.cs">
-      <DependentUpon>ViewSwitcher.ascx</DependentUpon>
+    <Compile Include="Users\index.aspx.cs">
+      <DependentUpon>index.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="ViewSwitcher.ascx.designer.cs">
-      <DependentUpon>ViewSwitcher.ascx</DependentUpon>
+    <Compile Include="Users\index.aspx.designer.cs">
+      <DependentUpon>index.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -347,13 +340,12 @@
     <Content Include="Teams\Events.aspx" />
     <Content Include="Teams\Index.aspx" />
     <Content Include="Teams\Members.aspx" />
-    <Content Include="ViewSwitcher.ascx" />
+    <Content Include="Users\index.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Bundle.config" />
     <Content Include="packages.config" />
     <Content Include="Site.Master" />
-    <Content Include="Site.Mobile.Master" />
     <Content Include="Web.config" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <None Include="Web.Debug.config">

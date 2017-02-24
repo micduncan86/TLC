@@ -165,8 +165,7 @@ namespace TLC.Data
                        where user.Email.Equals(email) && user.PasswordHashCode.Equals(hashLookUP)
                        select user).FirstOrDefault();
             if (myuser != null && myuser.UserId > 0)
-            {
-               
+            {               
                 return myuser; 
             }
             return null;
@@ -177,11 +176,11 @@ namespace TLC.Data
             return Convert.ToBase64String(Encoding.Default.GetBytes(encodeHash));
         }
                
-        public bool AddUser(string email, string password)
+        public User AddUser(string email, string password)
         {
             var nUser = new User();
             nUser.Email = email;
-            nUser.Role = "User";
+            nUser.UserRole = User.enumRole.User;
             nUser.AddedById = -1;
             nUser.AddedDate = DateTime.Now;
             nUser.UserName = email;
@@ -189,7 +188,12 @@ namespace TLC.Data
             nUser.MyTeamId = -1;
             _dbSet.Add(nUser);
             _context.SaveChanges();
-            return false;
+            return nUser;
+        }
+
+        public static string ReturnUserRole(User.enumRole enumRole)
+        {
+            return enumRole == User.enumRole.User ? "User" : "Administrater";
         }
 
     }

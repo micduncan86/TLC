@@ -8,7 +8,7 @@
         modal.show();
     },
     SuccessAlert: function (alertTitle, alertMessage, callback) {
-        var dAlert = $("<div/>", {class: "alert alert-success", role: "alert", style: "position: absolute; top: 0; margin-top: 70px; width: 350px;display:none;"});
+        var dAlert = $("<div/>", {class: "alert alert-success mySuccessMessage", role: "alert"});
         $("<h4/>", {class: "alert-heading", html: alertTitle}).appendTo(dAlert);
         $("<p/>",{html: alertMessage}).appendTo(dAlert);
 

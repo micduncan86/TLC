@@ -47,12 +47,9 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" runat="server" href="~/">Team Leader Center</a>
+                    <a class="navbar-brand" runat="server" href="~/Home">Team Leader Center</a>
                 </div>
-                <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        <li><a runat="server" href="~/">Home</a></li>
-                    </ul>
+                <div class="navbar-collapse collapse">                    
                     <asp:LoginView runat="server" ViewStateMode="Disabled">
                         <AnonymousTemplate>
                             <ul class="nav navbar-nav navbar-right">
@@ -89,6 +86,21 @@
                                     </ul>
 
                                 </li>
+                                <% if(HttpContext.Current.User.IsInRole("Administrater")) { %>
+                                <li class="dropdown">
+                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Adminstration <span class="caret"></span>
+                                    </a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li role="presentation">
+                                            <a runat="server" href="~/users/index">List Users</a>
+                                        </li>
+                                        <li role="presentation">
+                                            <a runat="server" href="#">Add New User</a>
+                                        </li>
+                                    </ul>
+
+                                </li>
+                                <%} %>
                                 <li>
                                     <asp:LoginStatus runat="server" LogoutAction="Redirect" LogoutText="Log off" LogoutPageUrl="~/" OnLoggingOut="Unnamed_LoggingOut" />
                                 </li>

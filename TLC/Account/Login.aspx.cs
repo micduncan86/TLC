@@ -27,14 +27,20 @@ namespace TLC.Account
                     if (login != null)
                     {
                         Session.Add("mylogin", login);
-                        FormsAuthenticationTicket lgnTicket = new FormsAuthenticationTicket(1, login.UserName, DateTime.Now, DateTime.Now.AddSeconds((60 * 15)), true, login.MyTeamId + ":" + login.Role);
+                        FormsAuthenticationTicket lgnTicket = new FormsAuthenticationTicket(1, login.UserName, DateTime.Now, DateTime.Now.AddSeconds((60 * 15)), true, login.UserId + ":" + login.Role);
                         string encryptTicket = FormsAuthentication.Encrypt(lgnTicket);
                         var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptTicket);
                         cookie.Expires = lgnTicket.Expiration;
                         Response.Cookies.Add(cookie);
                         Response.Cookies.Add(new HttpCookie("__TlcTeamIdKey", login.MyTeamId.ToString()));
-                        Response.Redirect("~/Home.aspx");             
-                        //FormsAuthentication.RedirectFromLoginPage(login.UserName, false);
+                        if (Request.Url.Query.Contains("ReturnUrl"))
+                        {
+                            Response.Redirect(HttpUtility.ParseQueryString(Request.Url.Query).Get("ReturnUrl"));                            
+                        }
+                        else
+                        {
+                            Response.Redirect("~/Home.aspx");
+                        }
                     }
 
                 }

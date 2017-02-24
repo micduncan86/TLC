@@ -7,6 +7,7 @@ using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Microsoft.AspNet.Identity;
+using TLC.Data;
 
 namespace TLC
 {
@@ -16,6 +17,11 @@ namespace TLC
         private const string AntiXsrfUserNameKey = "__AntiXsrfUserName";
         private string _antiXsrfTokenValue;
         private const string _TlcTeamIdKey = "__TlcTeamIdKey";
+
+        public void AddNotification(Page _page, string Title, string Message)
+        {
+            ScriptManager.RegisterStartupScript(_page, _page.GetType(), _page.UniqueID + "_Notification", string.Format("app.SuccessAlert('{0}','{1}')",Title,Message), true);
+        }
 
         protected void Page_Init(object sender, EventArgs e)
         {
@@ -75,7 +81,12 @@ namespace TLC
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (Equals(Session["mylogin"], null))
+            {
+                System.Web.Security.FormsAuthentication.SignOut();
+                System.Web.Security.FormsAuthentication.RedirectToLoginPage();
+                return;
+            }            
         }
 
         protected void Unnamed_LoggingOut(object sender, LoginCancelEventArgs e)
