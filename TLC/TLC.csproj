@@ -279,10 +279,6 @@
     <Content Include="About.aspx" />
     <Content Include="Account\Login.aspx" />
     <Content Include="Account\Register.aspx" />
-    <Content Include="App_Data\data.mdf" />
-    <Content Include="App_Data\data_log.ldf">
-      <DependentUpon>data.mdf</DependentUpon>
-    </Content>
     <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap-datepicker.css" />
     <Content Include="Content\bootstrap.css" />
