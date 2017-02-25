@@ -60,19 +60,15 @@
                         </AnonymousTemplate>
                         <LoggedInTemplate>
                             <ul class="nav navbar-nav navbar-right">
-                                <li class="dropdown">
+                                <%--<li class="dropdown">
                                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">Teams <span class="caret"></span>
                                     </a>
                                     <ul class="dropdown-menu" role="menu">
                                         <li role="presentation">
-                                            <a runat="server" href="~/teams/index">View Team</a>
-                                        </li>
-                                        <li role="presentation">
-                                            <a runat="server" href="#">Add New Team</a>
-                                        </li>
+                                            <a runat="server" href="~/teams/index">List Teams</a>
+                                        </li>                                        
                                     </ul>
-
-                                </li>
+                                </li>--%>                               
                                 <li class="dropdown">
                                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">Members <span class="caret"></span>
                                     </a>

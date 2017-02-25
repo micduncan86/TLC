@@ -17,17 +17,23 @@
         <div class="col-md-4">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <asp:Literal ID="ltrTeamName" runat="server"></asp:Literal>
+                    <asp:TextBox ID="txtTeamName" runat="server" CssClass="form-control" style="display:inline; font-size: 12px; height: 20px;"></asp:TextBox>
                     <span class="badge" style="float: right;"><span>
                         <asp:Literal ID="ltrMemberCount" runat="server"></asp:Literal></span><span class="glyphicon glyphicon-user"></span></span>
                 </div>
                 <div class="panel-body" style="min-height: 125px; max-height: 125px;">
                     <p>
                         Team Number:
-                        <asp:Label ID="lblTeamNumber" runat="server"></asp:Label>
+                        <asp:Textbox ID="txtTeamNumber" runat="server" CssClass="form-control" style="display:inline; width:100px;"></asp:Textbox> 
+                                               
                     </p>
                     Co Leader:
-                    <asp:Label ID="lblCoLeader" runat="server"></asp:Label>
+                    <asp:Label ID="lblCoLeader" runat="server"></asp:Label> 
+                    <p>
+                    <asp:LinkButton ID="lnkUpdateTeamInfo" runat="server" CssClass="btn btn-xs btn-success pull-right" OnClick="lnkUpdateTeamInfo_Click">
+                        Update
+                    </asp:LinkButton>                   
+                        </p>
                 </div>
             </div>
         </div>
@@ -78,7 +84,7 @@
                                     <span class="glyphicon glyphicon-trash"></span>
                                 </button>
                                 <label class="btn btn-xs btn-primary" style="float: right;">Status:<%# Eval("Status") %></label></p>
-                            <pre><%# Eval("Description") %></pre>
+                            <div class="panel panel-default panel-heading"><%# Eval("EventDate") %><br /><%# Eval("Description") %></div>
 
                         </ItemTemplate>
                     </asp:ListView>
@@ -97,10 +103,10 @@
                                 Actions <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                                <li role="presentation">
+                                <li role="presentation">                                    
                                     <asp:LinkButton ID="lnkAddMember" runat="server" OnClick="lnkAddMember_Click">
                                         Add Member to Team
-                                    </asp:LinkButton>                                  
+                                    </asp:LinkButton>                                                                      
                                 </li>
                             </ul>
                         </div>

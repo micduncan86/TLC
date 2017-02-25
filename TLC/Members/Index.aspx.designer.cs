@@ -22,6 +22,24 @@ namespace TLC.Members {
         protected global::System.Web.UI.WebControls.LinkButton lnkAdd;
         
         /// <summary>
+        /// txtsearch control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txtsearch;
+        
+        /// <summary>
+        /// lnkSearch control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton lnkSearch;
+        
+        /// <summary>
         /// grdMembers control.
         /// </summary>
         /// <remarks>

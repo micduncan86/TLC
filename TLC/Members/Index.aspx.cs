@@ -32,8 +32,15 @@ namespace TLC.Members
             {
                 datasource = memberId > 0 ? memberRepo.GetAll().Where(x => x.MemberId == memberId).ToList() : memberRepo.GetAll();
             }
-            grdMembers.DataSource = datasource;
-            grdMembers.DataBind();
+            int teamId;
+            if (int.TryParse(Request.Params.Get("TeamId"), out teamId))
+            {
+                datasource = ((List<Member>)datasource).Where(x => x.TeamId != teamId).ToList();
+            }
+
+            
+            grdMembers.DataSource = ((List<Member>)datasource).OrderBy(x => x.FullName).ToList();
+            grdMembers.DataBind();            
         }
 
         protected void lnkAdd_Click(object sender, EventArgs e)
@@ -57,7 +64,7 @@ namespace TLC.Members
             ddlTeam.SelectedIndex = -1;
             ddlTeam.DataSource = (from teams in new TeamRepository().GetAll()
                                   select teams).ToList();
-            ddlTeam.DataTextField = "Name";
+            ddlTeam.DataTextField = "TeamName";
             ddlTeam.DataValueField = "TeamId";
             ddlTeam.DataBind();
             ddlTeam.Items.Insert(0, new ListItem("", "0"));
@@ -108,6 +115,7 @@ namespace TLC.Members
                     break;
             }
             memberRepo.Save();
+            ((SiteMaster)Page.Master).AddNotification(Page, "Member Update Successful", member.FullName + " was updated.");
             LoadGrid();
         }
 
@@ -121,14 +129,25 @@ namespace TLC.Members
                 case "Edit":
                     ModalMemberWindow(memberRepo.FindBy(teamMemberId));
                     break;
+                case "Assign":
+                    Member selMember = memberRepo.FindBy(teamMemberId);
+                    int teamId;
+                    int.TryParse(Request.Params.Get("TeamId"), out teamId);
+                    selMember.TeamId = teamId;
+                    memberRepo.Update(selMember);
+                    memberRepo.Save();
+                    ((SiteMaster)Page.Master).AddNotification(Page, "Member Assignment Successful", selMember.FullName + " was added to your team.");
+                    break;
                 case "Copy":
 
                     Member curMember = memberRepo.FindBy(teamMemberId);
                     curMember.Copy();
+                    ((SiteMaster)Page.Master).AddNotification(Page, "Member Copy Successful", curMember.FullName + " was copied.");
                     break;
                 case "Delete":
                     memberRepo.Delete(teamMemberId);
                     memberRepo.Save();
+                    ((SiteMaster)Page.Master).AddNotification(Page, "Member Removal Successful",  "Member was removed.");
                     break;
                 default:
                     break;
@@ -137,7 +156,52 @@ namespace TLC.Members
             LoadGrid();
         }
 
-        
+        protected void grdMembers_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            var liAssign = e.Row.FindControl("liAssign");
+            var liDelete = e.Row.FindControl("liDelete");
+            if (liAssign != null)
+            {
+                int teamId;
+                if (int.TryParse(Request.Params.Get("TeamId"), out teamId))
+                {
+                    liAssign.Visible = true;
+                }                
+            }
+            if (liDelete != null)
+            {
+                if (!User.IsInRole(UserRepository.ReturnUserRole(Data.User.enumRole.Administrater)))
+                {
+                    liDelete.Visible = false;
+                }
+            }
+        }
+        protected void Search(string searchTerm)
+        {
+            var list = new List<Member>();
+            if (!String.IsNullOrWhiteSpace(searchTerm))
+            {
+                list = (from member in new MemberRepository().GetAll()
+                        where (1 == 1)
+                        && (
+                        (member.FullName.ToLower() ?? "").Contains(searchTerm.ToLower())
+                        || (member.Email.ToLower() ?? "").Contains(searchTerm.ToLower())
+                        || (member.Phone ?? "").Contains(searchTerm)
+                        )
+                        orderby member.FullName
+                        select member).ToList();
+            }
+            else
+            {
+                list = new MemberRepository().GetAll().OrderBy(y => y.FullName).ToList();
+            }
 
+            grdMembers.DataSource = list;
+            grdMembers.DataBind();
+        }
+        protected void lnkSearch_Click(object sender, EventArgs e)
+        {
+            Search(txtsearch.Value);
+        }
     }
 }

@@ -83,8 +83,8 @@ namespace TLC
         {
             if (Equals(Session["mylogin"], null))
             {
-                System.Web.Security.FormsAuthentication.SignOut();
-                System.Web.Security.FormsAuthentication.RedirectToLoginPage();
+                //System.Web.Security.FormsAuthentication.SignOut();
+                //System.Web.Security.FormsAuthentication.RedirectToLoginPage();
                 return;
             }            
         }

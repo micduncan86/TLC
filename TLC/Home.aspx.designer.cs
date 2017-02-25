@@ -22,13 +22,13 @@ namespace TLC {
         protected global::System.Web.UI.WebControls.DropDownList ddlTeams;
         
         /// <summary>
-        /// ltrTeamName control.
+        /// txtTeamName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ltrTeamName;
+        protected global::System.Web.UI.WebControls.TextBox txtTeamName;
         
         /// <summary>
         /// ltrMemberCount control.
@@ -40,13 +40,13 @@ namespace TLC {
         protected global::System.Web.UI.WebControls.Literal ltrMemberCount;
         
         /// <summary>
-        /// lblTeamNumber control.
+        /// txtTeamNumber control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTeamNumber;
+        protected global::System.Web.UI.WebControls.TextBox txtTeamNumber;
         
         /// <summary>
         /// lblCoLeader control.
@@ -56,6 +56,15 @@ namespace TLC {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblCoLeader;
+        
+        /// <summary>
+        /// lnkUpdateTeamInfo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton lnkUpdateTeamInfo;
         
         /// <summary>
         /// ltrEventCount control.
