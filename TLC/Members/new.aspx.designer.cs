@@ -7,9 +7,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TLC {
+namespace TLC.Members {
     
     
-    public partial class _Default {
+    public partial class _new {
     }
 }

@@ -48,10 +48,10 @@ namespace TLC
             {
                 data = new TeamRepository().FindBy(Convert.ToInt32(ddlTeams.SelectedValue));
             }
-            ltrTeamName.Text = data.TeamName;
+            txtTeamName.Text = data.TeamName;
             ltrMemberCount.Text = data.Members.Count.ToString();
 
-            lblTeamNumber.Text = data.TeamNumber;
+            txtTeamNumber.Text = data.TeamNumber;
             lblCoLeader.Text = "None";  
             lnkAddMember.CommandArgument = data.TeamId.ToString();
             if (data.CoTeamLeader != null)
@@ -99,7 +99,7 @@ namespace TLC
 
         protected void lnkAddMember_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/members/addtoteam.aspx?team=" + ddlTeams.SelectedValue);
+            Response.Redirect("~/members/index.aspx?TeamId=" + ddlTeams.SelectedValue);
             // Schttp://localhost:16189/HomeriptManager.RegisterStartupScript(this.Page, this.GetType(), "ADDNEWMEMBER", "ModalAddMember(" + ddlTeams.SelectedValue + ");", true);
         }
 
@@ -116,6 +116,19 @@ namespace TLC
                     break;  
             }
             e.Handled = true;
+        }
+
+        protected void lnkUpdateTeamInfo_Click(object sender, EventArgs e)
+        {
+            var provider = new TeamRepository();
+            Team updateTeam = provider.FindBy(Convert.ToInt32(ddlTeams.SelectedValue));
+            updateTeam.TeamName = txtTeamName.Text;
+            updateTeam.TeamNumber = txtTeamNumber.Text;
+
+            provider.Update(updateTeam);
+            provider.Save();
+            ((SiteMaster)Page.Master).AddNotification(Page, "Update Successful", "Team information has been updated.");
+
         }
     }
 }

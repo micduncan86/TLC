@@ -64,7 +64,7 @@
                     </asp:ListView>
                 </div>
             </div>
-            <asp:Button ID="btnAdd" runat="server" CssClass="btn btn-sm btn-success pull-right" OnClick="btnAdd_Click" Text="Add Members To Team" />
+            <asp:Button ID="btnAdd" runat="server" CssClass="btn btn-sm btn-success" OnClick="btnAdd_Click" Text="Add Members To Team" />
             <a href='<%: "../home.aspx" + Request.Url.Query %>' class="btn btn-sm btn-primary">Back</a>
         </div>
     </div>

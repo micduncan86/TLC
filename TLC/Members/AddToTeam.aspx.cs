@@ -16,7 +16,7 @@ namespace TLC.Members
             {
                 if (Request.QueryString.ToString().ToLower().Contains("modal"))
                 {
-                   var nav = this.Master.FindControl("divNav") as System.Web.UI.HtmlControls.HtmlContainerControl;
+                    var nav = this.Master.FindControl("divNav") as System.Web.UI.HtmlControls.HtmlContainerControl;
                     nav.Visible = false;
                 }
                 Search("");
@@ -28,20 +28,20 @@ namespace TLC.Members
             if (!String.IsNullOrWhiteSpace(searchTerm))
             {
                 list = (from member in new MemberRepository().GetAll()
-                            where (member.TeamId == -1)
-                            && (
-                            (member.FullName.ToLower() ?? "").Contains(searchTerm.ToLower())
-                            || (member.Email.ToLower() ?? "").Contains(searchTerm.ToLower())
-                            || (member.Phone ?? "").Contains(searchTerm)
-                            )
-                            orderby member.FullName
-                            select member).ToList();
+                        where (member.TeamId == -1)
+                        && (
+                        (member.FullName.ToLower() ?? "").Contains(searchTerm.ToLower())
+                        || (member.Email.ToLower() ?? "").Contains(searchTerm.ToLower())
+                        || (member.Phone ?? "").Contains(searchTerm)
+                        )
+                        orderby member.FullName
+                        select member).ToList();
             }
             else
             {
                 list = new MemberRepository().GetAll().Where(x => x.TeamId == -1).OrderBy(y => y.FullName).ToList();
             }
-           
+
             lstMembers.DataSource = list;
             lstMembers.DataBind();
         }
@@ -53,20 +53,25 @@ namespace TLC.Members
 
         protected void btnAdd_Click(object sender, EventArgs e)
         {
+            var blnAdded = false;
             var memRepo = new MemberRepository();
-            foreach(var item in lstMembers.Items)
+            foreach (var item in lstMembers.Items)
             {
                 var chk = item.FindControl("chkAdd") as CheckBox;
                 if (chk.Checked)
                 {
                     var addMember = memRepo.FindBy(lstMembers.DataKeys[item.DataItemIndex].Value);
                     addMember.TeamId = Convert.ToInt32(HttpUtility.ParseQueryString(Request.Url.Query).Get("Team"));
-                    memRepo.Update(addMember);                    
+                    memRepo.Update(addMember);
+                    blnAdded = true;
                 }
             }
             memRepo.Save();
             Search(txtsearch.Value.ToString());
-            ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "SUCCESSMSG", "app.SuccessAlert('Success','Members have been added to the team.');", true);
+            if (blnAdded)
+            {
+                ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "SUCCESSMSG", "app.SuccessAlert('Success','Members have been added to the team.');", true);
+            }
         }
     }
 }

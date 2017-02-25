@@ -25,6 +25,22 @@ namespace TLC.Data
         [NotMapped]
         public List<CheckUp> CheckUps { get; set; }
 
+        [NotMapped]
+        public Team Team {
+            get {
+                if (this.TeamId > 0)
+                {
+                    return new TeamRepository().FindBy(this.TeamId);
+                }
+                else
+                {
+                    return new Team("Not Assigned", "");
+                }
+
+            }
+            private set { }
+        }
+
         #endregion
 
         #region Constructors

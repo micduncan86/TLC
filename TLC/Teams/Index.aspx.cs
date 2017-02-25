@@ -165,7 +165,7 @@ namespace TLC.Teams
 
                 ddl.DataSource = Equals(datasource, null) ? new MemberRepository().GetAll() : datasource;
                 ddl.DataTextField = "FullName";
-                ddl.DataValueField = "TeamMemberId";
+                ddl.DataValueField = "MemberId";
                 ddl.DataBind();
 
                 if (memberId != -1)
