@@ -40,7 +40,7 @@ namespace TLC.Account
                     }
                     else
                     {
-                        if (Email.Text == "admin" && Password.Text == "Tttbhzn2017")
+                        if (Email.Text == "admin@tlc.com" && Password.Text == "Tttbhzn2017")
                         {
                             provider.AddUser(Email.Text, Password.Text);
                             SetTicketAuth(login);
