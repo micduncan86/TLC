@@ -52,12 +52,9 @@ namespace TLC
             ltrMemberCount.Text = data.Members.Count.ToString();
 
             txtTeamNumber.Text = data.TeamNumber;
-            lblCoLeader.Text = "None";  
+            lblTeamLeader.Text = data.TeamLeader.FullName;
+            lblCoLeader.Text = data.CoTeamLeader.FullName; 
             lnkAddMember.CommandArgument = data.TeamId.ToString();
-            if (data.CoTeamLeader != null)
-            {
-                lblCoLeader.Text = String.IsNullOrWhiteSpace(data.CoTeamLeader.FullName) ? "None" : data.CoTeamLeader.FullName;
-            }
             LoadEvents(data.Events);
             LoadMembers(data.Members);
         }

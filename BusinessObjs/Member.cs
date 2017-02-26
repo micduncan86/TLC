@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations.Schema;
 namespace TLC.Data
 {
-    public class Member: BaseEntity
+    public class Member : BaseEntity
     {
         #region Properties
         public int MemberId { get; set; }
@@ -23,11 +23,38 @@ namespace TLC.Data
         public string Notes { get; set; }
 
         [NotMapped]
-        public List<CheckUp> CheckUps { get; set; }
+        public string LatestCheckUpDate
+        {
+            get
+            {
+                return this.CheckUps.Count > 0 ? this.CheckUps[0].CheckUpDate.ToShortDateString() : "";
+            }
+            private set { }
+        }
+        [NotMapped]
+        public string LatestCheckUpOutCome
+        {
+            get
+            {
+                return this.CheckUps.Count > 0 ? this.CheckUps[0].Outcome : "";
+            }
+            private set { }
+        }
+        [NotMapped]
+        public List<CheckUp> CheckUps
+        {
+            get
+            {
+                return new CheckUpRepository().GetCheckUpsByMemberId(this.MemberId);
+            }
+            private set { }
+        }
 
         [NotMapped]
-        public Team Team {
-            get {
+        public Team Team
+        {
+            get
+            {
                 if (this.TeamId > 0)
                 {
                     return new TeamRepository().FindBy(this.TeamId);
@@ -44,11 +71,11 @@ namespace TLC.Data
         #endregion
 
         #region Constructors
-        public Member() : this (string.Empty,string.Empty,string.Empty)
+        public Member() : this(string.Empty, string.Empty, string.Empty)
         {
 
         }
-        public Member(string firstname,string lastname,string phone)
+        public Member(string firstname, string lastname, string phone)
         {
             FirstName = firstname;
             LastName = lastname;
@@ -59,7 +86,7 @@ namespace TLC.Data
         #endregion
 
         #region Methods
-        public void SetAddress(string address,string city,string state, string zipcode)
+        public void SetAddress(string address, string city, string state, string zipcode)
         {
             Address = address;
             City = city;
@@ -89,7 +116,7 @@ namespace TLC.Data
                 tmRepo.Save();
                 return true;
             }
-            return false;     
+            return false;
         }
         #endregion
 

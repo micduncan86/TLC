@@ -18,9 +18,9 @@ namespace TLC
         private string _antiXsrfTokenValue;
         private const string _TlcTeamIdKey = "__TlcTeamIdKey";
 
-        public void AddNotification(Page _page, string Title, string Message)
+        public void AddNotification(Page _page, string Title, string Message,string callback = "")
         {
-            ScriptManager.RegisterStartupScript(_page, _page.GetType(), _page.UniqueID + "_Notification", string.Format("app.SuccessAlert('{0}','{1}')",Title,Message), true);
+            ScriptManager.RegisterStartupScript(_page, _page.GetType(), _page.UniqueID + "_Notification", string.Format("app.SuccessAlert('{0}','{1}',{2})",Title,Message,callback), true);
         }
 
         protected void Page_Init(object sender, EventArgs e)

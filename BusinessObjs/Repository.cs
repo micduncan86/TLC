@@ -50,6 +50,8 @@ namespace TLC.Data
         {
             _context.SaveChanges();
         }
+
+
     }
 
     public class DataContext : DbContext
@@ -58,6 +60,11 @@ namespace TLC.Data
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
         }
+        public override int SaveChanges()
+        {
+            AddTimeStampsUser();
+            return base.SaveChanges();
+        }
 
         public DataContext() : base("DataDb") { }
         public DbSet<User> Users { get; set; }
@@ -65,7 +72,37 @@ namespace TLC.Data
         public DbSet<Event> Events { get; set; }
         public DbSet<Member> TeamMembers { get; set; }
         public DbSet<Token> Tokens { get; set; }
-        //public DbSet<CheckUp> CheckUps { get; set; }
+        public DbSet<CheckUp> CheckUps { get; set; }
+
+        protected void AddTimeStampsUser()
+        {
+            var entities = ChangeTracker.Entries().Where(x => x.Entity is BaseEntity && (x.State ==EntityState.Added || x.State == EntityState.Modified));
+            var currentUser = !Equals(System.Web.HttpContext.Current?.User?.Identity,null) ? System.Web.HttpContext.Current.User.Identity : new System.Web.Security.FormsIdentity(new FormsAuthenticationTicket("Anonymous",false,0));
+            var loginId = -1;
+            if (currentUser is FormsIdentity)
+            {
+                FormsIdentity id = (FormsIdentity)currentUser;
+                FormsAuthenticationTicket tkt = id.Ticket;
+                if (tkt.UserData.Contains(":"))
+                {
+                    loginId = Convert.ToInt32(tkt.UserData.Split(':')[0]);
+                }
+            }
+
+            foreach (var entity in entities)
+            {
+                
+                if (entity.State == EntityState.Added)
+                {
+                    ((BaseEntity)entity.Entity).AddedDate = DateTime.Now;
+                    ((BaseEntity)entity.Entity).AddedById = loginId;                    
+                }
+                ((BaseEntity)entity.Entity).ModifiedDate = DateTime.Now;
+                ((BaseEntity)entity.Entity).ModifiedBy = currentUser.Name;
+
+                //FUTURE DEV: Add AuditLogging Async
+            }
+        }
     }
     public class MemberRepository : RepositoryBase<Member>, IMemberRepository {
 
@@ -214,9 +251,8 @@ namespace TLC.Data
 
         public List<CheckUp> GetCheckUpsByMemberId(int teamMemberId)
         {
-            return (from checkups in _dbSet
-                    where checkups.TeamMemberId == teamMemberId
-                    select checkups).ToList();
+            return _dbSet.Where(x => x.TeamMemberId == teamMemberId).OrderByDescending(o => o.CheckUpDate).ToList();
+           
         }
         public List<CheckUp> GetCheckUpsByTeamId(int teamId)
         {

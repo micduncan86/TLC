@@ -6,7 +6,7 @@
 <head runat="server">
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%: Page.Title %> - My ASP.NET Application</title>
+    <title><%: Page.Title %> - TLC</title>
 
     <asp:ContentPlaceHolder runat="server" ID="HeadContent">
         <%: Scripts.Render("~/bundles/modernizr") %>
@@ -23,7 +23,7 @@
                 <%--Framework Scripts--%>
                 <asp:ScriptReference Name="MsAjaxBundle" />
                 <asp:ScriptReference Name="jquery" />
-                <asp:ScriptReference Name="bootstrap" />
+                <asp:ScriptReference Name="bootstrap" />                
                 <asp:ScriptReference Name="respond" />
                 <asp:ScriptReference Name="app" />
                 <asp:ScriptReference Name="WebForms.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebForms.js" />
@@ -75,10 +75,7 @@
                                     <ul class="dropdown-menu" role="menu">
                                         <li role="presentation">
                                             <a runat="server" href="~/members/index">List All Members</a>
-                                        </li>
-                                        <li role="presentation">
-                                            <a runat="server" href="#">Add New Member</a>
-                                        </li>
+                                        </li>                                       
                                     </ul>
 
                                 </li>

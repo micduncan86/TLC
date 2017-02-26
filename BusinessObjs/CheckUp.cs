@@ -11,7 +11,7 @@ namespace TLC.Data
         public int CheckUpId { get; set; }
         public int TeamId { get; set; }
         public int TeamMemberId { get; set; }
-        public string CheckUpDate { get; set; }
+        public DateTime CheckUpDate { get; set; }
         public string Method { get; set; }
         public string Outcome { get; set; }
         public bool RequiresAction { get; set; }
