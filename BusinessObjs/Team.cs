@@ -37,7 +37,7 @@ namespace TLC.Data
         {
             get
             {
-                return new MemberRepository().FindBy(CoTeamLeaderId);
+                return CoTeamLeaderId <= 0 ? new Member("Not","Assigned","") : new MemberRepository().FindBy(CoTeamLeaderId);
             }
             private set { }
         }

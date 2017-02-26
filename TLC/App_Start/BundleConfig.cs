@@ -34,12 +34,17 @@ namespace TLC
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                             "~/Scripts/modernizr-*"));
 
+            bundles.Add(new ScriptBundle("~/bundles/appJs").Include(
+                "~/Scripts/app.js",
+                "~/Scripts/bootstrap-datepicker.js"
+                ));
+
             ScriptManager.ScriptResourceMapping.AddDefinition(
                 "app",
                 new ScriptResourceDefinition
                 {
-                    Path = "~/Scripts/app.js",
-                    DebugPath = "~/Scripts/app.js",
+                    Path = "~/bundles/appJs",
+                    DebugPath = "~/bundles/appJs",
                 });
 
             ScriptManager.ScriptResourceMapping.AddDefinition(

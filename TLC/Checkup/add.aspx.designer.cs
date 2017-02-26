@@ -7,117 +7,99 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TLC {
+namespace TLC.Checkup {
     
     
-    public partial class Home {
+    public partial class add {
         
         /// <summary>
-        /// ddlTeams control.
+        /// ddlTeam control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlTeams;
+        protected global::System.Web.UI.WebControls.DropDownList ddlTeam;
         
         /// <summary>
-        /// txtTeamName control.
+        /// ddlMember control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtTeamName;
+        protected global::System.Web.UI.WebControls.DropDownList ddlMember;
         
         /// <summary>
-        /// lnkUpdateTeamInfo control.
+        /// txtCheckUpDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lnkUpdateTeamInfo;
+        protected global::System.Web.UI.WebControls.TextBox txtCheckUpDate;
         
         /// <summary>
-        /// txtTeamNumber control.
+        /// reqDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtTeamNumber;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator reqDate;
         
         /// <summary>
-        /// lblTeamLeader control.
+        /// valIsDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTeamLeader;
+        protected global::System.Web.UI.WebControls.CompareValidator valIsDate;
         
         /// <summary>
-        /// lblCoLeader control.
+        /// ddlMethod control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblCoLeader;
+        protected global::System.Web.UI.WebControls.DropDownList ddlMethod;
         
         /// <summary>
-        /// ltrEventCount control.
+        /// txtOutCome control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ltrEventCount;
+        protected global::System.Web.UI.WebControls.TextBox txtOutCome;
         
         /// <summary>
-        /// lnkAddEvent control.
+        /// chkActionRequired control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lnkAddEvent;
+        protected global::System.Web.UI.WebControls.CheckBox chkActionRequired;
         
         /// <summary>
-        /// lstEvents control.
+        /// txtFollowUpAction control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ListView lstEvents;
+        protected global::System.Web.UI.WebControls.TextBox txtFollowUpAction;
         
         /// <summary>
-        /// ltrMemberCount control.
+        /// lnkAddCheckUp control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ltrMemberCount;
-        
-        /// <summary>
-        /// lnkAddMember control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lnkAddMember;
-        
-        /// <summary>
-        /// lstMembers control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ListView lstMembers;
+        protected global::System.Web.UI.WebControls.LinkButton lnkAddCheckUp;
     }
 }

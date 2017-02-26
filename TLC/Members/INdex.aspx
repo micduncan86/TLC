@@ -18,6 +18,9 @@
                 </li>
                 <li role="presentation" class="divider"></li>
                 <li role="presentation">
+                    <a href="../export/members.aspx?type=xls" target="_blank">
+                        <span class="glyphicon glyphicon-file"></span> Export To Excel
+                    </a>
                 </li>
             </ul>
         </div>

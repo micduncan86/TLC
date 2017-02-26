@@ -17,23 +17,27 @@
         <div class="col-md-4">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <asp:TextBox ID="txtTeamName" runat="server" CssClass="form-control" style="display:inline; font-size: 12px; height: 20px;"></asp:TextBox>
-                    <span class="badge" style="float: right;"><span>
-                        <asp:Literal ID="ltrMemberCount" runat="server"></asp:Literal></span><span class="glyphicon glyphicon-user"></span></span>
+                    <asp:TextBox ID="txtTeamName" runat="server" CssClass="form-control" Style="display: inline; font-size: 12px; height: 20px;"></asp:TextBox>
+                    <asp:LinkButton ID="lnkUpdateTeamInfo" runat="server" CssClass="btn btn-xs btn-success pull-right" OnClick="lnkUpdateTeamInfo_Click">
+                        Update
+                    </asp:LinkButton>
                 </div>
                 <div class="panel-body" style="min-height: 125px; max-height: 125px;">
                     <p>
                         Team Number:
-                        <asp:Textbox ID="txtTeamNumber" runat="server" CssClass="form-control" style="display:inline; width:100px;"></asp:Textbox> 
-                                               
+                        <asp:TextBox ID="txtTeamNumber" runat="server" CssClass="form-control" Style="display: inline; width: 100px;"></asp:TextBox>
                     </p>
-                    Co Leader:
-                    <asp:Label ID="lblCoLeader" runat="server"></asp:Label> 
                     <p>
-                    <asp:LinkButton ID="lnkUpdateTeamInfo" runat="server" CssClass="btn btn-xs btn-success pull-right" OnClick="lnkUpdateTeamInfo_Click">
-                        Update
-                    </asp:LinkButton>                   
-                        </p>
+                        Team Leader:
+                    <asp:Label ID="lblTeamLeader" runat="server"></asp:Label>
+                    </p>
+                    <p>
+                        Co Leader:
+                    <asp:Label ID="lblCoLeader" runat="server"></asp:Label>
+                    </p>
+
+                    <p>
+                    </p>
                 </div>
             </div>
         </div>
@@ -83,8 +87,12 @@
                                 <button type="button" class="btn btn-xs btn-info">
                                     <span class="glyphicon glyphicon-trash"></span>
                                 </button>
-                                <label class="btn btn-xs btn-primary" style="float: right;">Status:<%# Eval("Status") %></label></p>
-                            <div class="panel panel-default panel-heading"><%# Eval("EventDate") %><br /><%# Eval("Description") %></div>
+                                <label class="btn btn-xs btn-primary" style="float: right;">Status:<%# Eval("Status") %></label>
+                            </p>
+                            <div class="panel panel-default panel-heading">
+                                <%# Eval("EventDate") %><br />
+                                <%# Eval("Description") %>
+                            </div>
 
                         </ItemTemplate>
                     </asp:ListView>
@@ -97,16 +105,18 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <strong>Members</strong>
+                    <span class="badge"><span>
+                        <asp:Literal ID="ltrMemberCount" runat="server"></asp:Literal></span><span class="glyphicon glyphicon-user"></span></span>
                     <div class="pull-right" style="margin-top: -5px;">
                         <div class="dropdown">
                             <button class="btn btn-sm btn-default dropdown-toggle" type="button" data-toggle="dropdown">
                                 Actions <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                                <li role="presentation">                                    
+                                <li role="presentation">
                                     <asp:LinkButton ID="lnkAddMember" runat="server" OnClick="lnkAddMember_Click">
                                         Add Member to Team
-                                    </asp:LinkButton>                                                                      
+                                    </asp:LinkButton>
                                 </li>
                             </ul>
                         </div>
@@ -122,8 +132,8 @@
                                             <th class="col-xs-1"></th>
                                             <th class="col-xs-2">Name</th>
                                             <th class="col-xs-4 col-mobile">Email</th>
-                                            <th class="col-xs-2 col-mobile">Phone</th>
-                                            <th class="col-xs-3 col-mobile">Address</th>
+                                            <th class="col-xs-2 col-mobile">Last CheckUp</th>
+                                            <th class="col-xs-3 col-mobile">Outcome</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -147,8 +157,7 @@
                                         </button>
                                         <ul class="dropdown-menu" role="menu">
                                             <li role="presentation">
-                                                <asp:LinkButton ID="lnkCheckUp" runat="server" CommandName="Checkup">Add Check Up
-                                                </asp:LinkButton>
+                                                <a href='<%# Page.ResolveUrl("~/checkup/add.aspx?MemberId=" + Eval("MemberId")) %>'>Add Check Up</a>  
                                                 <asp:LinkButton ID="lnkHistory" runat="server" CommandName="Copy">View History
                                                 </asp:LinkButton>
                                             </li>
@@ -162,8 +171,8 @@
                                 </td>
                                 <td class="col-xs-2"><%# Eval("FullName") %></td>
                                 <td class="col-xs-4 col-mobile"><%# Eval("Email") %></td>
-                                <td class="col-xs-3 col-mobile"><%# Eval("Phone") %></td>
-                                <td class="col-xs-2 col-mobile"><%# Eval("Address") %></td>
+                                <td class="col-xs-3 col-mobile"><%# Eval("LatestCheckUpDate") %></td>
+                                <td class="col-xs-2 col-mobile"><%# Eval("LatestCheckUpOutCome") %></td>
 
                             </ItemTemplate>
                         </asp:ListView>
@@ -171,5 +180,6 @@
                 </div>
             </div>
         </div>
-    </div>   
+    </div>
+
 </asp:Content>
