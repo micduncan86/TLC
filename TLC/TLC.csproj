@@ -167,6 +167,13 @@
     <Compile Include="Checkup\add.aspx.designer.cs">
       <DependentUpon>add.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Checkup\index.aspx.cs">
+      <DependentUpon>index.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Checkup\index.aspx.designer.cs">
+      <DependentUpon>index.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Contact.aspx.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -267,6 +274,7 @@
     <Content Include="Account\Login.aspx" />
     <Content Include="Account\Register.aspx" />
     <Content Include="Checkup\add.aspx" />
+    <Content Include="Checkup\index.aspx" />
     <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap-datepicker.css" />
     <Content Include="Content\bootstrap.css" />
@@ -282,6 +290,8 @@
     <Content Include="images\bg.jpg" />
     <Content Include="images\church.jpg" />
     <Content Include="images\lifechurch.jpg" />
+    <Content Include="images\logo.png" />
+    <Content Include="images\logo_icon.png" />
     <Content Include="Members\AddToTeam.aspx" />
     <Content Include="Members\Index.aspx" />
     <Content Include="Members\new.aspx" />

@@ -22,10 +22,10 @@ namespace TLC.Checkup
         //}
         protected void Page_Load(object sender, EventArgs e)
         {
+            int.TryParse(Request.Params.Get("MemberId"), out memberId);
+            int.TryParse(Request.Params.Get("TeamId"), out teamId);
             if (!Page.IsPostBack)
-            {
-                int.TryParse(Request.Params.Get("MemberId"), out memberId);
-                int.TryParse(Request.Params.Get("TeamId"), out teamId);
+            {                
                 LoadMembers(memberId);
                 LoadTeams(teamId);
                 LoadMethods();

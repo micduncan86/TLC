@@ -13,6 +13,16 @@ body {
     left: 0px;
     z-index: 1;
 }
+.tlcloginLogo{
+    background-image: url("../images/logo.png");
+        background-repeat: no-repeat;
+        min-height: 180px;
+}
+.tlc-nav-logo{
+    background-image: url("../images/logo_icon.png");
+        background-repeat: no-repeat;
+        min-height: 50px;
+}
 
 /* Wrapping element */
 /* Set some basic padding to keep content from hitting the edges */

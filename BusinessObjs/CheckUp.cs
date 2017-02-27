@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TLC.Data
 {
@@ -16,5 +17,14 @@ namespace TLC.Data
         public string Outcome { get; set; }
         public bool RequiresAction { get; set; }
         public string Actions { get; set; }
+        
+        [NotMapped]
+        public Member Member
+        {
+            get {
+                return new MemberRepository().FindBy(this.TeamMemberId);
+            }
+            private set { }
+        }
     }
 }
