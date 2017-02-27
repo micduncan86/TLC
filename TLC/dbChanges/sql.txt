@@ -1,4 +1,110 @@
-﻿IF NOT EXISTS(Select * From INFORMATION_SCHEMA.COLUMNS Where TABLE_NAME = 'USER' AND COLUMN_NAME = 'ModifiedDate')
+﻿IF  NOT EXISTS (SELECT * FROM sys.objects 
+WHERE object_id = OBJECT_ID(N'[dbo].[User]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[User] (
+    [UserId]           INT            IDENTITY (1, 1) NOT NULL,
+    [Email]            NVARCHAR (150) NOT NULL,
+    [PasswordHashCode] NVARCHAR (MAX) NOT NULL,
+    [UserName]         NVARCHAR (50)  NOT NULL,
+    [AddedById]        INT            DEFAULT ((-1)) NOT NULL,
+    [AddedDate]        DATETIME       NULL,
+    [Role]             NVARCHAR (100) DEFAULT ('Admin') NULL,
+    [MyTeamId]         INT            DEFAULT ((-1)) NOT NULL,
+    [ModifiedDate]     DATETIME       DEFAULT (getdate()) NOT NULL,
+    [ModifiedBy]       NVARCHAR (200) DEFAULT ('') NOT NULL,
+    PRIMARY KEY CLUSTERED ([UserId] ASC)
+)
+END;
+IF  NOT EXISTS (SELECT * FROM sys.objects 
+WHERE object_id = OBJECT_ID(N'[dbo].[Token]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[Token] (
+    [TokenId]   INT            IDENTITY (1, 1) NOT NULL,
+    [UserId]    INT            NOT NULL,
+    [AuthToken] NVARCHAR (250) NOT NULL,
+    [IssuedOn]  DATETIME       NOT NULL,
+    [ExpiresOn] DATETIME       NOT NULL,
+    PRIMARY KEY CLUSTERED ([TokenId] ASC)
+)
+END;
+IF  NOT EXISTS (SELECT * FROM sys.objects 
+WHERE object_id = OBJECT_ID(N'[dbo].[Team]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[Team] (
+    [TeamId]         INT            IDENTITY (1, 1) NOT NULL,
+    [TeamName]       NVARCHAR (50)  NOT NULL,
+    [TeamLeaderId]   INT            NOT NULL,
+    [TeamNumber]     NVARCHAR (50)  NOT NULL,
+    [AddedById]      INT            NOT NULL,
+    [AddedDate]      DATETIME       NOT NULL,
+    [CoTeamLeaderId] INT            DEFAULT ((-1)) NOT NULL,
+    [ModifiedDate]   DATETIME       DEFAULT (getdate()) NOT NULL,
+    [ModifiedBy]     NVARCHAR (200) DEFAULT ('') NOT NULL,
+    PRIMARY KEY CLUSTERED ([TeamId] ASC)
+)
+END;
+IF  NOT EXISTS (SELECT * FROM sys.objects 
+WHERE object_id = OBJECT_ID(N'[dbo].[Member]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[Member] (
+    [MemberId]     INT            IDENTITY (1, 1) NOT NULL,
+    [TeamId]       INT            NOT NULL,
+    [FirstName]    NVARCHAR (50)  NOT NULL,
+    [LastName]     NVARCHAR (50)  NOT NULL,
+    [Phone]        NVARCHAR (50)  NULL,
+    [Email]        NVARCHAR (50)  NOT NULL,
+    [Address]      NVARCHAR (50)  NULL,
+    [City]         NVARCHAR (50)  NULL,
+    [State]        NVARCHAR (50)  NULL,
+    [ZipCode]      NVARCHAR (50)  NULL,
+    [Notes]        NVARCHAR (MAX) NULL,
+    [AddedById]    INT            NULL,
+    [AddedDate]    DATETIME       NULL,
+    [ModifiedDate] DATETIME       DEFAULT (getdate()) NOT NULL,
+    [ModifiedBy]   NVARCHAR (200) DEFAULT ('') NOT NULL,
+    PRIMARY KEY CLUSTERED ([MemberId] ASC)
+)
+END;
+IF  NOT EXISTS (SELECT * FROM sys.objects 
+WHERE object_id = OBJECT_ID(N'[dbo].[Event]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[Event] (
+    [EventId]      INT            IDENTITY (1, 1) NOT NULL,
+    [Title]        NVARCHAR (50)  NOT NULL,
+    [EventDate]    DATETIME       NOT NULL,
+    [Completed]    BIT            NOT NULL,
+    [TeamId]       INT            NOT NULL,
+    [Notes]        NVARCHAR (MAX) NULL,
+    [Cancelled]    BIT            NOT NULL,
+    [AddedDate]    DATETIME       NOT NULL,
+    [AddedById]    INT            DEFAULT ((-1)) NOT NULL,
+    [Description]  NVARCHAR (500) NULL,
+    [ModifiedDate] DATETIME       DEFAULT (getdate()) NOT NULL,
+    [ModifiedBy]   NVARCHAR (200) DEFAULT ('') NOT NULL,
+    PRIMARY KEY CLUSTERED ([EventId] ASC)
+)
+END;
+IF  NOT EXISTS (SELECT * FROM sys.objects 
+WHERE object_id = OBJECT_ID(N'[dbo].[Checkup]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[Checkup] (
+    [CheckUpId]      INT            IDENTITY (1, 1) NOT NULL,
+    [TeamId]         INT            NOT NULL,
+    [TeamMemberId]   INT            NOT NULL,
+    [CheckUpDate]    DATETIME       NOT NULL,
+    [Method]         NVARCHAR (50)  NOT NULL,
+    [Outcome]        NVARCHAR (MAX) NULL,
+    [RequiresAction] BIT            NOT NULL,
+    [Actions]        NVARCHAR (50)  NULL,
+    [ModifiedDate]   DATETIME       DEFAULT (getdate()) NOT NULL,
+    [ModifiedBy]     NVARCHAR (200) DEFAULT ('') NOT NULL,
+    [AddedDate]      DATETIME       DEFAULT (getdate()) NOT NULL,
+    [AddedById]      INT            DEFAULT ((-1)) NOT NULL,
+    PRIMARY KEY CLUSTERED ([CheckUpId] ASC)
+)
+END;
+--
+IF NOT EXISTS(Select * From INFORMATION_SCHEMA.COLUMNS Where TABLE_NAME = 'USER' AND COLUMN_NAME = 'ModifiedDate')
 BEGIN
 ALTER TABLE [User] ADD [ModifiedDate] datetime NOT NULL DEFAULT GETDATE()
 END;

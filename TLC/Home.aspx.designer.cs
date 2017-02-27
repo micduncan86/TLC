@@ -103,15 +103,6 @@ namespace TLC {
         protected global::System.Web.UI.WebControls.Literal ltrMemberCount;
         
         /// <summary>
-        /// lnkAddMember control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lnkAddMember;
-        
-        /// <summary>
         /// lstMembers control.
         /// </summary>
         /// <remarks>

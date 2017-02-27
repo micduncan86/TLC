@@ -36,24 +36,18 @@ namespace TLC.Account
                     if (login != null)
                     {
                         Session.Add("mylogin", login);
-                        SetTicketAuth(login);                        
-                    }
-                    else
-                    {
-                        if (Email.Text == "admin@tlc.com" && Password.Text == "Tttbhzn2017")
+                        SetTicketAuth(login);
+                        if (Request.Url.Query.Contains("ReturnUrl"))
                         {
-                            provider.AddUser(Email.Text, Password.Text);
-                            SetTicketAuth(login);
+                            Response.Redirect(HttpUtility.ParseQueryString(Request.Url.Query).Get("ReturnUrl"));
+                        }
+                        else
+                        {
+                            Response.Redirect("~/Home.aspx");
                         }
                     }
-                    if (Request.Url.Query.Contains("ReturnUrl"))
-                    {
-                        Response.Redirect(HttpUtility.ParseQueryString(Request.Url.Query).Get("ReturnUrl"));
-                    }
-                    else
-                    {
-                        Response.Redirect("~/Home.aspx");
-                    }
+                    ErrorMessage.Visible = true;
+                    FailureText.Text = "Combination of Username and Password did not match. Please try again.";
                 }
 
                 #region CommentSit

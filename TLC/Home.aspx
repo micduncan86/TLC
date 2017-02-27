@@ -17,7 +17,7 @@
         <div class="col-md-4">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <asp:TextBox ID="txtTeamName" runat="server" CssClass="form-control" Style="display: inline; font-size: 12px; height: 20px;"></asp:TextBox>
+                    <asp:TextBox ID="txtTeamName" runat="server" CssClass="form-control" Style="display: inline; font-size: 12px; height: 20px; width: 200px;"></asp:TextBox>
                     <asp:LinkButton ID="lnkUpdateTeamInfo" runat="server" CssClass="btn btn-xs btn-success pull-right" OnClick="lnkUpdateTeamInfo_Click">
                         Update
                     </asp:LinkButton>
@@ -64,36 +64,35 @@
                 <div class="panel-body" style="min-height: 125px; max-height: 125px;">
                     <asp:ListView ID="lstEvents" runat="server" DataKeyNames="EventId" GroupPlaceholderID="phGroup" ItemPlaceholderID="phItem">
                         <LayoutTemplate>
-                            <div style="overflow-x: hidden; overflow-y: scroll; max-height: 107px;">
-                                <asp:PlaceHolder ID="phGroup" runat="server"></asp:PlaceHolder>
-                            </div>
+                            <div style="overflow-x: hidden; overflow-y: auto; height: 105px;">
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th class="col-xs-1"></th>
+                                        <th class="col-xs-2">Title</th>
+                                        <th class="col-xs-2 col-mobile">Date</th>
+                                        <th class="col-xs-7 col-mobile">Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <asp:PlaceHolder ID="phGroup" runat="server"></asp:PlaceHolder>
+                                </tbody>
+                            </table>
+                                </div>
                         </LayoutTemplate>
                         <GroupTemplate>
-                            <ul class="list-group">
-                                <li class="list-group-item">
-                                    <asp:PlaceHolder ID="phItem" runat="server"></asp:PlaceHolder>
-                                </li>
-                            </ul>
+                            <tr>
+                                <asp:PlaceHolder ID="phItem" runat="server"></asp:PlaceHolder>
+                            </tr>
                         </GroupTemplate>
                         <EmptyDataTemplate>
                             <strong>No Data</strong>
                         </EmptyDataTemplate>
                         <ItemTemplate>
-                            <p>
-                                <label><%# Eval("Title") %></label>
-                                <button type="button" class="btn btn-xs btn-info">
-                                    <span class="glyphicon glyphicon-pencil"></span>
-                                </button>
-                                <button type="button" class="btn btn-xs btn-info">
-                                    <span class="glyphicon glyphicon-trash"></span>
-                                </button>
-                                <label class="btn btn-xs btn-primary" style="float: right;">Status:<%# Eval("Status") %></label>
-                            </p>
-                            <div class="panel panel-default panel-heading">
-                                <%# Eval("EventDate") %><br />
-                                <%# Eval("Description") %>
-                            </div>
-
+                            <td class="col-xs-1"></td>
+                            <td class="col-xs-2"><%# Eval("Title") %></td>
+                            <td class="col-xs-2 col-mobile"><%# DateTime.Parse(Eval("EventDate").ToString()).ToShortDateString() %></td>
+                            <td class="col-xs-7 col-mobile"><%# Eval("Description") %></td>
                         </ItemTemplate>
                     </asp:ListView>
                 </div>
@@ -114,9 +113,9 @@
                             </button>
                             <ul class="dropdown-menu dropdown-menu-right" role="menu">
                                 <li role="presentation">
-                                    <asp:LinkButton ID="lnkAddMember" runat="server" OnClick="lnkAddMember_Click">
-                                        Add Member to Team
-                                    </asp:LinkButton>
+                                    <a href="members/index.aspx?TeamId=<%  Response.Write(string.Format("{0}", ddlTeams.SelectedValue)); %>">Add Member to Team</a>                                </li>
+                                <li role="presentation">
+                                    <a href="Checkup/index.aspx?TeamId=<%  Response.Write(string.Format("{0}", ddlTeams.SelectedValue)); %>">View All Check Ups</a>
                                 </li>
                             </ul>
                         </div>
@@ -157,9 +156,8 @@
                                         </button>
                                         <ul class="dropdown-menu" role="menu">
                                             <li role="presentation">
-                                                <a href='<%# Page.ResolveUrl("~/checkup/add.aspx?MemberId=" + Eval("MemberId")) %>'>Add Check Up</a>  
-                                                <asp:LinkButton ID="lnkHistory" runat="server" CommandName="Copy">View History
-                                                </asp:LinkButton>
+                                                <a href='<%# Page.ResolveUrl("~/checkup/add.aspx?MemberId=" + Eval("MemberId")) %>'>Add Check Up</a>
+                                                <a href='<%# Page.ResolveUrl("~/checkup/index.aspx?MemberId=" + Eval("MemberId")) %>'>Check Up History</a>
                                             </li>
                                             <li role="presentation" class="divider"></li>
                                             <li role="presentation">

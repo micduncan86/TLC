@@ -53,8 +53,7 @@ namespace TLC
 
             txtTeamNumber.Text = data.TeamNumber;
             lblTeamLeader.Text = data.TeamLeader.FullName;
-            lblCoLeader.Text = data.CoTeamLeader.FullName; 
-            lnkAddMember.CommandArgument = data.TeamId.ToString();
+            lblCoLeader.Text = data.CoTeamLeader.FullName;             
             LoadEvents(data.Events);
             LoadMembers(data.Members);
         }
@@ -94,12 +93,7 @@ namespace TLC
             
         }
 
-        protected void lnkAddMember_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("~/members/index.aspx?TeamId=" + ddlTeams.SelectedValue);
-            // Schttp://localhost:16189/HomeriptManager.RegisterStartupScript(this.Page, this.GetType(), "ADDNEWMEMBER", "ModalAddMember(" + ddlTeams.SelectedValue + ");", true);
-        }
-
+ 
         protected void lstMembers_ItemCommand(object sender, ListViewCommandEventArgs e)
         {
             var lst = sender as ListView;

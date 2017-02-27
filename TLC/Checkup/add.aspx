@@ -44,6 +44,7 @@
                     <asp:LinkButton ID="lnkAddCheckUp" runat="server" CssClass="btn btn-sm btn-success" OnClick="lnkAddCheckUp_Click">
                         <span class="glyphicon glyphicon-check"></span> Add Check Up
                     </asp:LinkButton>
+                    <a href="../Home.aspx" class="btn bnt-sm btn-info">Back</a>
                 </div>
             </div>
         </div>

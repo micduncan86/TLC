@@ -3,7 +3,11 @@
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
     <br />
     <div class="row">
+        <div class="col-md-2"></div>
         <div class="col-md-8">
+            <div class="tlcloginLogo">
+
+            </div>
             <div class="panel panel-default">
                 <div class="panel-heading">
                    <%: Title %>
