@@ -29,9 +29,7 @@ namespace TLC.Account
             if (IsValid)
             {
                 var provider = new UserRepository();
-                if (provider != null)
-                {
-                    //provider.AddUser(Email.Text, Password.Text);
+                //provider.AddUser(Email.Text, Password.Text);
                     var login = provider.Authenticate(Email.Text, Password.Text);
                     if (login != null)
                     {
@@ -48,7 +46,7 @@ namespace TLC.Account
                     }
                     ErrorMessage.Visible = true;
                     FailureText.Text = "Combination of Username and Password did not match. Please try again.";
-                }
+                
 
                 #region CommentSit
                 //Validate the user password

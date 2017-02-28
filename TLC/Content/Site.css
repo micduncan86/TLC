@@ -1,6 +1,6 @@
 ﻿/* Move down content because we have a fixed navbar that is 50px tall */
 body {
-    padding-top: 50px;
+    padding-top: 60px;
     padding-bottom: 20px;
 }
 
@@ -13,15 +13,25 @@ body {
     left: 0px;
     z-index: 1;
 }
+.navbar-brand{
+    background-image: url("../images/logo.png");
+        background-repeat: no-repeat;
+        min-height: 72px;
+        min-width: 250px;
+    background-size: 100%;
+}
 .tlcloginLogo{
     background-image: url("../images/logo.png");
         background-repeat: no-repeat;
         min-height: 180px;
 }
-.tlc-nav-logo{
-    background-image: url("../images/logo_icon.png");
-        background-repeat: no-repeat;
-        min-height: 50px;
+
+.navbar-inverse {
+    background-color: white;
+    border: 0;
+}
+.navbar-inverse .navbar-toggle .icon-bar {
+    background-color: #000;
 }
 
 /* Wrapping element */
