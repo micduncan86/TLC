@@ -2,6 +2,7 @@
 using System.Text;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Web.Security;
@@ -96,6 +97,10 @@ namespace TLC.Data
                 {
                     ((BaseEntity)entity.Entity).AddedDate = DateTime.Now;
                     ((BaseEntity)entity.Entity).AddedById = loginId;                    
+                }
+                if (((BaseEntity)entity.Entity).AddedById == -1)
+                {
+                    ((BaseEntity)entity.Entity).AddedById = loginId;
                 }
                 ((BaseEntity)entity.Entity).ModifiedDate = DateTime.Now;
                 ((BaseEntity)entity.Entity).ModifiedBy = currentUser.Name;
@@ -197,15 +202,19 @@ namespace TLC.Data
         //protected string algo = System.Configuration.ConfigurationManager.AppSettings["userAlgorithm"].ToString();
         public User Authenticate(string email, string password)
         {
-            var hashLookUP = returnHash(password);
-            User myuser = (from user in _dbSet
-                       where user.Email.Equals(email) && user.PasswordHashCode.Equals(hashLookUP)
-                       select user).FirstOrDefault();
-            if (myuser != null && myuser.UserId > 0)
-            {               
-                return myuser; 
-            }
-            return null;
+            return _dbSet.SqlQuery("ValidateLogin @pLogin, @pPassword", new SqlParameter("@pLogin", email), new SqlParameter("@pPassword",password)).FirstOrDefault();
+        }
+        public int ChangePassword(int userId,string email,string oldPassword,string newPassword)
+        {
+            var status = new SqlParameter("@Status", System.Data.SqlDbType.Int) { Direction = System.Data.ParameterDirection.Output };
+           _context.Database.ExecuteSqlCommand("exec @Status = PwdChange @pUserId, @pEmail, @pOldPassword, @pNewPassword",
+               status
+                , new SqlParameter("@pUserId", userId)
+                , new SqlParameter("@pEmail", email)
+                , new SqlParameter("@pOldPassword", oldPassword)
+                , new SqlParameter("@pNewPassword", newPassword)
+           );
+            return (int)status.Value;
         }
         private string returnHash(string password)
         {
@@ -215,17 +224,15 @@ namespace TLC.Data
                
         public User AddUser(string email, string password)
         {
-            var nUser = new User();
-            nUser.Email = email;
-            nUser.UserRole = User.enumRole.User;
-            nUser.AddedById = -1;
-            nUser.AddedDate = DateTime.Now;
-            nUser.UserName = email;
-            nUser.PasswordHashCode = returnHash(password);
-            nUser.MyTeamId = -1;
-            _dbSet.Add(nUser);
+            var user = this._dbSet.SqlQuery("AddUser @pEmail, @pPassword, @pUserName", 
+                new SqlParameter("@pEmail", email), 
+                new SqlParameter("@pPassword", password),
+                new SqlParameter("@pUserName", email)
+                ).FirstOrDefault();
+
+            _context.Entry(user).State = EntityState.Modified;
             _context.SaveChanges();
-            return nUser;
+            return user;
         }
 
         public static string ReturnUserRole(User.enumRole enumRole)

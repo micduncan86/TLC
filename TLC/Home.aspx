@@ -10,14 +10,34 @@
             <label style="font-size: 24px;">Welcome <%: Context.User.Identity.GetUserName()  %></label>
         </div>
         <div class="col-md-2" style="margin-top: 20px; margin-bottom: 10px;">
-            <asp:DropDownList ID="ddlTeams" runat="server" CssClass="form-control" OnSelectedIndexChanged="ddlTeams_SelectedIndexChanged" AutoPostBack="true"></asp:DropDownList>
+            <asp:ListView ID="lstTeams" runat="server" GroupPlaceholderID="phGroup" ItemPlaceholderID="phItem" DataKeyNames="TeamId">
+                <LayoutTemplate>
+                    <div class="dropdown">
+                        <button class="btn btn-sm btn-default dropdown-toggle" style="width:100%;" type="button" data-toggle="dropdown">
+                           Select a Team<span class="caret"></span>
+                        </button>                        
+                        <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                            <asp:PlaceHolder ID="phGroup" runat="server"></asp:PlaceHolder>
+                        </ul>
+                    </div>
+                </LayoutTemplate>
+                <GroupTemplate>
+                    <li role="presentation">
+                        <asp:PlaceHolder ID="phItem" runat="server"></asp:PlaceHolder>
+                    </li>
+                </GroupTemplate>
+                <ItemTemplate>                    
+                    <a href="home.aspx?TeamId=<%# Eval("TeamId") %>"><%# Eval("TeamName") %></a>                    
+                </ItemTemplate>
+            </asp:ListView>            
         </div>
     </div>
     <div class="row">
         <div class="col-md-4">
             <div class="panel panel-default">
+                <input type="hidden" id="hdnTeamId" runat="server" />
                 <div class="panel-heading">
-                    <asp:TextBox ID="txtTeamName" runat="server" CssClass="form-control" Style="display: inline; font-size: 12px; height: 20px; width: 200px;"></asp:TextBox>
+                    <asp:TextBox ID="txtTeamName" runat="server" CssClass="form-control" Style="display: inline; font-size: 12px; height: 25px; width: 200px;"></asp:TextBox>
                     <asp:LinkButton ID="lnkUpdateTeamInfo" runat="server" CssClass="btn btn-xs btn-success pull-right" OnClick="lnkUpdateTeamInfo_Click">
                         Update
                     </asp:LinkButton>
@@ -65,20 +85,20 @@
                     <asp:ListView ID="lstEvents" runat="server" DataKeyNames="EventId" GroupPlaceholderID="phGroup" ItemPlaceholderID="phItem">
                         <LayoutTemplate>
                             <div style="overflow-x: hidden; overflow-y: auto; height: 105px;">
-                            <table class="table table-striped table-hover">
-                                <thead>
-                                    <tr>
-                                        <th class="col-xs-1"></th>
-                                        <th class="col-xs-2">Title</th>
-                                        <th class="col-xs-2 col-mobile">Date</th>
-                                        <th class="col-xs-7 col-mobile">Description</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <asp:PlaceHolder ID="phGroup" runat="server"></asp:PlaceHolder>
-                                </tbody>
-                            </table>
-                                </div>
+                                <table class="table table-striped table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th class="col-xs-1"></th>
+                                            <th class="col-xs-2">Title</th>
+                                            <th class="col-xs-2 col-mobile">Date</th>
+                                            <th class="col-xs-7 col-mobile">Description</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <asp:PlaceHolder ID="phGroup" runat="server"></asp:PlaceHolder>
+                                    </tbody>
+                                </table>
+                            </div>
                         </LayoutTemplate>
                         <GroupTemplate>
                             <tr>
@@ -113,9 +133,10 @@
                             </button>
                             <ul class="dropdown-menu dropdown-menu-right" role="menu">
                                 <li role="presentation">
-                                    <a href="members/index.aspx?TeamId=<%  Response.Write(string.Format("{0}", ddlTeams.SelectedValue)); %>">Add Member to Team</a>                                </li>
+                                    
+                                    <a href="members/index.aspx?TeamId=<%  Response.Write(string.Format("{0}", hdnTeamId.Value)); %>"><span class="glyphicon glyphicon-plus"></span> Add Member to Team</a>                                </li>
                                 <li role="presentation">
-                                    <a href="Checkup/index.aspx?TeamId=<%  Response.Write(string.Format("{0}", ddlTeams.SelectedValue)); %>">View All Check Ups</a>
+                                    <a href="Checkup/index.aspx?TeamId=<%  Response.Write(string.Format("{0}", hdnTeamId.Value)); %>"><span class="glyphicon glyphicon-search"></span> View All Check Ups</a>
                                 </li>
                             </ul>
                         </div>
@@ -156,12 +177,12 @@
                                         </button>
                                         <ul class="dropdown-menu" role="menu">
                                             <li role="presentation">
-                                                <a href='<%# Page.ResolveUrl("~/checkup/add.aspx?MemberId=" + Eval("MemberId")) %>'>Add Check Up</a>
-                                                <a href='<%# Page.ResolveUrl("~/checkup/index.aspx?MemberId=" + Eval("MemberId")) %>'>Check Up History</a>
+                                                <a href='<%# Page.ResolveUrl("~/checkup/index.aspx?AddCheckup=1&MemberId=" + Eval("MemberId")) %>'><span class="glyphicon glyphicon-plus"></span> Add Check Up</a>
+                                                <a href='<%# Page.ResolveUrl("~/checkup/index.aspx?MemberId=" + Eval("MemberId")) %>'><span class="glyphicon glyphicon-check"></span> Check Up History</a>
                                             </li>
                                             <li role="presentation" class="divider"></li>
                                             <li role="presentation">
-                                                <asp:LinkButton ID="lnkRemoveMember" runat="server" CommandArgument='<%# Eval("MemberId") %>' CommandName="Delete">Remove From Team
+                                                <asp:LinkButton ID="lnkRemoveMember" runat="server" CommandArgument='<%# Eval("MemberId") %>' CommandName="Delete"><span class="glyphicon glyphicon-trash"></span> Remove From Team
                                                 </asp:LinkButton>
                                             </li>
                                         </ul>

@@ -23,7 +23,7 @@
                 <%--Framework Scripts--%>
                 <asp:ScriptReference Name="MsAjaxBundle" />
                 <asp:ScriptReference Name="jquery" />
-                <asp:ScriptReference Name="bootstrap" />                
+                <asp:ScriptReference Name="bootstrap" />
                 <asp:ScriptReference Name="respond" />
                 <asp:ScriptReference Name="app" />
                 <asp:ScriptReference Name="WebForms.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebForms.js" />
@@ -42,17 +42,15 @@
         <div class="navbar navbar-inverse navbar-fixed-top" id="divNav" runat="server">
             <div class="container">
                 <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>    
-                    <a class="navbar-brand" runat="server" href="~/Home">
-                        <div class="tlc-nav-logo">
-                        </div>
-                    </a>                
+                    <button type="button" class="navbar-toggle" style="background: none;" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="glyphicon glyphicon-th-list"></span>
+                    </button>
+                    <% if (HttpContext.Current.User.Identity.IsAuthenticated)
+                        { %>
+                    <a class="navbar-brand" runat="server" href="~/Home"></a>
+                    <%} %>
                 </div>
-                <div class="navbar-collapse collapse">                    
+                <div class="navbar-collapse collapse">
                     <asp:LoginView runat="server" ViewStateMode="Disabled">
                         <AnonymousTemplate>
                             <ul class="nav navbar-nav navbar-right">
@@ -63,29 +61,21 @@
                         </AnonymousTemplate>
                         <LoggedInTemplate>
                             <ul class="nav navbar-nav navbar-right">
-                                <%--<li class="dropdown">
-                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Teams <span class="caret"></span>
-                                    </a>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li role="presentation">
-                                            <a runat="server" href="~/teams/index">List Teams</a>
-                                        </li>                                        
-                                    </ul>
-                                </li>--%>      
                                 <li>
-                                    <a  runat="server" href="~/Home">Home</a>
-                                </li>                         
+                                    <a runat="server" href="~/Home">Home</a>
+                                </li>
                                 <li class="dropdown">
                                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">Members <span class="caret"></span>
                                     </a>
                                     <ul class="dropdown-menu" role="menu">
                                         <li role="presentation">
                                             <a runat="server" href="~/members/index">List All Members</a>
-                                        </li>                                       
+                                        </li>
                                     </ul>
 
                                 </li>
-                                <% if(HttpContext.Current.User.IsInRole("Administrater")) { %>
+                                <% if (HttpContext.Current.User.IsInRole("Administrater"))
+                                    { %>
                                 <li class="dropdown">
                                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">Adminstration <span class="caret"></span>
                                     </a>
@@ -94,10 +84,15 @@
                                             <a runat="server" href="~/users/index">List Users</a>
                                         </li>
                                         <li role="presentation">
-                                            <a runat="server" href="#">Add New User</a>
+                                            <a runat="server" href="~/users/changepassword.aspx">Change Password</a>
                                         </li>
                                     </ul>
 
+                                </li>
+                                <% }
+                                    else { %>
+                                <li>
+                                    <a runat="server" href="~/users/changepassword.aspx">Change Password</a>
                                 </li>
                                 <%} %>
                                 <li>

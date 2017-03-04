@@ -21,8 +21,9 @@ namespace TLC.Data
         public string Email { get; set; }
         public string UserName { get; set; }
         public string Role { get; private set; }
-        public string PasswordHashCode { get; set; }
+        //private string PasswordHashCode { get; set; }
         public int MyTeamId { get; set; }
+               
 
         [NotMapped]
         public enumRole UserRole
@@ -37,15 +38,7 @@ namespace TLC.Data
             }
         }
 
-        [NotMapped]
-        public Team MyTeam
-        {
-            get
-            {
-                return this.MyTeamId == -1 ? new Team() : new TeamRepository().FindBy(this.MyTeamId);
-            }
-        }
-
+   
         public User() : this(string.Empty) { }
 
         public User(string email)
@@ -53,7 +46,6 @@ namespace TLC.Data
             if (email == string.Empty)
             {
                 Email = string.Empty;
-                PasswordHashCode = string.Empty;
                 Role = string.Empty;
                 UserName = string.Empty;
                 MyTeamId = -1;

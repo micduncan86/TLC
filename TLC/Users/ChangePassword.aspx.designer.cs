@@ -7,117 +7,99 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TLC {
+namespace TLC.Users {
     
     
-    public partial class Home {
+    public partial class ChangePassword {
         
         /// <summary>
-        /// lstTeams control.
+        /// divForm control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ListView lstTeams;
+        protected global::System.Web.UI.WebControls.Panel divForm;
         
         /// <summary>
-        /// hdnTeamId control.
+        /// lblError control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hdnTeamId;
+        protected global::System.Web.UI.WebControls.Label lblError;
         
         /// <summary>
-        /// txtTeamName control.
+        /// txtEmail control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtTeamName;
+        protected global::System.Web.UI.WebControls.TextBox txtEmail;
         
         /// <summary>
-        /// lnkUpdateTeamInfo control.
+        /// txtOldPassword control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lnkUpdateTeamInfo;
+        protected global::System.Web.UI.WebControls.TextBox txtOldPassword;
         
         /// <summary>
-        /// txtTeamNumber control.
+        /// txtPassword control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtTeamNumber;
+        protected global::System.Web.UI.WebControls.TextBox txtPassword;
         
         /// <summary>
-        /// lblTeamLeader control.
+        /// lnkChange control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTeamLeader;
+        protected global::System.Web.UI.WebControls.LinkButton lnkChange;
         
         /// <summary>
-        /// lblCoLeader control.
+        /// lnkBack control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblCoLeader;
+        protected global::System.Web.UI.WebControls.HyperLink lnkBack;
         
         /// <summary>
-        /// ltrEventCount control.
+        /// divOutcome control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ltrEventCount;
+        protected global::System.Web.UI.WebControls.Panel divOutcome;
         
         /// <summary>
-        /// lnkAddEvent control.
+        /// lblOutcome control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lnkAddEvent;
+        protected global::System.Web.UI.WebControls.Label lblOutcome;
         
         /// <summary>
-        /// lstEvents control.
+        /// HyperLink1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ListView lstEvents;
-        
-        /// <summary>
-        /// ltrMemberCount control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ltrMemberCount;
-        
-        /// <summary>
-        /// lstMembers control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ListView lstMembers;
+        protected global::System.Web.UI.WebControls.HyperLink HyperLink1;
     }
 }

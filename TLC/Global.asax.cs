@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Text;
 using System.Data.SqlClient;
 using System.Web;
 using System.Web.Optimization;
@@ -74,8 +75,10 @@ namespace TLC
                     {
                         FormsIdentity id = (FormsIdentity)User.Identity;
                         FormsAuthenticationTicket tkt = id.Ticket;
-                        var roles = tkt.UserData.Split(':')[1];
-                        HttpContext.Current.User = new GenericPrincipal(id, roles.Split(','));                        
+                        var jSerializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+                        var json = System.Text.Encoding.Default.GetString(Convert.FromBase64String(tkt.UserData));
+                        var lgn = jSerializer.Deserialize(json, new User().GetType());
+                        HttpContext.Current.User = new GenericPrincipal(id,((TLC.Data.User)lgn).Role.Split(','));                        
                     }
                 }
             }

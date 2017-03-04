@@ -1,4 +1,70 @@
-﻿IF  NOT EXISTS (SELECT * FROM sys.objects 
+﻿IF EXISTS (select id from sysobjects where id = OBJECT_ID(N'ValidateLogin') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+	DROP PROCEDURE ValidateLogin;
+IF EXISTS (select id from sysobjects where id = OBJECT_ID(N'AddUser') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+	DROP PROCEDURE AddUser;
+IF EXISTS (select id from sysobjects where id = OBJECT_ID(N'PwdChange') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+	DROP PROCEDURE PwdChange;
+CREATE PROCEDURE PwdChange
+@pUserId int,
+@pEmail nvarchar(150),
+@pOldPassword nvarchar(100),
+@pNewPassword nvarchar(100)
+AS
+BEGIN
+SET NOCOUNT ON
+DECLARE @Changed bit = 0
+IF EXISTS (SELECT Userid from [User] WHERE UserId = @pUserId AND Email = @pEmail AND PasswordHashCode = HASHBYTES('SHA2_512', @pOldPassword+CAST(Salt as nvarchar(36))))
+BEGIN
+UPDATE [User] SET PasswordHashCode = HASHBYTES('SHA2_512', @pNewPassword+CAST(Salt as nvarchar(36))) WHERE UserId = @pUserId
+SET @Changed = 1
+END
+RETURN @Changed
+END;
+CREATE PROCEDURE ValidateLogin
+@pLogin nvarchar(150),
+@pPassword nvarchar(100)
+AS
+BEGIN
+set nocount on
+DECLARE @userId int = null		
+IF EXISTS (Select TOP(1) Email from [User] WHERE Email = @pLogin)
+BEGIN
+SET @userId = (select UserId from [User] WHERE Email = @pLogin AND PasswordHashCode = HASHBYTES('SHA2_512',@pPassword+Cast(Salt as nvarchar(36))))	
+END	
+select * from [User] where UserId = @userId
+END;
+CREATE PROCEDURE AddUser
+@pEmail nvarchar(150),
+@pPassword nvarchar(100),
+@pUserName nvarchar(150),
+@pRole nvarchar(50) = 'Administrater',
+@pAddedById int = -1,
+@pModifiedBy nvarchar(250) = ''
+AS
+BEGIN
+SET NOCOUNT ON
+DECLARE @salt UNIQUEIDENTIFIER = NEWID()
+BEGIN TRY
+INSERT INTO [User]
+(Email,UserName,[Role],AddedById,AddedDate,ModifiedDate,ModifiedBy,Salt,PasswordHashCode)
+VALUES
+(@pEmail,
+@pUserName,
+@pRole,
+@pAddedById,
+GETDATE(),
+GETDATE(),
+@pModifiedBy,
+@salt,
+HASHBYTES('SHA2_512',@pPassword+CAST(@salt as nvarchar(36)))
+)
+
+SELECT * FROM [User] WHERE UserId = SCOPE_IDENTITY()
+END try
+BEGIN CATCH
+END CATCH
+END;
+IF  NOT EXISTS (SELECT * FROM sys.objects 
 WHERE object_id = OBJECT_ID(N'[dbo].[User]') AND type in (N'U'))
 BEGIN
 CREATE TABLE [dbo].[User] (
@@ -104,6 +170,10 @@ CREATE TABLE [dbo].[Checkup] (
 )
 END;
 --
+IF NOT EXISTS(Select * From INFORMATION_SCHEMA.COLUMNS Where TABLE_NAME = 'USER' AND COLUMN_NAME = 'Salt')
+BEGIN
+ALTER TABLE [User] ADD [Salt] UNIQUEIDENTIFIER
+END;
 IF NOT EXISTS(Select * From INFORMATION_SCHEMA.COLUMNS Where TABLE_NAME = 'USER' AND COLUMN_NAME = 'ModifiedDate')
 BEGIN
 ALTER TABLE [User] ADD [ModifiedDate] datetime NOT NULL DEFAULT GETDATE()

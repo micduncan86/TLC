@@ -16,13 +16,15 @@ namespace TLC
         private const string AntiXsrfTokenKey = "__AntiXsrfToken";
         private const string AntiXsrfUserNameKey = "__AntiXsrfUserName";
         private string _antiXsrfTokenValue;
-        private const string _TlcTeamIdKey = "__TlcTeamIdKey";
+        
 
+        public User loggedUser = null;
+               
         public void AddNotification(Page _page, string Title, string Message,string callback = "")
         {
-            ScriptManager.RegisterStartupScript(_page, _page.GetType(), _page.UniqueID + "_Notification", string.Format("app.SuccessAlert('{0}','{1}',{2})",Title,Message,callback), true);
+            ScriptManager.RegisterStartupScript(_page, _page.GetType(), _page.UniqueID + "_Notification", string.Format("app.SuccessAlert('{0}','{1}',{2})",Title,Message,callback == "" ? "null" : callback), true);
         }
-
+        
         protected void Page_Init(object sender, EventArgs e)
         {
             // The code below helps to protect against XSRF attacks
@@ -51,11 +53,6 @@ namespace TLC
                 }
                 Response.Cookies.Set(responseCookie);
             }
-            if (Request.Cookies.Get(_TlcTeamIdKey) != null)
-            {
-               // var jsTeamId = string.Format("teams.myteam = {0};", Request.Cookies[_TlcTeamIdKey].Value);
-                //ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "teamID", jsTeamId, true);
-            }
            
             Page.PreLoad += master_Page_PreLoad;
         }
@@ -81,17 +78,25 @@ namespace TLC
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Equals(Session["mylogin"], null))
+            if (HttpContext.Current.User.Identity.IsAuthenticated)
             {
-                //System.Web.Security.FormsAuthentication.SignOut();
-                //System.Web.Security.FormsAuthentication.RedirectToLoginPage();
-                return;
+                if (HttpContext.Current.User.Identity is FormsIdentity)
+                {
+                    FormsIdentity id = (FormsIdentity)HttpContext.Current.User.Identity;
+                    FormsAuthenticationTicket tkt = id.Ticket;
+                    if (!String.IsNullOrEmpty(tkt.UserData) && !string.IsNullOrWhiteSpace(tkt.UserData))
+                    {
+                        var jSerializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+                        var json = System.Text.Encoding.Default.GetString(Convert.FromBase64String(tkt.UserData));
+                        var lgn = jSerializer.Deserialize(json, new User().GetType());
+                        loggedUser = (TLC.Data.User)lgn;
+                    }
+                } 
             }            
         }
 
         protected void Unnamed_LoggingOut(object sender, LoginCancelEventArgs e)
         {
-            //Context.GetOwinContext().Authentication.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
         }
     }
 
