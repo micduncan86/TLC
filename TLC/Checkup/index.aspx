@@ -15,13 +15,15 @@
                     <asp:DropDownList ID="ddlTeams" runat="server" CssClass="form-control" Width="150px" AutoPostBack="true" OnSelectedIndexChanged="ddlTeams_SelectedIndexChanged" Visible="false">
                     </asp:DropDownList>
                     <label>Members:</label>
-                    <asp:DropDownList ID="ddlMembers" runat="server" CssClass="form-control" Width="150px"></asp:DropDownList>
+                    <asp:DropDownList ID="ddlMembers" ClientIDMode="Static" runat="server" CssClass="form-control" Width="150px"></asp:DropDownList>
                     <asp:Button ID="btnLoadCheckUps" runat="server" OnClick="btnLoadCheckUps_Click" Text="Load" CssClass="btn btn-sm btn-info" />
+                        <asp:Button ID="btnAddCheckUp" ClientIDMode="Static" runat="server" Text="Add Check Up" CssClass="btn btn-sm btn-info" OnClick="btnAddCheckUp_Click" />
                     </div>                    
                 </div>
                 <div class="panel-body">
-                    <asp:GridView ID="grdCheckUps" runat="server" AutoGenerateColumns="false" CssClass="table table-striped table-hover">
-                        <Columns>
+                    <asp:GridView ID="grdCheckUps" runat="server" DataKeyNames="CheckUpId" AutoGenerateColumns="false" CssClass="table table-striped table-hover" OnRowCommand="grdCheckUps_RowCommand">
+                        <Columns>   
+                            <asp:ButtonField CommandName="Edit" ControlStyle-CssClass="btn btn-xs btn-default" Text="<span class='glyphicon glyphicon-pencil'></span>" />
                             <asp:BoundField DataField="Member.FullName" HeaderText="Member" Visible="false" />
                             <asp:BoundField DataField="CheckUpDate" HeaderText="Date" DataFormatString="{0:d}" />
                             <asp:BoundField DataField="Method" HeaderText="Method" />
@@ -31,7 +33,6 @@
                                     <label title='<%#  Eval("ModifiedDate") %>'><%# Eval("ModifiedBy") %></label>
                                 </ItemTemplate>
                             </asp:TemplateField>
-
                         </Columns>
                         <EmptyDataTemplate>
                             <strong>No Check Ups Found.</strong>
@@ -42,4 +43,67 @@
             <a href="../Home.aspx" class="btn btn-sm btn-success">Back</a>
         </div>
     </div>
+    <div id="modalCheckUp" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        &times;
+                    </button>
+                    <h4 class="modal-title">
+                        <asp:Literal ID="ltrModalTitle" runat="server">Team Members</asp:Literal></h4>
+                </div>
+                <div class="modal-body">
+                    <asp:Panel ID="pnlNewCheckUp" runat="server">
+                        <div>
+                            <input type="hidden" id="txtTeamId" runat="server" />
+                            <input type="hidden" id="txtMemberId" runat="server" />
+                            <div class="form-group">
+                                <label>Check Up Date:</label>
+                                <asp:TextBox runat="server" ID="txtCheckUpDate" CssClass="form-control datepicker" placeholder="Date" Width="140"></asp:TextBox>
+                            </div>
+                            <div class="form-group">
+                                <label>Method:</label>
+                                <asp:DropDownList ID="ddlMethod" runat="server" CssClass="form-control" Width="140px"></asp:DropDownList>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Outcome:</label>
+                                <asp:TextBox runat="server" ID="txtOutcome" Rows="5" CssClass="form-control" placeholder="Outcome" TextMode="MultiLine"></asp:TextBox>
+                            </div>
+                            <div class="form-group form-inline">
+                                <asp:CheckBox ID="chkActionRequired" ClientIDMode="Static" runat="server" Text="Is Follow Up actions required?" />
+                            </div>
+                            <div id="followupActions" class="form-group " style="display:none;">
+                                <label>Follow Up Actions:</label>
+                                <asp:TextBox runat="server" ID="txtActions" Rows="5" CssClass="form-control" placeholder="Actions" TextMode="MultiLine" Style=""></asp:TextBox>
+                            </div>
+                        </div>
+                    </asp:Panel>
+                </div>
+                <div class="modal-footer">
+                    <asp:LinkButton runat="server" ID="lnkAddCheckUp" CommandName="New" CssClass="btn btn-sm btn-success" OnClick="lnkAddCheckUp_Click" >
+                        <span class="glyphicon glyphicon-plus"></span>
+                        Add Check Up
+                    </asp:LinkButton>
+                </div>
+            </div>
+        </div>
+    </div>
+    <asp:HiddenField ID="hdfShowModal" ClientIDMode="Static" runat="server" />
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".datepicker").datepicker();
+
+            $("#chkActionRequired").click(function () {
+                $("#followupActions").toggle(this.checked);
+            })
+            if ($("#hdfShowModal").val() == "1") {
+                $("#modalCheckUp").modal("show");
+            }
+            $("#ddlMembers").change(function () {
+                $("#btnAddCheckUp").toggle($(this).val() != "0");  
+            });
+        });
+    </script>
 </asp:Content>

@@ -17,21 +17,19 @@ namespace TLC.Account
         }
         protected void SetTicketAuth(User login)
         {
-            FormsAuthenticationTicket lgnTicket = new FormsAuthenticationTicket(1, login.UserName, DateTime.Now, DateTime.Now.AddSeconds((60 * 15)), true, login.UserId + ":" + login.Role);
+            var jSerializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+            FormsAuthenticationTicket lgnTicket = new FormsAuthenticationTicket(1, login.UserName, DateTime.Now, DateTime.Now.AddSeconds((60 * 15)), true, Convert.ToBase64String(Encoding.Default.GetBytes(jSerializer.Serialize(login))));
             string encryptTicket = FormsAuthentication.Encrypt(lgnTicket);
             var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptTicket);
-            cookie.Expires = lgnTicket.Expiration;
-            Response.Cookies.Add(cookie);
-            Response.Cookies.Add(new HttpCookie("__TlcTeamIdKey", login.MyTeamId.ToString()));
+            cookie.Expires = lgnTicket.Expiration;            
+            Response.Cookies.Add(cookie);            
         }
         protected void LogIn(object sender, EventArgs e)
         {
             if (IsValid)
             {
                 var provider = new UserRepository();
-                if (provider != null)
-                {
-                    //provider.AddUser(Email.Text, Password.Text);
+                //provider.AddUser(Email.Text, Password.Text);
                     var login = provider.Authenticate(Email.Text, Password.Text);
                     if (login != null)
                     {
@@ -48,7 +46,7 @@ namespace TLC.Account
                     }
                     ErrorMessage.Visible = true;
                     FailureText.Text = "Combination of Username and Password did not match. Please try again.";
-                }
+                
 
                 #region CommentSit
                 //Validate the user password

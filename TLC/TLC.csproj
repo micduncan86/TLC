@@ -151,13 +151,6 @@
     <Compile Include="Account\Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Account\Register.aspx.cs">
-      <DependentUpon>Register.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Account\Register.aspx.designer.cs">
-      <DependentUpon>Register.aspx</DependentUpon>
-    </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Checkup\add.aspx.cs">
@@ -255,6 +248,13 @@
     <Compile Include="Teams\Members.aspx.designer.cs">
       <DependentUpon>Members.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Users\ChangePassword.aspx.cs">
+      <DependentUpon>ChangePassword.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Users\ChangePassword.aspx.designer.cs">
+      <DependentUpon>ChangePassword.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Users\index.aspx.cs">
       <DependentUpon>index.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -272,7 +272,6 @@
   <ItemGroup>
     <Content Include="About.aspx" />
     <Content Include="Account\Login.aspx" />
-    <Content Include="Account\Register.aspx" />
     <Content Include="Checkup\add.aspx" />
     <Content Include="Checkup\index.aspx" />
     <Content Include="Contact.aspx" />
@@ -336,6 +335,7 @@
     <Content Include="Teams\Events.aspx" />
     <Content Include="Teams\Index.aspx" />
     <Content Include="Teams\Members.aspx" />
+    <Content Include="Users\ChangePassword.aspx" />
     <Content Include="Users\index.aspx" />
   </ItemGroup>
   <ItemGroup>

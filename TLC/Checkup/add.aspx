@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="add.aspx.cs" Inherits="TLC.Checkup.add" MasterPageFile="~/Site.Master" %>
+﻿<%@ Page Title="Check Up" Language="C#" AutoEventWireup="true" CodeBehind="add.aspx.cs" Inherits="TLC.Checkup.add" MasterPageFile="~/Site.Master" %>
 
 <asp:Content ID="HeaderContent" runat="server" ContentPlaceHolderID="HeadContent">    
 </asp:Content>
@@ -49,6 +49,8 @@
             </div>
         </div>
     </div>
+    
+    <asp:HiddenField ID="hdfShowModal" ClientIDMode="Static" runat="server" />
     <script type="text/javascript">
         $(document).ready(function () {
             $(".datepicker").datepicker();
@@ -56,6 +58,9 @@
             $("#chkActionRequired").click(function () {
                 $("#txtFollowUpAction").toggle(this.checked);
             })
+            if ($("#hdfShowModal").val() == "1") {
+                $("#modalCheckUp").modal("show");
+            }
         });
     </script>
 </asp:Content>

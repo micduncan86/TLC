@@ -22,7 +22,7 @@ namespace TLC
                 var mylogin = Session["mylogin"] as User;
                 if (User.IsInRole(UserRepository.ReturnUserRole(Data.User.enumRole.Administrater)))
                 {
-                    LoadTeams(String.IsNullOrEmpty(HttpUtility.ParseQueryString(Request.Url.Query).Get("Team")) ? mylogin.MyTeamId : Convert.ToInt32(HttpUtility.ParseQueryString(Request.Url.Query).Get("Team")));
+                    LoadTeams(String.IsNullOrEmpty(HttpUtility.ParseQueryString(Request.Url.Query).Get("TeamId")) ? mylogin.MyTeamId : Convert.ToInt32(HttpUtility.ParseQueryString(Request.Url.Query).Get("TeamId")));
                 }
                 else
                 {
@@ -30,24 +30,27 @@ namespace TLC
                 }
                             
                 LoadTeam(null);
-                ddlTeams.Visible = mylogin.MyTeamId == -1 ? true : false;    
+                lstTeams.Visible = mylogin.MyTeamId == -1 ? true : false;    
             }
         }
         protected void LoadTeams(int teamid)
         {
             var data = new TeamRepository().GetAll();
-            ddlTeams.DataSource = data;
-            ddlTeams.DataTextField = "TeamName";
-            ddlTeams.DataValueField = "TeamId";
-            ddlTeams.DataBind();
-            ddlTeams.SelectedValue = teamid.ToString();
+            lstTeams.DataSource = data;
+            lstTeams.DataBind();
+            if (teamid == -1)
+            {
+                teamid = Convert.ToInt32(lstTeams.DataKeys[0].Value);
+            }
+            hdnTeamId.Value = teamid.ToString();
         }
         protected void LoadTeam(Team data)
         {
             if (data == null)
             {
-                data = new TeamRepository().FindBy(Convert.ToInt32(ddlTeams.SelectedValue));
+                data = new TeamRepository().FindBy(Convert.ToInt32(hdnTeamId.Value));
             }
+            hdnTeamId.Value = data.TeamId.ToString();
             txtTeamName.Text = data.TeamName;
             ltrMemberCount.Text = data.Members.Count.ToString();
 
@@ -71,10 +74,6 @@ namespace TLC
 
         }
 
-        protected void ddlTeams_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            LoadTeam(null);
-        }
 
         protected void lstMembers_ItemDataBound(object sender, ListViewItemEventArgs e)
         {
@@ -112,7 +111,7 @@ namespace TLC
         protected void lnkUpdateTeamInfo_Click(object sender, EventArgs e)
         {
             var provider = new TeamRepository();
-            Team updateTeam = provider.FindBy(Convert.ToInt32(ddlTeams.SelectedValue));
+            Team updateTeam = provider.FindBy(Convert.ToInt32(hdnTeamId.Value));
             updateTeam.TeamName = txtTeamName.Text;
             updateTeam.TeamNumber = txtTeamNumber.Text;
 

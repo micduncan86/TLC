@@ -3,6 +3,10 @@ body {
     padding-top: 50px;
     padding-bottom: 20px;
 }
+.navbar-inverse{
+    background: #fff !important;
+    border: solid 1px silver !important;
+}
 
 .bgImage{
     background: url("../images/bg.jpg") center no-repeat;
@@ -18,10 +22,12 @@ body {
         background-repeat: no-repeat;
         min-height: 180px;
 }
-.tlc-nav-logo{
-    background-image: url("../images/logo_icon.png");
+.navbar-brand{
+    background-image: url("../images/logo.png");
         background-repeat: no-repeat;
-        min-height: 50px;
+        min-width: 160px;
+        padding: 0 !important;
+        background-size: contain;
 }
 
 /* Wrapping element */
@@ -107,6 +113,9 @@ input[type="select"] {
         height:0;
         opacity:0;
         visibility: collapse;
+    }
+    .navbar-collapse{
+        background-color: #333 !important;
     }
     .dropdown-menu-right {
         left: unset;
