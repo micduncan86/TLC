@@ -24,20 +24,20 @@ namespace TLC.Data
 
 
         [NotMapped]
-        public Member TeamLeader
+        public User TeamLeader
         {
             get {
-                return new MemberRepository().FindBy(TeamLeaderId);
+                return new UserRepository().FindBy(TeamLeaderId);
             }
             private set { }
         }
 
         [NotMapped]
-        public Member CoTeamLeader
+        public User CoTeamLeader
         {
             get
             {
-                return CoTeamLeaderId <= 0 ? new Member("Not","Assigned","") : new MemberRepository().FindBy(CoTeamLeaderId);
+                return CoTeamLeaderId <= 0 ? new User() { UserId = -1, Email = "", UserName = "Not Assigned" } : new UserRepository().FindBy(CoTeamLeaderId);
             }
             private set { }
         }
@@ -65,7 +65,7 @@ namespace TLC.Data
         {
             TeamName = name;
             TeamNumber = groupnumber;
-            TeamLeader = new Member();
+            TeamLeader = new User();
             Members = new List<Member>();
             Events = new List<Event>();
         }

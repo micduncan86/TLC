@@ -4,23 +4,37 @@
 </asp:Content>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
-
     <div class="row">
-        <div class="col-md-10" style="margin-top: 20px; margin-bottom: 10px;">
+        <div class="col-md-10" style="margin-bottom: 10px;">
             <label style="font-size: 24px;">Welcome <%: Context.User.Identity.GetUserName()  %></label>
         </div>
         <div class="col-md-2" style="margin-top: 20px; margin-bottom: 10px;">
             <asp:ListView ID="lstTeams" runat="server" GroupPlaceholderID="phGroup" ItemPlaceholderID="phItem" DataKeyNames="TeamId">
                 <LayoutTemplate>
                     <div class="dropdown">
-                        <button class="btn btn-sm btn-default dropdown-toggle" style="width:100%;" type="button" data-toggle="dropdown">
+                        <button class="btn btn-sm btn-info dropdown-toggle" style="width:100%;" type="button" data-toggle="dropdown">
                            Select a Team<span class="caret"></span>
                         </button>                        
                         <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                            <li role="presentation" class="alert-info">
+                                <a href="Teams/index.aspx?Add=1"><span class="glyphicon glyphicon-plus"></span> Add New Team</span> </a>
+                            </li>
                             <asp:PlaceHolder ID="phGroup" runat="server"></asp:PlaceHolder>
                         </ul>
                     </div>
                 </LayoutTemplate>
+                <EmptyDataTemplate>
+                    <div class="dropdown">
+                        <button class="btn btn-sm btn-info dropdown-toggle" style="width:100%;" type="button" data-toggle="dropdown">
+                           Select a Team<span class="caret"></span>
+                        </button>                        
+                        <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                            <li role="presentation">
+                                <a href="Teams/index.aspx">Add New Team</a>
+                            </li>
+                        </ul>
+                    </div>
+                </EmptyDataTemplate>
                 <GroupTemplate>
                     <li role="presentation">
                         <asp:PlaceHolder ID="phItem" runat="server"></asp:PlaceHolder>
@@ -69,7 +83,7 @@
                         <asp:Literal ID="ltrEventCount" runat="server"></asp:Literal></span>
                     <div class="pull-right" style="margin-top: -5px;">
                         <div class="dropdown">
-                            <button class="btn btn-sm btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                            <button class="btn btn-sm btn-info dropdown-toggle" type="button" data-toggle="dropdown">
                                 Actions <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu dropdown-menu-right" role="menu">
@@ -128,7 +142,7 @@
                         <asp:Literal ID="ltrMemberCount" runat="server"></asp:Literal></span><span class="glyphicon glyphicon-user"></span></span>
                     <div class="pull-right" style="margin-top: -5px;">
                         <div class="dropdown">
-                            <button class="btn btn-sm btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                            <button class="btn btn-sm btn-info dropdown-toggle" type="button" data-toggle="dropdown">
                                 Actions <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu dropdown-menu-right" role="menu">

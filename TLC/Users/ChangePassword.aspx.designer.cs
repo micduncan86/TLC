@@ -40,6 +40,15 @@ namespace TLC.Users {
         protected global::System.Web.UI.WebControls.TextBox txtEmail;
         
         /// <summary>
+        /// divOldPassword control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divOldPassword;
+        
+        /// <summary>
         /// txtOldPassword control.
         /// </summary>
         /// <remarks>

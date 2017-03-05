@@ -50,7 +50,7 @@
                                 <ul class="dropdown-menu" role="menu" style="padding:5px;">
                                     <li role="presentation">
                                         <label>Team Leader:</label>
-                                        <asp:Literal ID="Literal2" runat="server" Text='<%# Eval("TeamLeader.FullName") %>'></asp:Literal>
+                                        <asp:Literal ID="Literal2" runat="server" Text='<%# Eval("TeamLeader.UserName") %>'></asp:Literal>
                                     </li>
                                     <li role="presentation">
                                         <label>Group Number:</label>

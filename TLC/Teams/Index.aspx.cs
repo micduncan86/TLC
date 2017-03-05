@@ -27,7 +27,10 @@ namespace TLC.Teams
             }
             if (!Page.IsPostBack)
             {
-
+                if (Request.Params.Get("Add") != null)
+                {
+                    lnkAdd_Click(null, null);
+                }
                 //LoadGrid(GetTeams("api/team"));
                 LoadGrid();
             }
@@ -163,9 +166,9 @@ namespace TLC.Teams
             if (!Equals(ddl, null))
             {
 
-                ddl.DataSource = Equals(datasource, null) ? new MemberRepository().GetAll() : datasource;
-                ddl.DataTextField = "FullName";
-                ddl.DataValueField = "MemberId";
+                ddl.DataSource = Equals(datasource, null) ? new UserRepository().GetAll() : datasource;
+                ddl.DataTextField = "UserName";
+                ddl.DataValueField = "UserId";
                 ddl.DataBind();
 
                 if (memberId != -1)
@@ -237,17 +240,10 @@ namespace TLC.Teams
                 case "New":
                     TeamRepo.Add(updateTeam);
                     TeamRepo.Save();
-                    //var response = ApiCall("api/team", "post", newTeam);
-                    //if (response.IsSuccessStatusCode)
-                    //{
-
-                    //}
+                    ((SiteMaster)Page.Master).AddNotification(Page, "Team Update Successful", updateTeam.TeamName + " was updated.");
                     break;
                 case "Update":
-                    //response = ApiCall("api/team/" + btn.CommandArgument, "put", newTeam);
-                    //if (response.IsSuccessStatusCode)
-                    //{
-                    //}     
+                         
                     var team = TeamRepo.FindBy(id);
                     team.TeamName = updateTeam.TeamName;
                     team.TeamNumber = updateTeam.TeamNumber;
@@ -255,12 +251,19 @@ namespace TLC.Teams
 
                     TeamRepo.Update(team);
                     TeamRepo.Save();
+                    ((SiteMaster)Page.Master).AddNotification(Page, "Team Update Successful", updateTeam.TeamName + " was updated.");
                     break;
                 default:
                     break;
             }
+            if (Request.Params.Get("Add") != null)
+            {
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), Page.UniqueID + "_Notification", "", true);
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), Page.UniqueID + "_ModalNotification", string.Format("app.modalFunction('{0}','{1}',{2},{3});", "Team Added", "A New Team has been added.", "null", "function(){ window.location='../home.aspx';}"), true);
+                
+            }
             LoadGrid();
-            //LoadGrid(GetTeams("api/team"));
+            
         }
     }
 }

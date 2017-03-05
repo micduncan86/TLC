@@ -22,7 +22,7 @@ namespace TLC
                
         public void AddNotification(Page _page, string Title, string Message,string callback = "")
         {
-            ScriptManager.RegisterStartupScript(_page, _page.GetType(), _page.UniqueID + "_Notification", string.Format("app.SuccessAlert('{0}','{1}',{2})",Title,Message,callback == "" ? "null" : callback), true);
+            ScriptManager.RegisterStartupScript(_page, _page.GetType(), _page.UniqueID + "_Notification", string.Format("app.SuccessAlert('{0}','{1}',{2});",Title,Message,callback == "" ? "null" : callback), true);
         }
         
         protected void Page_Init(object sender, EventArgs e)
@@ -74,10 +74,6 @@ namespace TLC
                     throw new InvalidOperationException("Validation of Anti-XSRF token failed.");
                 }
             }
-        }
-
-        protected void Page_Load(object sender, EventArgs e)
-        {
             if (HttpContext.Current.User.Identity.IsAuthenticated)
             {
                 if (HttpContext.Current.User.Identity is FormsIdentity)
@@ -92,7 +88,12 @@ namespace TLC
                         loggedUser = (TLC.Data.User)lgn;
                     }
                 } 
-            }            
+            }        
+        }
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+                
         }
 
         protected void Unnamed_LoggingOut(object sender, LoginCancelEventArgs e)
