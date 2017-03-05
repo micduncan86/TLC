@@ -60,7 +60,7 @@ namespace TLC
                 ltrMemberCount.Text = data.Members.Count.ToString();
 
                 txtTeamNumber.Text = data.TeamNumber;
-                lblTeamLeader.Text = data.TeamLeader.UserName;
+                   lblTeamLeader.Text = data.TeamLeader != null ? data.TeamLeader.UserName : "Not Assigned";
                 lblCoLeader.Text = data.CoTeamLeader.UserName;
                 LoadEvents(data.Events);
                 LoadMembers(data.Members);

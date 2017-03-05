@@ -42,8 +42,8 @@ namespace TLC.Members
             }
 
 
-            grdMembers.DataSource = ((List<Member>)datasource).OrderBy(x => x.FullName).ToList();
-            grdMembers.DataBind();
+            lstMembers.DataSource = ((List<Member>)datasource).OrderBy(x => x.FullName).ToList();
+            lstMembers.DataBind();
         }
 
         protected void lnkAdd_Click(object sender, EventArgs e)
@@ -143,42 +143,6 @@ namespace TLC.Members
             LoadGrid();
         }
 
-        protected void grdMembers_RowCommand(object sender, GridViewCommandEventArgs e)
-        {
-            var grid = sender as GridView;
-            int rowIndex = Convert.ToInt32(e.CommandArgument);
-            int teamMemberId = Convert.ToInt32(((GridView)sender).DataKeys[rowIndex][0]);
-            switch (e.CommandName)
-            {
-                case "Edit":
-                    ModalMemberWindow(memberRepo.FindBy(teamMemberId));
-                    break;
-                case "Assign":
-                    Member selMember = memberRepo.FindBy(teamMemberId);
-                    int teamId;
-                    int.TryParse(Request.Params.Get("TeamId"), out teamId);
-                    selMember.TeamId = teamId;
-                    memberRepo.Update(selMember);
-                    memberRepo.Save();
-                    ((SiteMaster)Page.Master).AddNotification(Page, "Member Assignment Successful", selMember.FullName + " was added to your team.");
-                    break;
-                case "Copy":
-
-                    Member curMember = memberRepo.FindBy(teamMemberId);
-                    curMember.Copy();
-                    ((SiteMaster)Page.Master).AddNotification(Page, "Member Copy Successful", curMember.FullName + " was copied.");
-                    break;
-                case "Delete":
-                    memberRepo.Delete(teamMemberId);
-                    memberRepo.Save();
-                    ((SiteMaster)Page.Master).AddNotification(Page, "Member Removal Successful", "Member was removed.");
-                    break;
-                default:
-                    break;
-            }
-            e.Handled = true;
-            LoadGrid();
-        }
 
         protected void grdMembers_RowDataBound(object sender, GridViewRowEventArgs e)
         {
@@ -222,5 +186,40 @@ namespace TLC.Members
             Search(txtsearch.Value);
         }
 
+        protected void lstMembers_ItemCommand(object sender, ListViewCommandEventArgs e)
+        {
+            var grid = sender as ListView;            
+            int teamMemberId = Convert.ToInt32(grid.DataKeys[e.Item.DataItemIndex].Value);
+            switch (e.CommandName)
+            {
+                case "Edit":
+                    ModalMemberWindow(memberRepo.FindBy(teamMemberId));
+                    break;
+                case "Assign":
+                    Member selMember = memberRepo.FindBy(teamMemberId);
+                    int teamId;
+                    int.TryParse(Request.Params.Get("TeamId"), out teamId);
+                    selMember.TeamId = teamId;
+                    memberRepo.Update(selMember);
+                    memberRepo.Save();
+                    ((SiteMaster)Page.Master).AddNotification(Page, "Member Assignment Successful", selMember.FullName + " was added to your team.");
+                    break;
+                case "Copy":
+
+                    Member curMember = memberRepo.FindBy(teamMemberId);
+                    curMember.Copy();
+                    ((SiteMaster)Page.Master).AddNotification(Page, "Member Copy Successful", curMember.FullName + " was copied.");
+                    break;
+                case "Delete":
+                    memberRepo.Delete(teamMemberId);
+                    memberRepo.Save();
+                    ((SiteMaster)Page.Master).AddNotification(Page, "Member Removal Successful", "Member was removed.");
+                    break;
+                default:
+                    break;
+            }
+            e.Handled = true;
+            LoadGrid();
+        }
     }
 }

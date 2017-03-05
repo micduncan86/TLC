@@ -69,13 +69,14 @@
                                     </a>
                                     <ul class="dropdown-menu" role="menu">
                                         <li role="presentation">
-                                            <a runat="server" href="~/members/index">List All Members</a>
+                                            <a runat="server" href="~/members/index"><span class="glyphicon glyphicon-th-list"></span> List All Members</a>
                                         </li>
-                                        <li role="presentation" class="divider">
-                                            
-                                        </li>
+                                        <li role="presentation" class="divider"></li>
                                         <li role="presentation">
-                                            <a runat="server" href="~/members/index.aspx?Add=1">Add New Member</a>
+                                            <a runat="server" href="~/members/index.aspx?Add=1">
+                                                <span class="glyphicon glyphicon-plus"></span>
+                                                 Add New Member
+                                            </a>
                                         </li>
                                     </ul>
 
@@ -87,38 +88,49 @@
                                     </a>
                                     <ul class="dropdown-menu" role="menu">
                                         <li role="presentation">
-                                            <a runat="server" href="~/teams/index">List Teams</a>
+                                            <a runat="server" href="~/teams/index"><span class="glyphicon glyphicon-th-list"></span> List Teams</a>
                                         </li>
-                                        <li role="presentation" class="divider">
-                                            
-                                        </li>
+                                        <li role="presentation" class="divider"></li>
                                         <li role="presentation">
-                                            <a runat="server" href="~/teams/index.aspx?Add=1">Add New Team</a>
+                                            <a runat="server" href="~/teams/index.aspx?Add=1">
+                                                <span class="glyphicon glyphicon-plus"></span> Add New Team
+                                            </a>
                                         </li>
                                     </ul>
 
                                 </li>
+                                <% } %>
                                 <li class="dropdown">
-                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Adminstration <span class="caret"></span>
+                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                        <span class="glyphicon glyphicon-user"></span>
+                                        <span class="caret"></span>
                                     </a>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li role="presentation">
-                                            <a runat="server" href="~/users/index">List Users</a>
-                                        </li>
-                                        <li role="presentation">
-                                            <a runat="server" href="~/users/changepassword.aspx">Change Password</a>
-                                        </li>
-                                    </ul>
-
-                                </li>
-                                <% }
-                                    else { %>
-                                <li>
-                                    <a runat="server" href="~/users/changepassword.aspx">Change Password</a>
-                                </li>
-                                <%} %>
-                                <li>
-                                    <asp:LoginStatus runat="server" LogoutAction="Redirect" LogoutText="Log off" LogoutPageUrl="~/" OnLoggingOut="Unnamed_LoggingOut" />
+                                    <div class="dropdown-menu" role="menu">
+                                        <ul class="profile-dropdown-menu">
+                                            <li role="presentation">
+                                                <label>
+                                                    <span class="glyphicon glyphicon-th-large"></span>
+                                                    <%: Context.User.Identity.GetUserName()  %></label>
+                                            </li>
+                                            <li role="presentation" class="divider"></li>
+                                            <% if (HttpContext.Current.User.IsInRole("Administrater"))
+                                                { %>
+                                            <li role="presentation">
+                                                <a runat="server" href="~/users/index">
+                                                    <span class="glyphicon glyphicon-th-list"></span>
+                                                    List Users</a>
+                                            </li>
+                                            <%} %>
+                                            <li role="presentation">
+                                                <a runat="server" href="~/users/changepassword.aspx">
+                                                    <span class="glyphicon glyphicon-flash"></span>
+                                                    Change Password</a>
+                                            </li>
+                                            <li role="presentation">
+                                                <asp:LoginStatus runat="server" LogoutAction="Redirect" LogoutText="<span class='glyphicon glyphicon-log-out'></span> Log off" LogoutPageUrl="~/" OnLoggingOut="Unnamed_LoggingOut" />
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </li>
                             </ul>
                         </LoggedInTemplate>
@@ -131,6 +143,7 @@
             </asp:ContentPlaceHolder>
             <hr />
             <footer>
+                <%= GetApplicationVersion() %>
             </footer>
         </div>
         <div id="myModal" class="modal fade" role="dialog">
