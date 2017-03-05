@@ -216,6 +216,24 @@ namespace TLC.Data
            );
             return (int)status.Value;
         }
+        public int ChangePassword(int userId, string email, string newPassword)
+        {
+            string cmd = "DECLARE @Changed int = 0";
+            //cmd += " IF EXISTS(select UserId from [User] WHERE UserId = @UserId AND Email = @Email)";
+            //cmd += " BEGIN";
+            cmd = " UPDATE [User] SET PasswordHashCode = HASHBYTES('SHA2_512', @NewPassword+CAST(Salt as nvarchar(36)))";
+            cmd += " WHERE UserId = @UserId AND Email = @Email";
+           // cmd += " SET @Changed = 1";
+           // cmd += "END";
+           // cmd += "SELECT @Changed";
+
+            var rtn = _context.Database.ExecuteSqlCommand(cmd
+                , new SqlParameter("@UserId", userId)
+                , new SqlParameter("@Email", email)
+                , new SqlParameter("@NewPassword", newPassword)
+                );
+            return rtn;
+        }
         private string returnHash(string password)
         {
             var encodeHash = FormsAuthentication.HashPasswordForStoringInConfigFile(password, "SHA1");

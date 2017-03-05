@@ -40,7 +40,10 @@ namespace TLC
             lstTeams.DataBind();
             if (teamid == -1)
             {
-                teamid = Convert.ToInt32(lstTeams.DataKeys[0].Value);
+                if (lstTeams.DataKeys.Count > 0)
+                {
+                    teamid = Convert.ToInt32(lstTeams.DataKeys[0].Value);
+                }                
             }
             hdnTeamId.Value = teamid.ToString();
         }
@@ -50,15 +53,19 @@ namespace TLC
             {
                 data = new TeamRepository().FindBy(Convert.ToInt32(hdnTeamId.Value));
             }
-            hdnTeamId.Value = data.TeamId.ToString();
-            txtTeamName.Text = data.TeamName;
-            ltrMemberCount.Text = data.Members.Count.ToString();
+            if (data != null)
+            {
+                hdnTeamId.Value = data.TeamId.ToString();
+                txtTeamName.Text = data.TeamName;
+                ltrMemberCount.Text = data.Members.Count.ToString();
 
-            txtTeamNumber.Text = data.TeamNumber;
-            lblTeamLeader.Text = data.TeamLeader.FullName;
-            lblCoLeader.Text = data.CoTeamLeader.FullName;             
-            LoadEvents(data.Events);
-            LoadMembers(data.Members);
+                txtTeamNumber.Text = data.TeamNumber;
+                lblTeamLeader.Text = data.TeamLeader.UserName;
+                lblCoLeader.Text = data.CoTeamLeader.UserName;
+                LoadEvents(data.Events);
+                LoadMembers(data.Members);
+            }
+            
         }
 
         protected void LoadEvents(List<Event> data)

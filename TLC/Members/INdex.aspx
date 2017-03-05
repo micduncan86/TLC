@@ -4,13 +4,13 @@
 </asp:Content>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
-    <div style="padding: 5px;">
-        <h3 style="display: inline;">Members</h3>        
+    <h3 style="display: inline;">Members</h3>
+    <div style="padding: 5px; min-height: 30px;">        
         <div class="dropdown pull-right">
-            <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+            <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown">
                 I want to <span class="caret"></span>
             </button>
-            <ul class="dropdown-menu" role="menu">                
+            <ul class="dropdown-menu" role="menu">
                 <li role="presentation">
                     <asp:LinkButton ID="lnkAdd" runat="server" OnClick="lnkAdd_Click">
                             <span class="glyphicon glyphicon-user"></span> Add New Member
@@ -19,23 +19,24 @@
                 <li role="presentation" class="divider"></li>
                 <li role="presentation">
                     <a href="../export/members.aspx?type=xls" target="_blank">
-                        <span class="glyphicon glyphicon-file"></span> Export To Excel
+                        <span class="glyphicon glyphicon-file"></span>Export To Excel
                     </a>
                 </li>
             </ul>
         </div>
         <div class="input-group input-group-sm pull-right">
-                <input type="text" id="txtsearch" runat="server" class="form-control" placeholder="Search for...">
-                <span class="input-group-btn" style="width: unset;">
-                    <asp:LinkButton ID="lnkSearch" runat="server" CssClass="btn btn-sm btn-secondary" OnClick="lnkSearch_Click">
+            <input type="text" id="txtsearch" runat="server" class="form-control" placeholder="Search for...">
+            <span class="input-group-btn" style="width: unset;">
+                <asp:LinkButton ID="lnkSearch" runat="server" CssClass="btn btn-sm btn-secondary" OnClick="lnkSearch_Click">
                                 <span class="glyphicon glyphicon-search"></span>
-                    </asp:LinkButton>
-                </span>
+                </asp:LinkButton>
+            </span>
 
-            </div>
-        <hr />
+        </div>
+        
     </div>
     <div>
+        <hr />
         <asp:GridView ID="grdMembers" runat="server" AutoGenerateColumns="False" CssClass="table table-condensed" RowStyle-CssClass="row" HeaderStyle-CssClass="row" BorderWidth="0" DataKeyNames="MemberId" OnRowDataBound="grdMembers_RowDataBound" OnRowCommand="grdMembers_RowCommand" ShowHeader="false">
             <EmptyDataTemplate>
                 No Members.
@@ -47,7 +48,7 @@
                             <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
                                 <span class="caret"></span>
                             </button>
-                            <ul class="dropdown-menu" role="menu">                                
+                            <ul class="dropdown-menu" role="menu">
                                 <li role="presentation" id="liAssign" runat="server" visible="false">
                                     <asp:LinkButton ID="lnkAddToTeam" runat="server" CommandArgument='<%# DataBinder.Eval(Container,"RowIndex") %>' CommandName="Assign">Assign to Team
                                     </asp:LinkButton>
@@ -62,10 +63,12 @@
                                     </asp:LinkButton>
                                 </li>
                                 <li role="presentation" class="divider"></li>
-                                <li role="presentation" id="liDelete" runat="server" >
+                                <% if (HttpContext.Current.User.IsInRole("Administrater")) { %>
+                                <li role="presentation" id="liDelete" runat="server">
                                     <asp:LinkButton ID="lnkDelete" CssClass="btn-danger" runat="server" CommandArgument='<%# DataBinder.Eval(Container,"RowIndex") %>' CommandName="Delete" OnClientClick="javascript: return confirm('Are you sure you want to delete this member?');">Delete
                                     </asp:LinkButton>
                                 </li>
+                                <%} %>
                             </ul>
                         </div>
 

@@ -15,15 +15,18 @@ namespace TLC.Members
         protected void Page_Load(object sender, EventArgs e)
         {
             hdfShowModal.Value = "0";
-            if (!string.IsNullOrEmpty(Request.QueryString["Id"]))
+            if (!string.IsNullOrEmpty(Request.Params.Get("Id")))
             {
-                memberId = Convert.ToInt32(Request.QueryString["Id"].ToString());
+                memberId = Convert.ToInt32(Request.Params.Get("Id"));
             }
             if (!Page.IsPostBack)
             {
 
-                //LoadGrid(GetTeams("api/team"));
                 LoadGrid();
+                if (Request.Params.Get("Add") != null)
+                {
+                    lnkAdd_Click(null, null);
+                }
             }
         }
         void LoadGrid(object datasource = null)
@@ -38,9 +41,9 @@ namespace TLC.Members
                 datasource = ((List<Member>)datasource).Where(x => x.TeamId != teamId).ToList();
             }
 
-            
+
             grdMembers.DataSource = ((List<Member>)datasource).OrderBy(x => x.FullName).ToList();
-            grdMembers.DataBind();            
+            grdMembers.DataBind();
         }
 
         protected void lnkAdd_Click(object sender, EventArgs e)
@@ -62,8 +65,21 @@ namespace TLC.Members
             txtNewMemberState.Text = curMember == null ? "" : curMember.State;
             txtNewMemberZipCode.Text = curMember == null ? "" : curMember.ZipCode;
             ddlTeam.SelectedIndex = -1;
-            ddlTeam.DataSource = (from teams in new TeamRepository().GetAll()
-                                  select teams).ToList();
+            if (User.IsInRole(UserRepository.ReturnUserRole(Data.User.enumRole.Administrater))){
+                ddlTeam.DataSource = (from teams in new TeamRepository().GetAll()
+                                      select teams).ToList();
+            }
+            else
+            {
+                int _teamId = 0;
+                if (int.TryParse(Request.Params.Get("TeamId"), out _teamId))
+                {
+                    ddlTeam.DataSource = (from teams in new TeamRepository().GetAll()
+                                          where teams.TeamId == _teamId
+                                          select teams).ToList();
+                }                    
+            }
+            
             ddlTeam.DataTextField = "TeamName";
             ddlTeam.DataValueField = "TeamId";
             ddlTeam.DataBind();
@@ -95,7 +111,7 @@ namespace TLC.Members
             };
             name.RemoveAt(0);
             member.LastName = string.Join(" ", name.ToArray());
-            
+
             switch (btn.CommandName)
             {
                 case "New":
@@ -108,14 +124,22 @@ namespace TLC.Members
                         member.MemberId = Convert.ToInt32(btn.CommandArgument);
                         memberRepo.Update(member);
                     }
-                  
- 
+
+
                     break;
                 default:
                     break;
             }
             memberRepo.Save();
-            ((SiteMaster)Page.Master).AddNotification(Page, "Member Update Successful", member.FullName + " was updated.");
+           
+            if (Request.Params.Get("Add") != null)
+            {
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), Page.UniqueID + "_ModalNotification", string.Format("app.modalFunction('{0}','{1}',{2},{3});", "Member Added", "A New Member has been added.", "null", "function(){ window.location='../home.aspx';}"), true);
+            }
+            else
+            {
+                ((SiteMaster)Page.Master).AddNotification(Page, "Member Update Successful", member.FullName + " was updated.");
+            }
             LoadGrid();
         }
 
@@ -147,7 +171,7 @@ namespace TLC.Members
                 case "Delete":
                     memberRepo.Delete(teamMemberId);
                     memberRepo.Save();
-                    ((SiteMaster)Page.Master).AddNotification(Page, "Member Removal Successful",  "Member was removed.");
+                    ((SiteMaster)Page.Master).AddNotification(Page, "Member Removal Successful", "Member was removed.");
                     break;
                 default:
                     break;
@@ -166,7 +190,7 @@ namespace TLC.Members
                 if (int.TryParse(Request.Params.Get("TeamId"), out teamId))
                 {
                     liAssign.Visible = true;
-                }                
+                }
             }
             if (liDelete != null)
             {
@@ -178,7 +202,7 @@ namespace TLC.Members
         }
         protected void Search(string searchTerm)
         {
-            var list = new List<Member>();
+            List<Member> list = null;
             if (!String.IsNullOrWhiteSpace(searchTerm))
             {
                 list = (from member in new MemberRepository().GetAll()
@@ -191,13 +215,7 @@ namespace TLC.Members
                         orderby member.FullName
                         select member).ToList();
             }
-            else
-            {
-                list = new MemberRepository().GetAll().OrderBy(y => y.FullName).ToList();
-            }
-
-            grdMembers.DataSource = list;
-            grdMembers.DataBind();
+            LoadGrid(list);            
         }
         protected void lnkSearch_Click(object sender, EventArgs e)
         {

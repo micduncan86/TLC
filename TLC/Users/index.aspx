@@ -26,7 +26,7 @@
                         <div class="panel-body">
                             <strong>No Users</strong>
                         </div>
-                    </div>                   
+                    </div>
                 </EmptyDataTemplate>
                 <LayoutTemplate>
                     <div class="panel panel-default">
@@ -38,7 +38,7 @@
                                         <th class="col-xs-2" style="border-bottom: unset; border-right: 1px solid silver;">Email</th>
                                         <th class="col-xs-3 col-mobile" style="border-bottom: unset; border-right: 1px solid silver;">Username</th>
                                         <th class="col-xs-2 col-mobile" style="border-bottom: unset; border-right: 1px solid silver;">Role</th>
-                                        <th class="col-xs-3 col-mobile" style="border-bottom: unset;">Assigned Team</th>
+
                                     </tr>
                                 </thead>
                             </table>
@@ -62,6 +62,9 @@
                         <asp:LinkButton ID="lnkEdit" runat="server" CommandName="EditUser" CommandArgument='<%# Eval("UserId") %>' CssClass="btn btn-xs btn-default" OnCommand="lnk_Command">
                             <span class="glyphicon glyphicon-pencil"></span>
                         </asp:LinkButton>
+                        <a class="btn btn-xs btn-warning" title="Change Password" href="ChangePassword.aspx?UserId=<%# Eval("UserId") %>">
+                            <span class="glyphicon glyphicon-flash"></span>
+                        </a>
                         <asp:LinkButton ID="lnkRemove" runat="server" CommandName="Delete" CommandArgument='<%# Eval("UserId") %>' CssClass="btn btn-xs btn-danger" OnCommand="lnk_Command" OnClientClick="return confirm('Are you sure you want to remove this user?');">
                             <span class="glyphicon glyphicon-remove"></span>
                         </asp:LinkButton>
@@ -69,14 +72,13 @@
                     <td class="col-xs-2"><%# Eval("Email") %></td>
                     <td class="col-xs-3 col-mobile"><%# Eval("UserName") %></td>
                     <td class="col-xs-2 col-mobile"><%# Eval("UserRole") %></td>
-                    <td class="col-xs-3 col-mobile"><%# Eval("MyTeam.TeamName") %></td>
                 </ItemTemplate>
             </asp:ListView>
         </div>
     </div>
     <asp:LinkButton ID="btnAddNew" runat="server" CssClass="btn btn-sm btn-success" OnClick="btnAddNew_Click">
                             <span class="glyphicon glyphicon-user"></span> Add New User
-    </asp:LinkButton> 
+    </asp:LinkButton>
     <div id="modalNewUser" class="modal fade" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -95,13 +97,13 @@
                             <asp:TextBox runat="server" ID="txtEmail" TextMode="Email" CssClass="form-control" placeholder="Email" Style="max-width: none; width: 425px;"></asp:TextBox>
                             <asp:RequiredFieldValidator ID="reqEmail" Enabled="false" runat="server" ControlToValidate="txtEmail" CssClass="text-danger" ErrorMessage="The email field is required." />
                             <asp:TextBox runat="server" ID="txtPassword" TextMode="Password" CssClass="form-control" placeholder="Password" Style="max-width: none; width: 425px;"></asp:TextBox>
-                            <asp:RequiredFieldValidator  ID="reqPassword" Enabled="false" runat="server" ControlToValidate="txtPassword" CssClass="text-danger" ErrorMessage="The password field is required." />
+                            <asp:RequiredFieldValidator ID="reqPassword" Enabled="false" runat="server" ControlToValidate="txtPassword" CssClass="text-danger" ErrorMessage="The password field is required." />
                         </div>
                         <div class="form-group">
                             <label>User Name:</label>
                             <asp:TextBox runat="server" ID="txtUserName" CssClass="form-control" placeholder="UserName" Style="max-width: none; width: 425px;"></asp:TextBox>
                         </div>
-                        
+
                         <div class="form-group form-inline">
                             <asp:CheckBox ID="chkIsAdmin" runat="server" CssClass="" Text=" Is Admin?" />
                         </div>

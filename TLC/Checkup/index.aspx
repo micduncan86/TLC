@@ -27,8 +27,8 @@
                             <asp:BoundField DataField="Member.FullName" HeaderText="Member" Visible="false" />
                             <asp:BoundField DataField="CheckUpDate" HeaderText="Date" DataFormatString="{0:d}" />
                             <asp:BoundField DataField="Method" HeaderText="Method" />
-                            <asp:BoundField DataField="Outcome" HeaderText="Outcome" />
-                            <asp:TemplateField HeaderText="Last Modified">
+                            <asp:BoundField DataField="Outcome" HeaderText="Outcome" HeaderStyle-CssClass="col-mobile" ItemStyle-CssClass="col-mobile" />
+                            <asp:TemplateField HeaderText="Last Modified" HeaderStyle-CssClass="col-mobile" ItemStyle-CssClass="col-mobile">
                                 <ItemTemplate>
                                     <label title='<%#  Eval("ModifiedDate") %>'><%# Eval("ModifiedBy") %></label>
                                 </ItemTemplate>

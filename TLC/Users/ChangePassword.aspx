@@ -19,7 +19,7 @@
                             <label>Email:</label>
                             <asp:TextBox ID="txtEmail" runat="server" TextMode="Email" CssClass="form-control"></asp:TextBox>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" id="divOldPassword" runat="server">
                             <label>Orginial Password:</label>
                             <asp:TextBox ID="txtOldPassword" runat="server" TextMode="Password" CssClass="form-control"></asp:TextBox>
                         </div>

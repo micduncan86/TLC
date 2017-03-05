@@ -100,6 +100,8 @@ namespace TLC.Users
                 case "EditUser":
                     EditUser(UserManager.FindBy(UserId));
                     break;
+                case "ChangePassword":
+                    break;
                 case DataControlCommands.DeleteCommandName:
                     UserManager.Delete(UserId);
                     UserManager.Save();
@@ -115,10 +117,10 @@ namespace TLC.Users
             if (e.Item.ItemType == ListViewItemType.DataItem)
             {
                 var user = e.Item.DataItem as TLC.Data.User;
-                if (string.Compare(((System.Web.Security.FormsIdentity)User.Identity).Ticket.UserData.Split(':')[0], user.UserId.ToString(), true) == 0)
+                if (((SiteMaster)Page.Master).loggedUser != null && ((SiteMaster)Page.Master).loggedUser.UserId == user.UserId)
                 {
                     e.Item.FindControl("lnkRemove").Visible = false;
-                }
+                }                
             }
 
         }

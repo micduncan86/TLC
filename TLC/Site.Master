@@ -71,11 +71,33 @@
                                         <li role="presentation">
                                             <a runat="server" href="~/members/index">List All Members</a>
                                         </li>
+                                        <li role="presentation" class="divider">
+                                            
+                                        </li>
+                                        <li role="presentation">
+                                            <a runat="server" href="~/members/index.aspx?Add=1">Add New Member</a>
+                                        </li>
                                     </ul>
 
                                 </li>
                                 <% if (HttpContext.Current.User.IsInRole("Administrater"))
                                     { %>
+                                <li class="dropdown">
+                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Teams <span class="caret"></span>
+                                    </a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li role="presentation">
+                                            <a runat="server" href="~/teams/index">List Teams</a>
+                                        </li>
+                                        <li role="presentation" class="divider">
+                                            
+                                        </li>
+                                        <li role="presentation">
+                                            <a runat="server" href="~/teams/index.aspx?Add=1">Add New Team</a>
+                                        </li>
+                                    </ul>
+
+                                </li>
                                 <li class="dropdown">
                                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">Adminstration <span class="caret"></span>
                                     </a>
