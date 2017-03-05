@@ -89,20 +89,20 @@ namespace TLC.Data
                     loginId = Convert.ToInt32(tkt.UserData.Split(':')[0]);
                 }
             }
-
+            var sqlDate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"));
             foreach (var entity in entities)
             {
                 
                 if (entity.State == EntityState.Added)
                 {
-                    ((BaseEntity)entity.Entity).AddedDate = DateTime.Now;
+                    ((BaseEntity)entity.Entity).AddedDate = sqlDate;
                     ((BaseEntity)entity.Entity).AddedById = loginId;                    
                 }
                 if (((BaseEntity)entity.Entity).AddedById == -1)
                 {
                     ((BaseEntity)entity.Entity).AddedById = loginId;
                 }
-                ((BaseEntity)entity.Entity).ModifiedDate = DateTime.Now;
+                ((BaseEntity)entity.Entity).ModifiedDate = sqlDate;
                 ((BaseEntity)entity.Entity).ModifiedBy = currentUser.Name;
 
                 //FUTURE DEV: Add AuditLogging Async
