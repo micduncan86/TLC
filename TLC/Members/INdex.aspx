@@ -5,9 +5,9 @@
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <h3 style="display: inline;">Members</h3>
-    <div style="padding: 5px; min-height: 30px;">        
+    <div style="padding: 5px; min-height: 45px;">
         <div class="dropdown pull-right">
-            <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown">
+            <button class="btn btn-sm btn-info dropdown-toggle" type="button" data-toggle="dropdown">
                 I want to <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" role="menu">
@@ -33,69 +33,135 @@
             </span>
 
         </div>
-        
+
     </div>
     <div>
-        <hr />
-        <asp:GridView ID="grdMembers" runat="server" AutoGenerateColumns="False" CssClass="table table-condensed" RowStyle-CssClass="row" HeaderStyle-CssClass="row" BorderWidth="0" DataKeyNames="MemberId" OnRowDataBound="grdMembers_RowDataBound" OnRowCommand="grdMembers_RowCommand" ShowHeader="false">
-            <EmptyDataTemplate>
-                No Members.
-            </EmptyDataTemplate>
-            <Columns>
-                <asp:TemplateField ItemStyle-Width="90px">
-                    <ItemTemplate>
-                        <div class="dropdown">
-                            <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
-                                <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu" role="menu">
-                                <li role="presentation" id="liAssign" runat="server" visible="false">
-                                    <asp:LinkButton ID="lnkAddToTeam" runat="server" CommandArgument='<%# DataBinder.Eval(Container,"RowIndex") %>' CommandName="Assign">Assign to Team
-                                    </asp:LinkButton>
-                                </li>
-                                <li role="presentation">
-                                    <asp:LinkButton ID="lnkEdit" runat="server" CommandArgument='<%# DataBinder.Eval(Container,"RowIndex") %>' CommandName="Edit">Edit
-                                    </asp:LinkButton>
-
-                                </li>
-                                <li role="presentation">
-                                    <asp:LinkButton ID="lnkCopy" runat="server" CommandArgument='<%# DataBinder.Eval(Container,"RowIndex") %>' CommandName="Copy">Copy
-                                    </asp:LinkButton>
-                                </li>
-                                <li role="presentation" class="divider"></li>
-                                <% if (HttpContext.Current.User.IsInRole("Administrater")) { %>
-                                <li role="presentation" id="liDelete" runat="server">
-                                    <asp:LinkButton ID="lnkDelete" CssClass="btn-danger" runat="server" CommandArgument='<%# DataBinder.Eval(Container,"RowIndex") %>' CommandName="Delete" OnClientClick="javascript: return confirm('Are you sure you want to delete this member?');">Delete
-                                    </asp:LinkButton>
-                                </li>
-                                <%} %>
-                            </ul>
+        <div class="row">
+            <div class="col-md-12">
+                <asp:ListView ID="lstMembers" runat="server" DataKeyNames="MemberId" GroupPlaceholderID="phGroup" ItemPlaceholderID="phItem" OnItemCommand="lstMembers_ItemCommand">
+                    <EmptyDataTemplate>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <table class="table table-striped table-hover" style="margin-bottom: unset;">
+                                    <thead>
+                                        <tr>
+                                            <th style="border-bottom: unset; border-right: 1px solid silver; min-width: 100px; width: 100px;"></th>
+                                            <th class="col-md-2 col-mobile-only" style="border-bottom: unset; border-right: 1px solid silver;">Name</th>
+                                            <th class="col-md-3 col-mobile" style="border-bottom: unset; border-right: 1px solid silver;">Name</th>
+                                            <th class="col-md-3 col-mobile" style="border-bottom: unset; border-right: 1px solid silver;">Email</th>
+                                            <th class="col-md-3 col-mobile" style="border-bottom: unset; border-right: 1px solid silver;">Team</th>
+                                            <th class="col-md-3 col-mobile" style="border-bottom: unset;">Info</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                            <div class="panel-body">
+                                <strong>No Users</strong>
+                            </div>
                         </div>
-
-                    </ItemTemplate>
-                </asp:TemplateField>
-                <asp:TemplateField ItemStyle-CssClass="col-md-12" HeaderText="Name">
+                    </EmptyDataTemplate>
+                    <LayoutTemplate>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <table class="table table-striped table-hover" style="margin-bottom: unset;">
+                                    <thead>
+                                        <tr>
+                                            <th style="border-bottom: unset; border-right: 1px solid silver; min-width: 100px; width: 100px;"></th>                
+                                            <th class="col-md-2 col-mobile-only" style="border-bottom: unset; border-right: 1px solid silver;">Name</th>
+                                            <th class="col-md-3 col-mobile" style="border-bottom: unset; border-right: 1px solid silver;">Name</th>
+                                            <th class="col-md-3 col-mobile" style="border-bottom: unset; border-right: 1px solid silver;">Email</th>
+                                            <th class="col-md-3 col-mobile" style="border-bottom: unset; border-right: 1px solid silver;">Team</th>
+                                            <th class="col-md-3 col-mobile" style="border-bottom: unset;">Info</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                            <div class="panel-body">
+                                <table class="table table-striped table-hover">
+                                    <tbody>
+                                        <asp:PlaceHolder ID="phGroup" runat="server"></asp:PlaceHolder>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </LayoutTemplate>
+                    <GroupTemplate>
+                        <tr>
+                            <asp:PlaceHolder ID="phItem" runat="server"></asp:PlaceHolder>
+                        </tr>
+                    </GroupTemplate>
                     <ItemTemplate>
-                        <h4><%# Eval("FullName") %></h4>
-                        <a href="mailto:<%# Eval("Email") %>" class="btn btn-xs btn-info">
-                            <span class="glyphicon glyphicon-envelope"></span>
-                            <%# Eval("Email") %></a>
-                        <div class="form-group">
+                        <td style="width: 90px;">
+                            <div class="dropdown">
+                                <button class="btn btn-sm btn-info dropdown-toggle" type="button" data-toggle="dropdown">
+                                    Actions
+                                <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li role="presentation" id="liAssign" runat="server" visible="false">
+                                        <asp:LinkButton ID="lnkAddToTeam" runat="server" CommandName="Assign">
+                                        <span class="glyphicon glyphicon-ok btn btn-xs btn-info"></span> 
+                                         Assign to Team
+                                        </asp:LinkButton>
+                                    </li>
+                                    <li role="presentation">
+                                        <asp:LinkButton ID="lnkEdit" runat="server" CommandName="Edit">
+                                        <span class="glyphicon glyphicon-pencil btn btn-xs btn-info"></span>
+                                         Edit
+                                        </asp:LinkButton>
+
+                                    </li>
+                                    <li role="presentation">
+                                        <asp:LinkButton ID="lnkCopy" runat="server" CommandName="Copy">
+                                        <span class="glyphicon glyphicon-share btn btn-xs btn-info"></span>
+                                         Copy
+                                        </asp:LinkButton>
+                                    </li>
+                                    <li role="presentation" class="divider"></li>
+                                    <% if (HttpContext.Current.User.IsInRole("Administrater"))
+                                        { %>
+                                    <li role="presentation" id="liDelete" runat="server">
+                                        <asp:LinkButton ID="lnkDelete" runat="server" CommandName="Delete" OnClientClick="javascript: return confirm('Are you sure you want to delete this member?');">
+                                        <span class="glyphicon glyphicon-trash btn btn-xs btn-danger"></span>
+                                         Delete
+                                        </asp:LinkButton>
+                                    </li>
+                                    <%} %>
+                                </ul>
+                            </div>
+                        </td>
+                        <td class="col-md-2 col-mobile-only">
+                            <h4><%# Eval("FullName") %></h4>
+                            <a href="mailto:<%# Eval("Email") %>" class="btn btn-xs btn-info">
+                                <span class="glyphicon glyphicon-envelope"></span>
+                                <%# Eval("Email") %></a>
+                            <div class="form-group">
+                                <%# Eval("Address") %>
+                                <p><%# Eval("City") %>, <%# Eval("State") %> <%# Eval("ZipCode") %></p>
+                                <p><%# Eval("Phone") %></p>
+                            </div>
+                            <a href="../home.aspx?TeamId=<%# Eval("Team.TeamId") %>" class="btn btn-xs btn-warning"><%# Eval("Team.TeamName") %></a>
+                        </td>
+                        <td class="col-md-3 col-mobile">
+                            <%# Eval("FullName") %>                    
+                        </td>
+                        <td class="col-md-3 col-mobile">
+                            <a href="mailto:<%# Eval("Email") %>" class="btn btn-xs btn-info">
+                                <span class="glyphicon glyphicon-envelope"></span>
+                                <%# Eval("Email") %></a>
+                        </td>
+                        <td class="col-md-3 col-mobile">
+                            <a href="../home.aspx?TeamId=<%# Eval("Team.TeamId") %>" class="btn btn-xs btn-warning"><%# Eval("Team.TeamName") %></a>
+                        </td>
+                        <td class="col-md-3 col-mobile">
                             <%# Eval("Address") %>
                             <p><%# Eval("City") %>, <%# Eval("State") %> <%# Eval("ZipCode") %></p>
                             <p><%# Eval("Phone") %></p>
-                        </div>
-                        <span class="btn btn-xs btn-warning"><%# Eval("Team.TeamName") %></span>
+                        </td>
                     </ItemTemplate>
-                    <EditItemTemplate>
-                        <asp:TextBox ID="txtName" runat="server" CssClass="form-control" Text='<%# Eval("FullName") %>'></asp:TextBox>
-                    </EditItemTemplate>
-                </asp:TemplateField>
-
-
-
-            </Columns>
-        </asp:GridView>
+                </asp:ListView>
+            </div>
+        </div>       
     </div>
 
     <div id="mdlMembers" class="modal fade" role="dialog">
@@ -103,8 +169,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">
-                        &times;
-                    </button>
+                        &times;</button>
                     <h4 class="modal-title">
                         <asp:Literal ID="ltrModalTitle" runat="server">Team Members</asp:Literal></h4>
                 </div>

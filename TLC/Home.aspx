@@ -17,7 +17,7 @@
                         </button>                        
                         <ul class="dropdown-menu dropdown-menu-right" role="menu">
                             <li role="presentation" class="alert-info">
-                                <a href="Teams/index.aspx?Add=1"><span class="glyphicon glyphicon-plus"></span> Add New Team</span> </a>
+                                <a href="Teams/index.aspx?Add=1"><span class="glyphicon glyphicon-plus btn btn-xs btn-success"></span> Add New Team</span> </a>
                             </li>
                             <asp:PlaceHolder ID="phGroup" runat="server"></asp:PlaceHolder>
                         </ul>
@@ -41,7 +41,10 @@
                     </li>
                 </GroupTemplate>
                 <ItemTemplate>                    
-                    <a href="home.aspx?TeamId=<%# Eval("TeamId") %>"><%# Eval("TeamName") %></a>                    
+                    <a href="home.aspx?TeamId=<%# Eval("TeamId") %>">
+                        <span class="glyphicon glyphicon-tasks btn btn-xs btn-info"></span>
+                        <%# Eval("TeamName") %>
+                    </a>                    
                 </ItemTemplate>
             </asp:ListView>            
         </div>
@@ -80,7 +83,9 @@
                 <div class="panel-heading">
                     Events   
                     <span class="badge">
-                        <asp:Literal ID="ltrEventCount" runat="server"></asp:Literal></span>
+                        <asp:Literal ID="ltrEventCount" runat="server"></asp:Literal>
+                        &nbsp;<span class="glyphicon glyphicon-calendar"></span>
+                    </span>
                     <div class="pull-right" style="margin-top: -5px;">
                         <div class="dropdown">
                             <button class="btn btn-sm btn-info dropdown-toggle" type="button" data-toggle="dropdown">
@@ -88,7 +93,9 @@
                             </button>
                             <ul class="dropdown-menu dropdown-menu-right" role="menu">
                                 <li role="presentation">
-                                    <asp:LinkButton ID="lnkAddEvent" runat="server" CommandName="Checkup">Add New Event
+                                    <asp:LinkButton ID="lnkAddEvent" runat="server" CommandName="Checkup">
+                                        <span class="glyphicon glyphicon-plus btn btn-xs btn-success"></span>
+                                        Add New Event
                                     </asp:LinkButton>
                                 </li>
                             </ul>
@@ -138,8 +145,10 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <strong>Members</strong>
-                    <span class="badge"><span>
-                        <asp:Literal ID="ltrMemberCount" runat="server"></asp:Literal></span><span class="glyphicon glyphicon-user"></span></span>
+                    <span class="badge">
+                        <asp:Literal ID="ltrMemberCount" runat="server"></asp:Literal>
+                        &nbsp;<span class="glyphicon glyphicon-user"></span>
+                    </span>
                     <div class="pull-right" style="margin-top: -5px;">
                         <div class="dropdown">
                             <button class="btn btn-sm btn-info dropdown-toggle" type="button" data-toggle="dropdown">
@@ -148,9 +157,9 @@
                             <ul class="dropdown-menu dropdown-menu-right" role="menu">
                                 <li role="presentation">
                                     
-                                    <a href="members/index.aspx?TeamId=<%  Response.Write(string.Format("{0}", hdnTeamId.Value)); %>"><span class="glyphicon glyphicon-plus"></span> Add Member to Team</a>                                </li>
+                                    <a href="members/index.aspx?TeamId=<%  Response.Write(string.Format("{0}", hdnTeamId.Value)); %>"><span class="glyphicon glyphicon-plus btn btn-xs btn-success"></span> Add Member to Team</a>                                </li>
                                 <li role="presentation">
-                                    <a href="Checkup/index.aspx?TeamId=<%  Response.Write(string.Format("{0}", hdnTeamId.Value)); %>"><span class="glyphicon glyphicon-search"></span> View All Check Ups</a>
+                                    <a href="Checkup/index.aspx?TeamId=<%  Response.Write(string.Format("{0}", hdnTeamId.Value)); %>"><span class="glyphicon glyphicon-search btn btn-xs btn-info"></span> View All Check Ups</a>
                                 </li>
                             </ul>
                         </div>
@@ -191,12 +200,12 @@
                                         </button>
                                         <ul class="dropdown-menu" role="menu">
                                             <li role="presentation">
-                                                <a href='<%# Page.ResolveUrl("~/checkup/index.aspx?AddCheckup=1&MemberId=" + Eval("MemberId")) %>'><span class="glyphicon glyphicon-plus"></span> Add Check Up</a>
-                                                <a href='<%# Page.ResolveUrl("~/checkup/index.aspx?MemberId=" + Eval("MemberId")) %>'><span class="glyphicon glyphicon-check"></span> Check Up History</a>
+                                                <a href='<%# Page.ResolveUrl("~/checkup/index.aspx?AddCheckup=1&MemberId=" + Eval("MemberId")) %>'><span class="glyphicon glyphicon-plus btn btn-xs btn-success"></span> Add Check Up</a>
+                                                <a href='<%# Page.ResolveUrl("~/checkup/index.aspx?MemberId=" + Eval("MemberId")) %>'><span class="glyphicon glyphicon-check btn btn-xs btn-info"></span> Check Up History</a>
                                             </li>
                                             <li role="presentation" class="divider"></li>
                                             <li role="presentation">
-                                                <asp:LinkButton ID="lnkRemoveMember" runat="server" CommandArgument='<%# Eval("MemberId") %>' CommandName="Delete"><span class="glyphicon glyphicon-trash"></span> Remove From Team
+                                                <asp:LinkButton ID="lnkRemoveMember" runat="server" CommandArgument='<%# Eval("MemberId") %>' CommandName="Delete"><span class="glyphicon glyphicon-trash btn btn-xs btn-danger"></span> Remove From Team
                                                 </asp:LinkButton>
                                             </li>
                                         </ul>

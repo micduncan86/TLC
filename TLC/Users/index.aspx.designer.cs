@@ -13,15 +13,6 @@ namespace TLC.Users {
     public partial class index {
         
         /// <summary>
-        /// lstUsers control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ListView lstUsers;
-        
-        /// <summary>
         /// btnAddNew control.
         /// </summary>
         /// <remarks>
@@ -29,6 +20,15 @@ namespace TLC.Users {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton btnAddNew;
+        
+        /// <summary>
+        /// lstUsers control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ListView lstUsers;
         
         /// <summary>
         /// modalTitle control.

@@ -3,12 +3,13 @@ body {
     padding-top: 75px;
     padding-bottom: 20px;
 }
-.navbar-inverse{
+
+.navbar-inverse {
     background: #fff !important;
     border: solid 1px silver !important;
 }
 
-.bgImage{
+.bgImage {
     background: url("../images/bg.jpg") center no-repeat;
     position: absolute;
     width: 100%;
@@ -17,18 +18,20 @@ body {
     left: 0px;
     z-index: 1;
 }
-.tlcloginLogo{
+
+.tlcloginLogo {
     background-image: url("../images/logo.png");
-        background-repeat: no-repeat;
-   background-size: contain;
-   padding: 10% 0 !important;
+    background-repeat: no-repeat;
+    background-size: contain;
+    padding: 10% 0 !important;
 }
-.navbar-brand{
+
+.navbar-brand {
     background-image: url("../images/logo.png");
-        background-repeat: no-repeat;
-        min-width: 160px;
-        padding: 0 !important;
-        background-size: contain;
+    background-repeat: no-repeat;
+    min-width: 160px;
+    padding: 0 !important;
+    background-size: contain;
 }
 
 /* Wrapping element */
@@ -51,8 +54,7 @@ input[type="password"],
 input[type="email"],
 input[type="tel"],
 input[type="select"] {
-    max-width:280px;
-
+    max-width: 280px;
 }
 
 /* Responsive: Portrait tablets and up */
@@ -60,6 +62,7 @@ input[type="select"] {
     .jumbotron {
         margin-top: 20px;
     }
+
     .body-content {
         padding: 0;
     }
@@ -70,55 +73,118 @@ input[type="select"] {
     margin: 1px;
 }
 
-.page-alert{
-    position:fixed;
-    bottom:0;
+.page-alert {
+    position: fixed;
+    bottom: 0;
     left: 0;
-    width:100%;
-    display:none;
+    width: 100%;
+    display: none;
 }
-.page-alert-inner{
-    padding:5px;
+
+.page-alert-inner {
+    padding: 5px;
 }
-.glyphicon.spinning{
+
+.glyphicon.spinning {
     animation: spin 1s infinite linear;
-    -webkit-animation : spin2 1s infinite linear;
+    -webkit-animation: spin2 1s infinite linear;
 }
-@keyframes spin{
-    from { transform: scale(1) rotate(0deg);}
-    to {transform: scale(1) rotate(360deg);}
-}
-@-webkit-keyframes spin2{
-    from { -webkit-transform: rotate(0deg);}
-    to { -webkit-transform: rotate(360deg);}
-}
-.mySuccessMessage{
-    position: absolute; 
-    top: 70px; 
-    right: 50%;
-    min-width: 500px;
-    display:none;
-    margin-right: -250px;
+
+@keyframes spin {
+    from {
+        transform: scale(1) rotate(0deg);
     }
 
+    to {
+        transform: scale(1) rotate(360deg);
+    }
+}
 
+@-webkit-keyframes spin2 {
+    from {
+        -webkit-transform: rotate(0deg);
+    }
 
+    to {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+.mySuccessMessage {
+    position: absolute;
+    top: 70px;
+    right: 50%;
+    min-width: 500px;
+    display: none;
+    margin-right: -250px;
+    z-index: 4;
+}
+
+.profile-dropdown-menu {
+    z-index: 1000;
+    padding: 5px 0;
+    list-style: none;
+}
+
+    .profile-dropdown-menu > li {
+        margin-top: 0;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+    }
+
+        .profile-dropdown-menu > li > a, .profile-dropdown-menu > li > label {
+            display: block;
+            padding: 3px 20px;
+            clear: both;
+            font-weight: normal;
+            line-height: 1.42857143;
+            color: #333;
+            white-space: nowrap;
+        }
+
+th.col-mobile-only, td.col-mobile-only {
+    display: none !important;
+    width: 0;
+    height: 0;
+    opacity: 0;
+    visibility: collapse;
+}
 /*  #Mobile (Portrait)
 ================================================== */
 /* Note: Design for a width of 320px */
 @media all and (max-width: 479px) {
-    th.col-mobile, td.col-mobile{
-        display:none !important; 
-        width:0;
-        height:0;
-        opacity:0;
+    th.col-mobile, td.col-mobile {
+        display: none !important;
+        width: 0;
+        height: 0;
+        opacity: 0;
         visibility: collapse;
     }
-    .navbar-collapse{
+
+    th.col-mobile-only, td.col-mobile-only {
+        display: table-cell !important;
+        width: unset;
+        height: unset;
+        opacity: unset;
+        visibility: unset;
+    }
+
+    .navbar-collapse {
         background-color: #333 !important;
     }
+
     .dropdown-menu-right {
         left: unset;
         right: 0;
+    }
+
+    .mySuccessMessage {
+        position: absolute;
+        top: 70px;
+        right: 50%;
+        min-width: 200px;
+        display: none;
+        margin-right: -100px;
+        z-index: 4;
     }
 }

@@ -4,7 +4,11 @@
 </asp:Content>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
-    <h2>Users</h2>
+    <h3>Users
+            <asp:LinkButton ID="btnAddNew" runat="server" CssClass="btn btn-sm btn-success pull-right" OnClick="btnAddNew_Click">
+                            <span class="glyphicon glyphicon-user"></span> Add New User
+    </asp:LinkButton>
+        </h3>
     <div class="row">
         <div class="col-md-12">
             <asp:ListView ID="lstUsers" runat="server" DataKeyNames="UserId" GroupPlaceholderID="phGroup" ItemPlaceholderID="phItem" OnItemDataBound="lstUsers_ItemDataBound">
@@ -59,15 +63,31 @@
                 </GroupTemplate>
                 <ItemTemplate>
                     <td class="col-xs-2">
-                        <asp:LinkButton ID="lnkEdit" runat="server" CommandName="EditUser" CommandArgument='<%# Eval("UserId") %>' CssClass="btn btn-xs btn-default" OnCommand="lnk_Command">
-                            <span class="glyphicon glyphicon-pencil"></span>
-                        </asp:LinkButton>
-                        <a class="btn btn-xs btn-warning" title="Change Password" href="ChangePassword.aspx?UserId=<%# Eval("UserId") %>">
-                            <span class="glyphicon glyphicon-flash"></span>
-                        </a>
-                        <asp:LinkButton ID="lnkRemove" runat="server" CommandName="Delete" CommandArgument='<%# Eval("UserId") %>' CssClass="btn btn-xs btn-danger" OnCommand="lnk_Command" OnClientClick="return confirm('Are you sure you want to remove this user?');">
-                            <span class="glyphicon glyphicon-remove"></span>
-                        </asp:LinkButton>
+                        <div class="dropdown">
+                            <button class="btn btn-sm btn-info dropdown-toggle" type="button" data-toggle="dropdown">
+                                Actions <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li role="presentation">
+                                    <asp:LinkButton ID="lnkEdit" runat="server" CommandName="EditUser" CommandArgument='<%# Eval("UserId") %>' OnCommand="lnk_Command">
+                                    <span class="glyphicon glyphicon-pencil btn btn-xs btn-info"></span>
+                                     Edit
+                                    </asp:LinkButton>
+                                </li>
+                                <li role="presentation">
+                                    <a title="Change Password" href="ChangePassword.aspx?UserId=<%# Eval("UserId") %>">
+                                        <span class="glyphicon glyphicon-flash btn btn-xs btn-warning"></span>
+                                        Change Password
+                                    </a>
+                                </li>
+                                <li role="presentation">
+                                    <asp:LinkButton ID="lnkRemove" runat="server" CommandName="Delete" CommandArgument='<%# Eval("UserId") %>' OnCommand="lnk_Command" OnClientClick="return confirm('Are you sure you want to remove this user?');">
+                            <span class="glyphicon glyphicon-remove btn btn-xs btn-danger"></span>
+                                     Delete
+                                    </asp:LinkButton>
+                                </li>
+                            </ul>
+                        </div>
                     </td>
                     <td class="col-xs-2"><%# Eval("Email") %></td>
                     <td class="col-xs-3 col-mobile"><%# Eval("UserName") %></td>
@@ -76,9 +96,6 @@
             </asp:ListView>
         </div>
     </div>
-    <asp:LinkButton ID="btnAddNew" runat="server" CssClass="btn btn-sm btn-success" OnClick="btnAddNew_Click">
-                            <span class="glyphicon glyphicon-user"></span> Add New User
-    </asp:LinkButton>
     <div id="modalNewUser" class="modal fade" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">

@@ -21,18 +21,26 @@
                             </button>
                             <ul class="dropdown-menu" role="menu">
                                 <li role="presentation">
-                                    <asp:LinkButton ID="lnkEdit" runat="server" CommandArgument='<%# DataBinder.Eval(Container,"RowIndex") %>' CommandName="Edit">Edit
+                                    <asp:LinkButton ID="lnkEdit" runat="server" CommandArgument='<%# DataBinder.Eval(Container,"RowIndex") %>' CommandName="Edit">
+                                        <span class="glyphicon glyphicon-pencil"></span>
+                                         Edit
                                     </asp:LinkButton>
                                 </li>
                                 <li role="presentation">
-                                    <a href='<%# "Members.aspx?Id=" + ((TLC.Data.Team)DataBinder.GetDataItem(Container)).TeamId %>' >Members</a>  
+                                    <a href='<%# "Members.aspx?Id=" + ((TLC.Data.Team)DataBinder.GetDataItem(Container)).TeamId %>' >
+                                        <span class="glyphicon glyphicon-th-list"></span>
+                                         Member List</a>  
                                 </li>
                                 <li role="presentation">
-                                    <a href='<%# "Events.aspx?Id=" + ((TLC.Data.Team)DataBinder.GetDataItem(Container)).TeamId %>' >Events</a>  
+                                    <a href='<%# "Events.aspx?Id=" + ((TLC.Data.Team)DataBinder.GetDataItem(Container)).TeamId %>' >
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                         Events</a>  
                                 </li>
                                 <li role="presentation" class="divider"></li>
                                 <li role="presentation">
-                                    <asp:LinkButton ID="lnkDelete" runat="server" CommandArgument='<%# DataBinder.Eval(Container,"RowIndex") %>' CommandName="Delete" OnClientClick="javascript: return confirm('Are you sure you want to delete this team?');">Delete
+                                    <asp:LinkButton ID="lnkDelete" runat="server" CommandArgument='<%# DataBinder.Eval(Container,"RowIndex") %>' CommandName="Delete" OnClientClick="javascript: return confirm('Are you sure you want to delete this team?');">
+                                        <span class="glyphicon glyphicon-trash"></span>
+                                         Delete
                                     </asp:LinkButton>
                                 </li>
                             </ul>

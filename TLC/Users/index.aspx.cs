@@ -75,6 +75,17 @@ namespace TLC.Users
 
                 UserManager.Update(newUser);
                 UserManager.Save();
+                if (newUser.MyTeamId > 0)
+                {
+                    var provider = new TeamRepository();
+                    var myteam = provider.FindBy(newUser.MyTeamId);
+                    if (myteam != null)
+                    {
+                        myteam.TeamLeaderId = newUser.UserId;
+                        provider.Update(myteam);
+                        provider.Save();
+                    }
+                }
             }
             LoadUsers();
             SiteMaster master = (SiteMaster)Page.Master;
