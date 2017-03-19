@@ -21,7 +21,7 @@ namespace TLC.global
         public static List<User> GetTeamLeaders()
         {
             UserRepository userRepo = new UserRepository();
-            return userRepo.GetAll().Where(x => x.MyTeamId <= 0).ToList();
+            return userRepo.GetAll().ToList();
         }
 
         [WebMethod]

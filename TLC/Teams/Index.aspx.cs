@@ -221,6 +221,7 @@ namespace TLC.Teams
         protected void lnkAddNewTeam_OnClick(object sender, EventArgs e)
         {
             var btn = sender as LinkButton;
+            var provider = new UserRepository();
             Team updateTeam = new Team()
             {
                 TeamName = txtNewTeamName.Text,
@@ -236,7 +237,8 @@ namespace TLC.Teams
             {
                 case "New":
                     TeamRepo.Add(updateTeam);
-                    TeamRepo.Save();
+                    TeamRepo.Save();                
+                 
                     ((SiteMaster)Page.Master).AddNotification(Page, "Team Update Successful", updateTeam.TeamName + " was updated.");
                     break;
                 case "Update":
@@ -244,7 +246,7 @@ namespace TLC.Teams
                     var team = TeamRepo.FindBy(id);
                     team.TeamName = updateTeam.TeamName;
                     team.TeamNumber = updateTeam.TeamNumber;
-                    team.TeamLeaderId = updateTeam.TeamLeaderId;
+                    team.TeamLeaderId = updateTeam.TeamLeaderId;                                          
 
                     TeamRepo.Update(team);
                     TeamRepo.Save();
@@ -261,6 +263,51 @@ namespace TLC.Teams
             }
             LoadGrid();
             
+        }
+
+        protected void ChangeLeader(Team myteam,int newLeaderId)
+        {
+            var provider = new UserRepository();
+            var tmRepo = new TeamRepository();
+            if (myteam.TeamLeaderId != newLeaderId)
+            {
+                var oldLeader = provider.FindBy(myteam.TeamLeaderId);
+                if (oldLeader != null)
+                {
+                    if (oldLeader.MyTeamId != myteam.TeamId)
+                    {
+                        var oldTeam = tmRepo.FindBy(oldLeader.MyTeamId);
+                        if (oldTeam != null)
+                        {
+                            oldTeam.TeamLeaderId = -1;
+                            tmRepo.Update(oldTeam);
+                            tmRepo.Save();
+                        }
+                        
+                    }
+                    oldLeader.MyTeamId = -1;
+                    provider.Update(oldLeader);
+                    provider.Save();
+                }
+            }
+            myteam.TeamLeaderId = newLeaderId;
+            var newLeader = provider.FindBy(newLeaderId);
+            if (newLeader != null)
+            {
+                if (newLeader.MyTeamId != myteam.TeamId)
+                {
+                    var oldTeam = tmRepo.FindBy(newLeader.MyTeamId);
+                    if (oldTeam != null)
+                    {
+                        oldTeam.TeamLeaderId = -1;
+                        tmRepo.Update(oldTeam);
+                        tmRepo.Save();
+                    }
+                }
+                newLeader.MyTeamId = myteam.TeamId;
+                provider.Update(newLeader);
+                provider.Save();
+            }
         }
 
     }

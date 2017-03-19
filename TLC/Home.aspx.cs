@@ -30,7 +30,7 @@ namespace TLC
                 }
                             
                 LoadTeam(null);
-                lstTeams.Visible = mylogin.MyTeamId == -1 ? true : false;    
+                lstTeams.Visible = mylogin.UserRole == Data.User.enumRole.Administrater ? true : false;    
             }
         }
         protected void LoadTeams(int teamid)
@@ -64,6 +64,11 @@ namespace TLC
                 lblCoLeader.Text = data.CoTeamLeader.UserName;
                 LoadEvents(data.Events);
                 LoadMembers(data.Members);
+            }
+            else
+            {
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), Page.UniqueID + "_ModalNotification", string.Format("app.modalFunction('{0}','{1}',{2},{3});", "Could Not Load Team Data.", "You are no longer a leader of a team. Please contact your administrator.", "null", "function(){ window.location='../account/login.aspx';}"), true);
+                Session["mylogin"] = null;
             }
             
         }
@@ -107,7 +112,7 @@ namespace TLC
             {
                 case DataControlCommands.DeleteCommandName:
                     int memberId = Convert.ToInt32(lst.DataKeys[e.Item.DataItemIndex].Value);
-                    AddRemoveMember(memberId, -1);
+                    AddRemoveMember(memberId, 0);
                     LoadTeam(null);
                     ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "SUCCESSMSG", "app.SuccessAlert('Success','Members have been removed from the team.');", true);
                     break;  

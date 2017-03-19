@@ -38,7 +38,7 @@
     <div>
         <div class="row">
             <div class="col-md-12">
-                <asp:ListView ID="lstMembers" runat="server" DataKeyNames="MemberId" GroupPlaceholderID="phGroup" ItemPlaceholderID="phItem" OnItemCommand="lstMembers_ItemCommand">
+                <asp:ListView ID="lstMembers" runat="server" DataKeyNames="MemberId" GroupPlaceholderID="phGroup" ItemPlaceholderID="phItem" OnItemCommand="lstMembers_ItemCommand" OnItemDataBound="lstMembers_ItemDataBound1">
                     <EmptyDataTemplate>
                         <div class="panel panel-default">
                             <div class="panel-heading">
@@ -55,7 +55,7 @@
                                     </thead>
                                 </table>
                             </div>
-                            <div class="panel-body">
+                            <div class="panel-body" style="min-height:400px; max-height:400px; overflow:auto;">
                                 <strong>No Users</strong>
                             </div>
                         </div>
@@ -76,7 +76,7 @@
                                     </thead>
                                 </table>
                             </div>
-                            <div class="panel-body">
+                            <div class="panel-body" style="min-height:400px; max-height:400px; overflow:auto;">
                                 <table class="table table-striped table-hover">
                                     <tbody>
                                         <asp:PlaceHolder ID="phGroup" runat="server"></asp:PlaceHolder>
@@ -192,7 +192,7 @@
                                 <asp:TextBox runat="server" ID="txtNewMemberState" CssClass="form-control" placeholder="State" Width="50"></asp:TextBox>
                                 <asp:TextBox runat="server" ID="txtNewMemberZipCode" CssClass="form-control" placeholder="Postal Code" Width="115"></asp:TextBox>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" id="divteamselection" runat="server">
                                 <label>Team Selection:</label>
                                 <asp:DropDownList ID="ddlTeam" runat="server" CssClass="form-control"></asp:DropDownList>
                             </div>

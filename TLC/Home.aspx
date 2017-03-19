@@ -12,12 +12,12 @@
             <asp:ListView ID="lstTeams" runat="server" GroupPlaceholderID="phGroup" ItemPlaceholderID="phItem" DataKeyNames="TeamId">
                 <LayoutTemplate>
                     <div class="dropdown">
-                        <button class="btn btn-sm btn-info dropdown-toggle" style="width:100%;" type="button" data-toggle="dropdown">
-                           Select a Team<span class="caret"></span>
-                        </button>                        
+                        <button class="btn btn-sm btn-info dropdown-toggle" style="width: 100%;" type="button" data-toggle="dropdown">
+                            Select a Team<span class="caret"></span>
+                        </button>
                         <ul class="dropdown-menu dropdown-menu-right" role="menu">
                             <li role="presentation" class="alert-info">
-                                <a href="Teams/index.aspx?Add=1"><span class="glyphicon glyphicon-plus btn btn-xs btn-success"></span> Add New Team</span> </a>
+                                <a href="Teams/index.aspx?Add=1"><span class="glyphicon glyphicon-plus btn btn-xs btn-success"></span>Add New Team</span> </a>
                             </li>
                             <asp:PlaceHolder ID="phGroup" runat="server"></asp:PlaceHolder>
                         </ul>
@@ -25,9 +25,9 @@
                 </LayoutTemplate>
                 <EmptyDataTemplate>
                     <div class="dropdown">
-                        <button class="btn btn-sm btn-info dropdown-toggle" style="width:100%;" type="button" data-toggle="dropdown">
-                           Select a Team<span class="caret"></span>
-                        </button>                        
+                        <button class="btn btn-sm btn-info dropdown-toggle" style="width: 100%;" type="button" data-toggle="dropdown">
+                            Select a Team<span class="caret"></span>
+                        </button>
                         <ul class="dropdown-menu dropdown-menu-right" role="menu">
                             <li role="presentation">
                                 <a href="Teams/index.aspx">Add New Team</a>
@@ -40,20 +40,21 @@
                         <asp:PlaceHolder ID="phItem" runat="server"></asp:PlaceHolder>
                     </li>
                 </GroupTemplate>
-                <ItemTemplate>                    
+                <ItemTemplate>
                     <a href="home.aspx?TeamId=<%# Eval("TeamId") %>">
                         <span class="glyphicon glyphicon-tasks btn btn-xs btn-info"></span>
                         <%# Eval("TeamName") %>
-                    </a>                    
+                    </a>
                 </ItemTemplate>
-            </asp:ListView>            
+            </asp:ListView>
         </div>
     </div>
     <div class="row">
         <div class="col-md-4">
             <div class="panel panel-default">
-                <asp:HiddenField ID="hdnTeamId" runat="server" ClientIDMode="Static" />           
+                <asp:HiddenField ID="hdnTeamId" runat="server" ClientIDMode="Static" />
                 <div class="panel-heading">
+                    <label>Name:</label>
                     <asp:TextBox ID="txtTeamName" runat="server" CssClass="form-control" Style="display: inline; font-size: 12px; height: 25px; width: 200px;"></asp:TextBox>
                     <asp:LinkButton ID="lnkUpdateTeamInfo" runat="server" CssClass="btn btn-xs btn-success pull-right" OnClick="lnkUpdateTeamInfo_Click">
                         Update
@@ -66,11 +67,20 @@
                     </p>
                     <p>
                         Team Leader:
-                    <asp:Label ID="lblTeamLeader" runat="server"></asp:Label> <a href="#" onclick="return app.ChangeLeader($(this));" ><span class="glyphicon glyphicon-cog"></span></a>
+                    <asp:Label ID="lblTeamLeader" runat="server"></asp:Label>
+                        <% if (HttpContext.Current.User.IsInRole(TLC.Data.UserRepository.ReturnUserRole(TLC.Data.User.enumRole.Administrater)))
+                            { %>
+                        <a href="#" onclick="return app.ChangeLeader($(this));"><span class="glyphicon glyphicon-cog"></span>
+                        </a>
+                        <% } %>
                     </p>
                     <p>
                         Co Leader:
-                    <asp:Label ID="lblCoLeader" runat="server"></asp:Label><a href="#"><span class="glyphicon glyphicon-cog"></span></a>
+                    <asp:Label ID="lblCoLeader" runat="server"></asp:Label>
+                        <% if (HttpContext.Current.User.IsInRole(TLC.Data.UserRepository.ReturnUserRole(TLC.Data.User.enumRole.Administrater)))
+                            { %>
+                        <a href="#"><span class="glyphicon glyphicon-cog"></span></a>
+                        <% } %>
                     </p>
 
                     <p>
@@ -156,10 +166,10 @@
                             </button>
                             <ul class="dropdown-menu dropdown-menu-right" role="menu">
                                 <li role="presentation">
-                                    
-                                    <a href="members/index.aspx?TeamId=<%  Response.Write(string.Format("{0}", hdnTeamId.Value)); %>"><span class="glyphicon glyphicon-plus btn btn-xs btn-success"></span> Add Member to Team</a>                                </li>
+
+                                    <a href="members/index.aspx?TeamId=<%  Response.Write(string.Format("{0}", hdnTeamId.Value)); %>"><span class="glyphicon glyphicon-plus btn btn-xs btn-success"></span>Add Member to Team</a>                                </li>
                                 <li role="presentation">
-                                    <a href="Checkup/index.aspx?TeamId=<%  Response.Write(string.Format("{0}", hdnTeamId.Value)); %>"><span class="glyphicon glyphicon-search btn btn-xs btn-info"></span> View All Check Ups</a>
+                                    <a href="Checkup/index.aspx?TeamId=<%  Response.Write(string.Format("{0}", hdnTeamId.Value)); %>"><span class="glyphicon glyphicon-search btn btn-xs btn-info"></span>View All Check Ups</a>
                                 </li>
                             </ul>
                         </div>
@@ -200,8 +210,8 @@
                                         </button>
                                         <ul class="dropdown-menu" role="menu">
                                             <li role="presentation">
-                                                <a href='<%# Page.ResolveUrl("~/checkup/index.aspx?AddCheckup=1&MemberId=" + Eval("MemberId")) %>'><span class="glyphicon glyphicon-plus btn btn-xs btn-success"></span> Add Check Up</a>
-                                                <a href='<%# Page.ResolveUrl("~/checkup/index.aspx?MemberId=" + Eval("MemberId")) %>'><span class="glyphicon glyphicon-check btn btn-xs btn-info"></span> Check Up History</a>
+                                                <a href='<%# Page.ResolveUrl("~/checkup/index.aspx?AddCheckup=1&MemberId=" + Eval("MemberId")) %>'><span class="glyphicon glyphicon-plus btn btn-xs btn-success"></span>Add Check Up</a>
+                                                <a href='<%# Page.ResolveUrl("~/checkup/index.aspx?MemberId=" + Eval("MemberId")) %>'><span class="glyphicon glyphicon-check btn btn-xs btn-info"></span>Check Up History</a>
                                             </li>
                                             <li role="presentation" class="divider"></li>
                                             <li role="presentation">

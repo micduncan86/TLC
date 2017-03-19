@@ -38,7 +38,7 @@ namespace TLC.Members
             int teamId;
             if (int.TryParse(Request.Params.Get("TeamId"), out teamId))
             {
-                datasource = ((List<Member>)datasource).Where(x => x.TeamId != teamId).ToList();
+                datasource = ((List<Member>)datasource).Where(x => x.TeamId <= 0).ToList();
             }
 
 
@@ -64,6 +64,7 @@ namespace TLC.Members
             txtNewMemberCity.Text = curMember == null ? "" : curMember.City;
             txtNewMemberState.Text = curMember == null ? "" : curMember.State;
             txtNewMemberZipCode.Text = curMember == null ? "" : curMember.ZipCode;
+            divteamselection.Visible = true;
             ddlTeam.SelectedIndex = -1;
             if (User.IsInRole(UserRepository.ReturnUserRole(Data.User.enumRole.Administrater))){
                 ddlTeam.DataSource = (from teams in new TeamRepository().GetAll()
@@ -77,7 +78,11 @@ namespace TLC.Members
                     ddlTeam.DataSource = (from teams in new TeamRepository().GetAll()
                                           where teams.TeamId == _teamId
                                           select teams).ToList();
-                }                    
+                }
+                else
+                {
+                    divteamselection.Visible = false;
+                }             
             }
             
             ddlTeam.DataTextField = "TeamName";
@@ -85,7 +90,10 @@ namespace TLC.Members
             ddlTeam.DataBind();
             ddlTeam.Items.Insert(0, new ListItem("", "0"));
 
-            ddlTeam.SelectedValue = curMember == null ? "0" : curMember.TeamId.ToString();
+            if (ddlTeam.Items.FindByValue(curMember == null ? "0" : curMember.TeamId.ToString()) != null)
+            {
+                ddlTeam.SelectedValue = curMember == null ? "0" : curMember.TeamId.ToString();
+            }          
 
 
             lnkAddUpdateMember.CommandName = curMember == null ? "New" : "Update";
@@ -142,12 +150,10 @@ namespace TLC.Members
             }
             LoadGrid();
         }
-
-
-        protected void grdMembers_RowDataBound(object sender, GridViewRowEventArgs e)
+        protected void lstMembers_ItemDataBound1(object sender, ListViewItemEventArgs e)
         {
-            var liAssign = e.Row.FindControl("liAssign");
-            var liDelete = e.Row.FindControl("liDelete");
+            var liAssign = e.Item.FindControl("liAssign");
+            var liDelete = e.Item.FindControl("liDelete");
             if (liAssign != null)
             {
                 int teamId;
@@ -163,7 +169,7 @@ namespace TLC.Members
                     liDelete.Visible = false;
                 }
             }
-        }
+        }      
         protected void Search(string searchTerm)
         {
             List<Member> list = null;
@@ -221,5 +227,7 @@ namespace TLC.Members
             e.Handled = true;
             LoadGrid();
         }
+
+ 
     }
 }

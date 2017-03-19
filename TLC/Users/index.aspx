@@ -47,7 +47,7 @@
                                 </thead>
                             </table>
                         </div>
-                        <div class="panel-body">
+                        <div class="panel-body" style="min-height:400px; max-height:400px; overflow:auto;">
                             <table class="table table-striped table-hover">
                                 <tbody>
                                     <asp:PlaceHolder ID="phGroup" runat="server"></asp:PlaceHolder>
@@ -111,10 +111,8 @@
                     <div>
                         <div class="form-group">
                             <label>Email (login):</label>
-                            <asp:TextBox runat="server" ID="txtEmail" TextMode="Email" CssClass="form-control" placeholder="Email" Style="max-width: none; width: 425px;"></asp:TextBox>
-                            <asp:RequiredFieldValidator ID="reqEmail" Enabled="false" runat="server" ControlToValidate="txtEmail" CssClass="text-danger" ErrorMessage="The email field is required." />
-                            <asp:TextBox runat="server" ID="txtPassword" TextMode="Password" CssClass="form-control" placeholder="Password" Style="max-width: none; width: 425px;"></asp:TextBox>
-                            <asp:RequiredFieldValidator ID="reqPassword" Enabled="false" runat="server" ControlToValidate="txtPassword" CssClass="text-danger" ErrorMessage="The password field is required." />
+                            <asp:TextBox runat="server" ID="txtEmail" TextMode="Email" CssClass="form-control" placeholder="Email" Style="max-width: none; width: 425px;"></asp:TextBox>                      
+                            <asp:TextBox runat="server" ID="txtPassword" TextMode="Password" CssClass="form-control" placeholder="Password" Style="max-width: none; width: 425px;"></asp:TextBox> 
                         </div>
                         <div class="form-group">
                             <label>User Name:</label>
