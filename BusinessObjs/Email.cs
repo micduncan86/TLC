@@ -5,28 +5,36 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Net;
+using System.Web;
 
 namespace TLC.Data
 {
     public class Email
     {
         private const string smtpHost = "smtp.gmail.com";
-        private const int smtpPort = 465;
+        private const int smtpPort = 465;       
         
-
-
         public static string Send(List<string> toAddresses, string subject, string bodyContent)
         {
             var jSerializer = new System.Web.Script.Serialization.JavaScriptSerializer();
             Dictionary<string,object> creds = (Dictionary<string,object>)jSerializer.DeserializeObject(System.Text.Encoding.Default.GetString(Convert.FromBase64String(System.Configuration.ConfigurationManager.AppSettings.Get("smtpCredentials"))));
             using(var smtpClient = new System.Net.Mail.SmtpClient())
             {
-                smtpClient.UseDefaultCredentials = false;
-                smtpClient.Host = smtpHost;
-                smtpClient.Port = smtpPort;
-                smtpClient.EnableSsl = true;
-                smtpClient.DeliveryMethod = System.Net.Mail.SmtpDeliveryMethod.Network;
-                smtpClient.Credentials = new System.Net.NetworkCredential(creds["UserName"].ToString(), creds["Password"].ToString());                
+                if (!HttpContext.Current.Request.IsLocal)
+                {
+                    smtpClient.UseDefaultCredentials = false;
+                    smtpClient.Host = smtpHost;
+                    smtpClient.Port = smtpPort;
+                    smtpClient.EnableSsl = true;
+                    smtpClient.DeliveryMethod = System.Net.Mail.SmtpDeliveryMethod.Network;
+                    smtpClient.Credentials = new System.Net.NetworkCredential(creds["UserName"].ToString(), creds["Password"].ToString());
+                }
+                else
+                {
+                    smtpClient.UseDefaultCredentials = false;
+                    smtpClient.Host = "127.0.0.1";
+                    smtpClient.Port = 25;              
+                }                    
                 smtpClient.Timeout = 20000;
                 var Message = new System.Net.Mail.MailMessage();
                 try
@@ -38,6 +46,7 @@ namespace TLC.Data
                         Message.To.Add(to);
                     }
                     Message.Subject = subject;
+                    Message.IsBodyHtml = true;
                     Message.Body = bodyContent;
 
                     smtpClient.Send(Message);
