@@ -48,6 +48,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -180,6 +181,13 @@
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Email\test.aspx.cs">
+      <DependentUpon>test.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Email\test.aspx.designer.cs">
+      <DependentUpon>test.aspx</DependentUpon>
+    </Compile>
     <Compile Include="export\members.aspx.cs">
       <DependentUpon>members.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -189,6 +197,20 @@
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="global\fetch.aspx.cs">
+      <DependentUpon>fetch.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="global\fetch.aspx.designer.cs">
+      <DependentUpon>fetch.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="global\import.aspx.cs">
+      <DependentUpon>import.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="global\import.aspx.designer.cs">
+      <DependentUpon>import.aspx</DependentUpon>
     </Compile>
     <Compile Include="Home.aspx.cs">
       <DependentUpon>Home.aspx</DependentUpon>
@@ -281,10 +303,13 @@
     <Content Include="Content\Site.css" />
     <Content Include="dbChanges\sql.txt" />
     <Content Include="Default.aspx" />
+    <Content Include="Email\test.aspx" />
     <Content Include="export\members.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="global\fetch.aspx" />
+    <Content Include="global\import.aspx" />
     <Content Include="Home.aspx" />
     <Content Include="images\bg.jpg" />
     <Content Include="images\church.jpg" />

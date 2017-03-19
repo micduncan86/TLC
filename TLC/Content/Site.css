@@ -57,16 +57,13 @@ input[type="select"] {
     max-width: 280px;
 }
 
-/* Responsive: Portrait tablets and up */
-@media screen and (min-width: 768px) {
-    .jumbotron {
-        margin-top: 20px;
-    }
-
-    .body-content {
-        padding: 0;
-    }
+.btn-info, .btn-info:hover {
+        background-color: #d84d41;
+    border-color: #d4392b;
 }
+
+/* Responsive: Portrait tablets and up */
+
 
 .label {
     display: inline-block;
@@ -186,5 +183,14 @@ th.col-mobile-only, td.col-mobile-only {
         display: none;
         margin-right: -100px;
         z-index: 4;
+    }
+}
+@media screen and (min-width: 768px) {
+    .jumbotron {
+        margin-top: 20px;
+    }
+
+    .body-content {
+        padding: 0;
     }
 }

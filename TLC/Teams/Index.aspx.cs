@@ -85,8 +85,8 @@ namespace TLC.Teams
             {
                 datasource = _teamId > 0 ? tmRepo.GetAll().Where(x => x.TeamId == _teamId).ToList() : tmRepo.GetAll();
             }
-            grdTeams.DataSource = datasource;
-            grdTeams.DataBind();
+            lstTeams.DataSource = datasource;
+            lstTeams.DataBind();
         }
 
         void LoadMemberGrid(object datasource = null)
@@ -103,15 +103,13 @@ namespace TLC.Teams
             lstMembers.DataBind();
         }
 
-        protected void grdTeams_RowCommand(object sender, GridViewCommandEventArgs e)
+        protected void lstTeams_ItemCommand(object sender, ListViewCommandEventArgs e)
         {
-            int rowIndex = Convert.ToInt32(e.CommandArgument);
-            int teamId;
+            int rowIndex = e.Item.DataItemIndex;
+            int teamId = Convert.ToInt32(((ListView)sender).DataKeys[rowIndex].Value);            
             switch (e.CommandName)
             {
                 case DataControlCommands.EditCommandName:
-                    //grdTeams.EditIndex = rowIndex;
-                    teamId = Convert.ToInt32(((GridView)sender).DataKeys[rowIndex][0]);
                     Team myTeam = tmRepo.FindBy(teamId);
                     pnlNewTeam.Visible = true;
                     pnlMembers.Visible = false;
@@ -126,23 +124,10 @@ namespace TLC.Teams
                     lnkAddNewTeam.Text = "Update Team";
                     lnkManageMembers.Visible = false;
                     LoadGrid();
-                    break;
-                case DataControlCommands.CancelCommandName:
-                    grdTeams.EditIndex = -1;
-                    LoadGrid();
-                    break;
-                case DataControlCommands.UpdateCommandName:
-                    grdTeams.UpdateRow(rowIndex, true);
-                    grdTeams.EditIndex = -1;
-                    LoadGrid();
-                    break;
+                    break;   
                 case DataControlCommands.DeleteCommandName:
-                    teamId = Convert.ToInt32(((GridView)sender).DataKeys[rowIndex][0]);
                     DeleteTeam(teamId);
                     LoadGrid();
-                    break;
-                case DataControlCommands.InsertCommandName:
-
                     break;
                 case "LoadMembers":
                     teamId = Convert.ToInt32(((GridView)sender).DataKeys[rowIndex][0]);
@@ -171,7 +156,9 @@ namespace TLC.Teams
                 ddl.DataValueField = "UserId";
                 ddl.DataBind();
 
-                if (memberId != -1)
+                ddl.Items.Insert(0,new ListItem("", "-1"));
+
+                if (memberId != -1 && (ddl.Items.FindByValue(memberId.ToString()) != null))
                 {
                     ddl.SelectedValue = memberId.ToString();
                 }
@@ -181,8 +168,18 @@ namespace TLC.Teams
 
         void DeleteTeam(int teamId)
         {
-            tmRepo.Delete(teamId);
-            tmRepo.Save();
+            Team myTeam = tmRepo.FindBy(teamId);
+            SiteMaster master = ((SiteMaster)Page.Master);
+            if (myTeam.Members.Count == 0)
+            {
+                tmRepo.Delete(teamId);
+                tmRepo.Save();
+                master.AddNotification(Page, "Team Deleted", myTeam.TeamName + " has been removed.");
+            }
+            else
+            {
+                master.AddNotification(Page, "Team Delete Failed", "Cannot deleted this team because it has member assigned to it.");
+            }         
         }
 
 
@@ -265,5 +262,6 @@ namespace TLC.Teams
             LoadGrid();
             
         }
+
     }
 }

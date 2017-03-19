@@ -132,6 +132,7 @@
 
                 </div>
                 <div class="modal-footer">
+                    <asp:Label ID="lblError" runat="server" CssClass="btn btn-danger pull-left" Visible="false"></asp:Label>
                     <asp:LinkButton ID="lnkAddUser" runat="server" CssClass="btn btn-sm btn-success" OnClick="lnkAddUser_Click">
                         <span class="glyphicon glyphicon-user"></span>
                         Add User

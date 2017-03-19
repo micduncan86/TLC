@@ -145,10 +145,10 @@
                         <td class="col-md-3 col-mobile">
                             <%# Eval("FullName") %>                    
                         </td>
-                        <td class="col-md-3 col-mobile">
-                            <a href="mailto:<%# Eval("Email") %>" class="btn btn-xs btn-info">
+                        <td class="col-md-3 col-mobile">                          
+                            <a href="mailto:<%# Eval("Email") %>" class="btn btn-xs btn-info" style="<%# Eval("Email") == "" ? "display:none;": "" %>" >
                                 <span class="glyphicon glyphicon-envelope"></span>
-                                <%# Eval("Email") %></a>
+                                <%# Eval("Email") %></a>                 
                         </td>
                         <td class="col-md-3 col-mobile">
                             <a href="../home.aspx?TeamId=<%# Eval("Team.TeamId") %>" class="btn btn-xs btn-warning"><%# Eval("Team.TeamName") %></a>
