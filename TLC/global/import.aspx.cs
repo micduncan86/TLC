@@ -15,7 +15,7 @@ namespace TLC.global
         {
             if (!Page.IsPostBack)
             {
-              
+
             }
         }
 
@@ -25,13 +25,13 @@ namespace TLC.global
                 .Select(x => x.Name)
                 .ToList();
         }
-        protected List<Dictionary<string,object>> DataToJson(System.Data.DataTable dtdata)
+        protected List<Dictionary<string, object>> DataToJson(System.Data.DataTable dtdata)
         {
-            List<Dictionary<string,object>> rtrn =  new List<Dictionary<string, object>>();
-            foreach(System.Data.DataRow row in dtdata.Rows)
+            List<Dictionary<string, object>> rtrn = new List<Dictionary<string, object>>();
+            foreach (System.Data.DataRow row in dtdata.Rows)
             {
                 Dictionary<string, object> drow = new Dictionary<string, object>();
-                foreach(System.Data.DataColumn col in dtdata.Columns)
+                foreach (System.Data.DataColumn col in dtdata.Columns)
                 {
                     drow.Add(col.ColumnName, row[col]);
                 }
@@ -44,7 +44,8 @@ namespace TLC.global
             System.Data.DataTable dtData = new System.Data.DataTable();
             if (fileUpload.HasFile)
             {
-                using (TextFieldParser parser = new TextFieldParser(fileUpload.PostedFile.InputStream)) {
+                using (TextFieldParser parser = new TextFieldParser(fileUpload.PostedFile.InputStream))
+                {
                     parser.CommentTokens = new string[] { "#" };
                     parser.SetDelimiters(new string[] { "," });
                     parser.HasFieldsEnclosedInQuotes = false;
@@ -54,7 +55,7 @@ namespace TLC.global
                     {
                         if (!parser.EndOfData)
                         {
-                            foreach(string col in parser.ReadFields())
+                            foreach (string col in parser.ReadFields())
                             {
                                 dtData.Columns.Add(col);
                             }
@@ -62,30 +63,42 @@ namespace TLC.global
                     }
                     while (!parser.EndOfData)
                     {
+                        Boolean addRow = false;
                         string[] fields = parser.ReadFields();
-                        System.Data.DataRow newRow = dtData.NewRow();
-                        for (int i = 0;i < fields.Length; i++)
+                        foreach (string field in fields)
                         {
-                            newRow[i] = fields[i];
+                            if (!String.IsNullOrWhiteSpace(field))
+                            {
+                                addRow = true;
+                                break;
+                            }
                         }
-                        dtData.Rows.Add(newRow);
-                        dtData.AcceptChanges();      
+                        if (addRow)
+                        {
+                            System.Data.DataRow newRow = dtData.NewRow();
+                            for (int i = 0; i < fields.Length; i++)
+                            {
+                                newRow[i] = fields[i];
+                            }
+                            dtData.Rows.Add(newRow);
+                            dtData.AcceptChanges();
+                        }
                     }
                 }
-                           
+
 
                 System.Data.DataTable dtreturn = new System.Data.DataTable();
-          
 
-                Dictionary<string,object> rtrn = new Dictionary<string, object>();
+
+                Dictionary<string, object> rtrn = new Dictionary<string, object>();
                 rtrn.Add("dbCols", DBFields());
-                rtrn.Add("dataCols", dtData.Columns.OfType<System.Data.DataColumn>().Select(x => x.ColumnName).ToList());              
-                rtrn.Add("data",new System.Web.Script.Serialization.JavaScriptSerializer().Serialize(DataToJson(dtData)));
+                rtrn.Add("dataCols", dtData.Columns.OfType<System.Data.DataColumn>().Select(x => x.ColumnName).ToList());
+                rtrn.Add("data", new System.Web.Script.Serialization.JavaScriptSerializer().Serialize(DataToJson(dtData)));
 
 
                 String json = new System.Web.Script.Serialization.JavaScriptSerializer().Serialize(rtrn);
 
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(),"importdata", string.Format(@"var importdata = {0}; ShowData(importdata);",json), true);
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "importdata", string.Format(@"var importdata = {0}; ShowData(importdata);", json), true);
 
                 //dgData.DataSource = dtData;
                 //dgData.DataBind();

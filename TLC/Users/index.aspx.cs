@@ -42,10 +42,15 @@ namespace TLC.Users
                 ddlTeam.DataSource = new TeamRepository().GetAll();
             }
 
+            ddlTeam.DataSource = new TeamRepository().GetAll();
+
             ddlTeam.DataTextField = "TeamName";
             ddlTeam.DataValueField = "TeamId";
             ddlTeam.DataBind();
-            if (teamid != -1)
+
+            ddlTeam.Items.Insert(0, new ListItem("", "-1"));
+
+            if (ddlTeam.Items.FindByValue(teamid.ToString()) != null)
             {
                 ddlTeam.SelectedValue = teamid.ToString();
             }
@@ -63,47 +68,64 @@ namespace TLC.Users
             lblError.Visible = false;
             txtEmail.CssClass = "form-control";
 
-            reqEmail.Enabled = true;
-            reqPassword.Enabled = true;
+            lnkAddUser.CommandName = DataControlCommands.InsertCommandName;
+            lnkAddUser.CommandArgument = "-1";             
         }
 
         protected void lnkAddUser_Click(object sender, EventArgs e)
         {
+            LinkButton btn = sender as LinkButton;
             if (Page.IsValid)
             {
-                User newUser = UserManager.AddUser(txtEmail.Text, txtPassword.Text);
-                if (newUser.UserId != -1)
+                User myUser = new Data.User();
+                switch (btn.CommandName)
+                {
+                    case DataControlCommands.EditCommandName:
+                        myUser = UserManager.FindBy(Convert.ToInt32(btn.CommandArgument));
+                        master.AddNotification(Page, "Update Successful", "User was updated.");
+                        break;
+                    case DataControlCommands.InsertCommandName:
+                        myUser = UserManager.AddUser(txtEmail.Text, txtPassword.Text);
+                        master.AddNotification(Page, "Add Successful", "A new user has been added to the system.");
+                        break;
+                }
+                if (myUser.UserId != -1)
                 {
                     lblError.Visible = false;
-                    newUser.UserName = string.IsNullOrWhiteSpace(txtUserName.Text) ? txtEmail.Text : txtUserName.Text;
-                    newUser.UserRole = chkIsAdmin.Checked ? Data.User.enumRole.Administrater : Data.User.enumRole.User;
+                    myUser.UserName = string.IsNullOrWhiteSpace(txtUserName.Text) ? txtEmail.Text : txtUserName.Text;
+                    myUser.UserRole = chkIsAdmin.Checked ? Data.User.enumRole.Administrater : Data.User.enumRole.User;
 
-                    newUser.MyTeamId = chkIsAdmin.Checked ? -1 : Convert.ToInt32(ddlTeam.SelectedValue);
+                                         
 
-                    UserManager.Update(newUser);
-                    UserManager.Save();
-                    if (newUser.MyTeamId > 0)
+                    myUser.MyTeamId = Convert.ToInt32(ddlTeam.SelectedValue);
+                    var provider = new TeamRepository();
+                    var myteam = provider.FindBy(myUser.MyTeamId);
+                    if (myteam != null)
                     {
-                        var provider = new TeamRepository();
-                        var myteam = provider.FindBy(newUser.MyTeamId);
-                        if (myteam != null)
-                        {
-                            myteam.TeamLeaderId = newUser.UserId;
-                            provider.Update(myteam);
-                            provider.Save();
-                        }
+                        //var userProvider = new UserRepository();
+                        //var oldLeader = userProvider.FindBy(myteam.TeamLeaderId);
+                        //oldLeader.MyTeamId = -1;
+                        //userProvider.Update(oldLeader);
+                        //userProvider.Save();
+
+                        myteam.TeamLeaderId = myUser.UserId;
+                        provider.Update(myteam);
+                        provider.Save();
                     }
+
+                    UserManager.Update(myUser);
+                    UserManager.Save();                    
                     LoadUsers();
-                    master.AddNotification(Page, "Add Successful", "A new user has been added to the system.");
+                    
                 }
                 else
                 {
-                    // master.AddNotification(Page, "Add User Failed", "This email is already in the system. Please try another address.");
                     hdfShowModal.Value = "1";
                     lblError.Text = "Cannot add user. This email is already registered. Try again.";
                     txtEmail.CssClass += " alert-danger";
                     lblError.Visible = true;
                 }
+
             }
 
         }
@@ -114,11 +136,12 @@ namespace TLC.Users
             txtEmail.Text = data.Email;
             txtUserName.Text = data.UserName;
             FillTeamDropDown(data.MyTeamId);
-            reqEmail.Enabled = true;
-            reqPassword.Enabled = false;
-            txtPassword.Visible = false;
+               txtPassword.Visible = false;
             lblError.Visible = false;
             txtEmail.CssClass = "form-control";
+            lnkAddUser.Text = "Update User";
+            lnkAddUser.CommandName = DataControlCommands.EditCommandName;
+            lnkAddUser.CommandArgument = data.UserId.ToString();
             chkIsAdmin.Checked = data.UserRole == Data.User.enumRole.Administrater;
         }
         protected void lnk_Command(object sender, CommandEventArgs e)

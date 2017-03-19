@@ -51,7 +51,7 @@
                                     </thead>
                                 </table>
                             </div>
-                            <div class="panel-body">
+                            <div class="panel-body" style="min-height:400px; max-height:400px; overflow:auto;">
                                 <table class="table table-striped table-hover">
                                     <tbody>
                                         <asp:PlaceHolder ID="phGroup" runat="server"></asp:PlaceHolder>

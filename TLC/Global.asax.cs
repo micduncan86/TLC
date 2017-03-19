@@ -65,6 +65,16 @@ namespace TLC
             }
         }
 
+        protected void Application_Error(object sender, EventArgs e)
+        {
+            HttpUnhandledException httpUnhandledException = new HttpUnhandledException(Server.GetLastError().Message, Server.GetLastError());
+
+            List<string> errorSendTo = new List<string>();
+            errorSendTo.Add("mbd2682@email.vccs.edu");
+            TLC.Data.Email.Send(errorSendTo, "Application Exception Raised" , httpUnhandledException.GetHtmlErrorMessage());
+    
+        }
+
         protected void Application_AuthenticateRequest(Object sender, EventArgs e)
         {
             if (User != null)

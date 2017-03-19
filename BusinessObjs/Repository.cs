@@ -84,9 +84,12 @@ namespace TLC.Data
             {
                 FormsIdentity id = (FormsIdentity)currentUser;
                 FormsAuthenticationTicket tkt = id.Ticket;
-                if (tkt.UserData.Contains(":"))
+                if (!String.IsNullOrWhiteSpace(tkt.UserData))
                 {
-                    loginId = Convert.ToInt32(tkt.UserData.Split(':')[0]);
+                    var jSerializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+                    var json = System.Text.Encoding.Default.GetString(Convert.FromBase64String(tkt.UserData));
+                    User lgn = jSerializer.Deserialize<User>(json);
+                    loginId = lgn.UserId;
                 }
             }
             var sqlDate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"));
@@ -277,7 +280,7 @@ namespace TLC.Data
         }
         private bool EmailExists(string email)
         {
-            return this._dbSet.Select(x => x.Email.ToLower() == email.ToLower()).Any();
+            return this._dbSet.Where(x => x.Email.ToLower() == email.ToLower()).Select(y => y.UserId).Any();
         }
 
 
