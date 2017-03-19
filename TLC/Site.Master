@@ -78,6 +78,16 @@
                                                  Add New Member
                                             </a>
                                         </li>
+                                        <% if (HttpContext.Current.User.IsInRole("Administrater"))
+                                                { %>
+                                        <li role="presentation" class="divider"></li>
+                                        <li role="presentation">
+                                            <a runat="server" href="~/global/import.aspx">
+                                                <span class="glyphicon glyphicon-file"></span>
+                                                 Import Members from File
+                                            </a>
+                                        </li>
+                                        <% } %>
                                     </ul>
 
                                 </li>

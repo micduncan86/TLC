@@ -22,13 +22,13 @@ namespace TLC.Teams {
         protected global::System.Web.UI.WebControls.LinkButton lnkAdd;
         
         /// <summary>
-        /// grdTeams control.
+        /// lstTeams control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView grdTeams;
+        protected global::System.Web.UI.WebControls.ListView lstTeams;
         
         /// <summary>
         /// ltrModalTitle control.

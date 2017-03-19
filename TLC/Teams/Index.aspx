@@ -10,82 +10,137 @@
             Add New Team
         </asp:LinkButton>
     </h3>
-    <p>
-        <asp:GridView ID="grdTeams" runat="server" AutoGenerateColumns="False" CssClass="table table-condensed" RowStyle-CssClass="row" HeaderStyle-CssClass="row" BorderWidth="0" OnRowCommand="grdTeams_RowCommand" DataKeyNames="TeamId"  ShowHeader="false">
-            <Columns>
-                <asp:TemplateField ItemStyle-Width="90px">
-                    <ItemTemplate>
-                        <div class="dropdown">
-                            <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
-                                Actions <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu" role="menu">
-                                <li role="presentation">
-                                    <asp:LinkButton ID="lnkEdit" runat="server" CommandArgument='<%# DataBinder.Eval(Container,"RowIndex") %>' CommandName="Edit">
-                                        <span class="glyphicon glyphicon-pencil"></span>
-                                         Edit
-                                    </asp:LinkButton>
-                                </li>
-                                <li role="presentation">
-                                    <a href='<%# "Members.aspx?Id=" + ((TLC.Data.Team)DataBinder.GetDataItem(Container)).TeamId %>' >
-                                        <span class="glyphicon glyphicon-th-list"></span>
-                                         Member List</a>  
-                                </li>
-                                <li role="presentation">
-                                    <a href='<%# "Events.aspx?Id=" + ((TLC.Data.Team)DataBinder.GetDataItem(Container)).TeamId %>' >
-                                        <span class="glyphicon glyphicon-calendar"></span>
-                                         Events</a>  
-                                </li>
-                                <li role="presentation" class="divider"></li>
-                                <li role="presentation">
-                                    <asp:LinkButton ID="lnkDelete" runat="server" CommandArgument='<%# DataBinder.Eval(Container,"RowIndex") %>' CommandName="Delete" OnClientClick="javascript: return confirm('Are you sure you want to delete this team?');">
-                                        <span class="glyphicon glyphicon-trash"></span>
-                                         Delete
-                                    </asp:LinkButton>
-                                </li>
-                            </ul>
+    <div>
+        <div class="row">
+            <div class="col-md-12">
+                <asp:ListView ID="lstTeams" runat="server" DataKeyNames="TeamId" GroupPlaceholderID="phGroup" ItemPlaceholderID="phItem" OnItemCommand="lstTeams_ItemCommand">
+                    <EmptyDataTemplate>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <table class="table table-striped table-hover" style="margin-bottom: unset;">
+                                    <thead>
+                                        <tr>
+                                            <th style="border-bottom: unset; border-right: 1px solid silver; min-width: 100px; width: 100px;"></th>
+                                            <th class="col-md-2 col-mobile-only" style="border-bottom: unset; border-right: 1px solid silver;">Team</th>
+                                            <th class="col-md-3 col-mobile" style="border-bottom: unset; border-right: 1px solid silver;">Team</th>
+                                            <th class="col-md-1 col-mobile" style="border-bottom: unset; border-right: 1px solid silver;">Number</th>
+                                            <th class="col-md-6 col-mobile" style="border-bottom: unset; border-right: 1px solid silver;">Leaders</th>
+
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                            <div class="panel-body">
+                                <strong>No Users</strong>
+                            </div>
                         </div>
-                    </ItemTemplate>
-                </asp:TemplateField>
-                <asp:TemplateField ItemStyle-CssClass="col-md-12" HeaderText="Name">
+                    </EmptyDataTemplate>
+                    <LayoutTemplate>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <table class="table table-striped table-hover" style="margin-bottom: unset;">
+                                    <thead>
+                                        <tr>
+                                            <th style="border-bottom: unset; border-right: 1px solid silver; min-width: 100px; width: 100px;"></th>
+                                            <th class="col-md-2 col-mobile-only" style="border-bottom: unset; border-right: 1px solid silver;">Team</th>
+                                            <th class="col-md-3 col-mobile" style="border-bottom: unset; border-right: 1px solid silver;">Team</th>
+                                            <th class="col-md-1 col-mobile" style="border-bottom: unset; border-right: 1px solid silver;">Number</th>
+                                            <th class="col-md-6 col-mobile" style="border-bottom: unset; border-right: 1px solid silver;">Leaders</th>
+
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                            <div class="panel-body">
+                                <table class="table table-striped table-hover">
+                                    <tbody>
+                                        <asp:PlaceHolder ID="phGroup" runat="server"></asp:PlaceHolder>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </LayoutTemplate>
+                    <GroupTemplate>
+                        <tr>
+                            <asp:PlaceHolder ID="phItem" runat="server"></asp:PlaceHolder>
+                        </tr>
+                    </GroupTemplate>
                     <ItemTemplate>
-                        <h4>
-                            <asp:Literal ID="ltrName" runat="server" Text='<%# Eval("TeamName") %>'></asp:Literal></h4>
+                        <td style="width: 90px;">
+                            <div class="dropdown">
+                                <button class="btn btn-sm btn-info dropdown-toggle" type="button" data-toggle="dropdown">
+                                    Actions
+                                <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li role="presentation">
+                                        <asp:LinkButton ID="lnkEdit" runat="server" CommandName="Edit">
+                                        <span class="glyphicon glyphicon-pencil btn btn-xs btn-info"></span>
+                                         Edit
+                                        </asp:LinkButton>
+                                    </li>
+                                    <li role="presentation">
+                                        <a href="../home.aspx?TeamId=<%# Eval("TeamId") %>">
+                                            <span class="glyphicon glyphicon-th-list btn btn-xs btn-info"></span>
+                                            Member List
+                                        </a>
+                                    </li>
+                                    <li role="presentation">
+                                        <a href='<%# "Events.aspx?Id=" + ((TLC.Data.Team)DataBinder.GetDataItem(Container)).TeamId %>'>
+                                            <span class="glyphicon glyphicon-calendar btn btn-xs btn-info"></span>
+                                            Events</a>
+                                    </li>
+                                    <li role="presentation" class="divider"></li>
+                                    <% if (HttpContext.Current.User.IsInRole("Administrater"))
+                                        { %>               
+                                        <li role="presentation" id="liDelete" runat="server">
+                                        <asp:LinkButton ID="lnkDelete" runat="server" CommandName="Delete" OnClientClick="javascript: return confirm('Are you sure you want to delete this member?');">
+                                        <span class="glyphicon glyphicon-trash btn btn-xs btn-danger"></span>
+                                         Delete
+                                        </asp:LinkButton>
+                                    </li>
+                                    <%} %>
+                                </ul>
+                            </div>
+                        </td>
+                        <td class="col-md-2 col-mobile-only">
+                            <h4><%# Eval("TeamName") %></h4>
                             <div class="dropdown">
                                 <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown">
                                     Info <span class="caret"></span>
                                 </button>
-                                <ul class="dropdown-menu" role="menu" style="padding:5px;">
+                                <ul class="dropdown-menu" role="menu" style="padding: 5px;">
                                     <li role="presentation">
                                         <label>Team Leader:</label>
-                                        <asp:Literal ID="Literal2" runat="server" Text='<%# Eval("TeamLeader.UserName") %>'></asp:Literal>
+                                        <%# Eval("TeamLeader.UserName") %>
                                     </li>
                                     <li role="presentation">
                                         <label>Group Number:</label>
-                                        <asp:Literal ID="Literal3" runat="server" Text='<%# Eval("TeamNumber") %>'></asp:Literal>
+                                        <%# Eval("TeamNumber") %>
                                     </li>
-                                    <li role="presentation">    
+                                    <li role="presentation">
                                         <label>Members:</label>
-                                        <asp:LinkButton ID="lnkMembers" runat="server" style="display:inline-block;" CommandArgument='<%# DataBinder.Eval(Container,"RowIndex") %>' CommandName="LoadMembers">
-                                <span class="badge">
-                                    <span class="glyphicon glyphicon-user"></span> <%# Eval("Members.Count") %>
-                                </span>
-                                        </asp:LinkButton>
+                                        <a href="../home.aspx?TeamId=<%# Eval("TeamId") %>" class="btn btn-xs btn-warning">
+                                            <span class="glyphicon glyphicon-user"></span><%# Eval("Members.Count") %>
+                                        </a>
                                     </li>
                                 </ul>
                             </div>
+                        </td>
+                        <td class="col-md-3 col-mobile">
+                            <%# Eval("TeamName") %>                    
+                        </td>
+                        <td class="col-md-1 col-mobile">
+                            <%# Eval("TeamNumber") %>                            
+                        </td>
+                        <td class="col-md-6 col-mobile">
+                            <%# Eval("TeamLeader.UserName") %>
+                        </td>
                     </ItemTemplate>
-                    <EditItemTemplate>
-                        <asp:TextBox ID="txtName" runat="server" CssClass="form-control" Text='<%# Eval("TeamName") %>'></asp:TextBox>
-                    </EditItemTemplate>
-                </asp:TemplateField>
-
-
-
-            </Columns>
-        </asp:GridView>
-    </p>
-
+                </asp:ListView>
+            </div>
+        </div>
+    </div>
     <div id="mdlMembers" class="modal fade" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">

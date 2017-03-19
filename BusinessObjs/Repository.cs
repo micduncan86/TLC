@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Web.Security;
+using System.ComponentModel.DataAnnotations;
 
 namespace TLC.Data
 {
@@ -52,7 +53,6 @@ namespace TLC.Data
             _context.SaveChanges();
         }
 
-
     }
 
     public class DataContext : DbContext
@@ -77,8 +77,8 @@ namespace TLC.Data
 
         protected void AddTimeStampsUser()
         {
-            var entities = ChangeTracker.Entries().Where(x => x.Entity is BaseEntity && (x.State ==EntityState.Added || x.State == EntityState.Modified));
-            var currentUser = !Equals(System.Web.HttpContext.Current?.User?.Identity,null) ? System.Web.HttpContext.Current.User.Identity : new System.Web.Security.FormsIdentity(new FormsAuthenticationTicket("Anonymous",false,0));
+            var entities = ChangeTracker.Entries().Where(x => x.Entity is BaseEntity && (x.State == EntityState.Added || x.State == EntityState.Modified));
+            var currentUser = !Equals(System.Web.HttpContext.Current?.User?.Identity, null) ? System.Web.HttpContext.Current.User.Identity : new System.Web.Security.FormsIdentity(new FormsAuthenticationTicket("Anonymous", false, 0));
             var loginId = -1;
             if (currentUser is FormsIdentity)
             {
@@ -92,11 +92,11 @@ namespace TLC.Data
             var sqlDate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"));
             foreach (var entity in entities)
             {
-                
+
                 if (entity.State == EntityState.Added)
                 {
                     ((BaseEntity)entity.Entity).AddedDate = sqlDate;
-                    ((BaseEntity)entity.Entity).AddedById = loginId;                    
+                    ((BaseEntity)entity.Entity).AddedById = loginId;
                 }
                 if (((BaseEntity)entity.Entity).AddedById == -1)
                 {
@@ -109,13 +109,26 @@ namespace TLC.Data
             }
         }
     }
-    public class MemberRepository : RepositoryBase<Member>, IMemberRepository {
+    public class MemberRepository : RepositoryBase<Member>, IMemberRepository
+    {
 
         public List<Member> GetMembersByTeamId(int teamid)
         {
             return (from members in _dbSet
                     where members.TeamId == teamid
                     select members).ToList();
+        }
+        public override void Add(Member obj)
+        {
+            if (!string.IsNullOrWhiteSpace(obj.Email))
+            {
+                var result = _dbSet.Local.Where(x => x.Email == obj.Email).Any();
+                if (result)
+                {
+                    throw new Exception(string.Format("{0} could not be added. Email address {1} was already found.", obj.FullName, obj.Email));
+                }
+            }
+            base.Add(obj);
         }
 
     }
@@ -198,22 +211,23 @@ namespace TLC.Data
     }
 
 
-    public class UserRepository : RepositoryBase<User>, IUserRepository {      
+    public class UserRepository : RepositoryBase<User>, IUserRepository
+    {
         //protected string algo = System.Configuration.ConfigurationManager.AppSettings["userAlgorithm"].ToString();
         public User Authenticate(string email, string password)
         {
-            return _dbSet.SqlQuery("ValidateLogin @pLogin, @pPassword", new SqlParameter("@pLogin", email), new SqlParameter("@pPassword",password)).FirstOrDefault();
+            return _dbSet.SqlQuery("ValidateLogin @pLogin, @pPassword", new SqlParameter("@pLogin", email), new SqlParameter("@pPassword", password)).FirstOrDefault();
         }
-        public int ChangePassword(int userId,string email,string oldPassword,string newPassword)
+        public int ChangePassword(int userId, string email, string oldPassword, string newPassword)
         {
             var status = new SqlParameter("@Status", System.Data.SqlDbType.Int) { Direction = System.Data.ParameterDirection.Output };
-           _context.Database.ExecuteSqlCommand("exec @Status = PwdChange @pUserId, @pEmail, @pOldPassword, @pNewPassword",
-               status
-                , new SqlParameter("@pUserId", userId)
-                , new SqlParameter("@pEmail", email)
-                , new SqlParameter("@pOldPassword", oldPassword)
-                , new SqlParameter("@pNewPassword", newPassword)
-           );
+            _context.Database.ExecuteSqlCommand("exec @Status = PwdChange @pUserId, @pEmail, @pOldPassword, @pNewPassword",
+                status
+                 , new SqlParameter("@pUserId", userId)
+                 , new SqlParameter("@pEmail", email)
+                 , new SqlParameter("@pOldPassword", oldPassword)
+                 , new SqlParameter("@pNewPassword", newPassword)
+            );
             return (int)status.Value;
         }
         public int ChangePassword(int userId, string email, string newPassword)
@@ -223,9 +237,9 @@ namespace TLC.Data
             //cmd += " BEGIN";
             cmd = " UPDATE [User] SET PasswordHashCode = HASHBYTES('SHA2_512', @NewPassword+CAST(Salt as nvarchar(36)))";
             cmd += " WHERE UserId = @UserId AND Email = @Email";
-           // cmd += " SET @Changed = 1";
-           // cmd += "END";
-           // cmd += "SELECT @Changed";
+            // cmd += " SET @Changed = 1";
+            // cmd += "END";
+            // cmd += "SELECT @Changed";
 
             var rtn = _context.Database.ExecuteSqlCommand(cmd
                 , new SqlParameter("@UserId", userId)
@@ -239,29 +253,39 @@ namespace TLC.Data
             var encodeHash = FormsAuthentication.HashPasswordForStoringInConfigFile(password, "SHA1");
             return Convert.ToBase64String(Encoding.Default.GetBytes(encodeHash));
         }
-               
+
         public User AddUser(string email, string password)
         {
-            var user = this._dbSet.SqlQuery("AddUser @pEmail, @pPassword, @pUserName", 
-                new SqlParameter("@pEmail", email), 
+            if (!EmailExists(email))
+            {
+                var user = this._dbSet.SqlQuery("AddUser @pEmail, @pPassword, @pUserName",
+                new SqlParameter("@pEmail", email),
                 new SqlParameter("@pPassword", password),
                 new SqlParameter("@pUserName", email)
                 ).FirstOrDefault();
 
-            _context.Entry(user).State = EntityState.Modified;
-            _context.SaveChanges();
-            return user;
+                _context.Entry(user).State = EntityState.Modified;
+                _context.SaveChanges();
+                return user;
+            }
+            return new User() { UserId = -1 };
         }
 
         public static string ReturnUserRole(User.enumRole enumRole)
         {
             return enumRole == User.enumRole.User ? "User" : "Administrater";
         }
+        private bool EmailExists(string email)
+        {
+            return this._dbSet.Select(x => x.Email.ToLower() == email.ToLower()).Any();
+        }
+
 
     }
 
 
-    public class EventRepository : RepositoryBase<Event>, IEventRepository {
+    public class EventRepository : RepositoryBase<Event>, IEventRepository
+    {
 
         public List<Event> GetEventsByTeamId(int teamId)
         {
@@ -272,12 +296,13 @@ namespace TLC.Data
     }
 
 
-    public class CheckUpRepository : RepositoryBase<CheckUp>, ICheckUpRepository {
+    public class CheckUpRepository : RepositoryBase<CheckUp>, ICheckUpRepository
+    {
 
         public List<CheckUp> GetCheckUpsByMemberId(int teamMemberId)
         {
             return _dbSet.Where(x => x.TeamMemberId == teamMemberId).OrderByDescending(o => o.CheckUpDate).ToList();
-           
+
         }
         public List<CheckUp> GetCheckUpsByTeamId(int teamId)
         {
@@ -287,5 +312,30 @@ namespace TLC.Data
         }
     }
 
-   
+    public class IsUniqueAttribute : ValidationAttribute
+    {
+        protected DataContext _context;
+        public IsUniqueAttribute()
+        {
+            this._context = new DataContext();
+        }
+        public IsUniqueAttribute(DataContext context)
+        {
+            this._context = context;
+        }
+        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+        {
+            var db = _context;
+            var className = validationContext.ObjectType.Name.Split('.').Last();
+            var propertyName = validationContext.MemberName;
+            var parameterName = string.Format("@{0}", propertyName);
+
+            var result = db.Database.SqlQuery<int>(string.Format("SELECT COUNT(*) FROM {0} WHERE {1} = {2}", className, propertyName, parameterName), new System.Data.SqlClient.SqlParameter(parameterName, value));
+            if (result.ToList()[0] > 0)
+            {
+                return new ValidationResult(string.Format("The '{0}' already exists.", propertyName), new List<string>() { propertyName });
+            }
+            return null;
+        }
+    }
 }

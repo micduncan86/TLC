@@ -11,9 +11,11 @@ namespace TLC.Users
     public partial class index : System.Web.UI.Page
     {
         protected UserRepository UserManager = new UserRepository();
+        protected SiteMaster master = null;
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            master = (SiteMaster)Page.Master;
             hdfShowModal.Value = "0";
             if (!Page.IsPostBack)
             {
@@ -58,6 +60,8 @@ namespace TLC.Users
             txtPassword.Text = string.Empty;
             txtPassword.Visible = true;
             txtUserName.Text = string.Empty;
+            lblError.Visible = false;
+            txtEmail.CssClass = "form-control";
 
             reqEmail.Enabled = true;
             reqPassword.Enabled = true;
@@ -68,28 +72,40 @@ namespace TLC.Users
             if (Page.IsValid)
             {
                 User newUser = UserManager.AddUser(txtEmail.Text, txtPassword.Text);
-                newUser.UserName = string.IsNullOrWhiteSpace(txtUserName.Text) ? txtEmail.Text : txtUserName.Text;
-                newUser.UserRole = chkIsAdmin.Checked ? Data.User.enumRole.Administrater : Data.User.enumRole.User;
-
-                newUser.MyTeamId = chkIsAdmin.Checked ? -1 : Convert.ToInt32(ddlTeam.SelectedValue);
-
-                UserManager.Update(newUser);
-                UserManager.Save();
-                if (newUser.MyTeamId > 0)
+                if (newUser.UserId != -1)
                 {
-                    var provider = new TeamRepository();
-                    var myteam = provider.FindBy(newUser.MyTeamId);
-                    if (myteam != null)
+                    lblError.Visible = false;
+                    newUser.UserName = string.IsNullOrWhiteSpace(txtUserName.Text) ? txtEmail.Text : txtUserName.Text;
+                    newUser.UserRole = chkIsAdmin.Checked ? Data.User.enumRole.Administrater : Data.User.enumRole.User;
+
+                    newUser.MyTeamId = chkIsAdmin.Checked ? -1 : Convert.ToInt32(ddlTeam.SelectedValue);
+
+                    UserManager.Update(newUser);
+                    UserManager.Save();
+                    if (newUser.MyTeamId > 0)
                     {
-                        myteam.TeamLeaderId = newUser.UserId;
-                        provider.Update(myteam);
-                        provider.Save();
+                        var provider = new TeamRepository();
+                        var myteam = provider.FindBy(newUser.MyTeamId);
+                        if (myteam != null)
+                        {
+                            myteam.TeamLeaderId = newUser.UserId;
+                            provider.Update(myteam);
+                            provider.Save();
+                        }
                     }
+                    LoadUsers();
+                    master.AddNotification(Page, "Add Successful", "A new user has been added to the system.");
+                }
+                else
+                {
+                    // master.AddNotification(Page, "Add User Failed", "This email is already in the system. Please try another address.");
+                    hdfShowModal.Value = "1";
+                    lblError.Text = "Cannot add user. This email is already registered. Try again.";
+                    txtEmail.CssClass += " alert-danger";
+                    lblError.Visible = true;
                 }
             }
-            LoadUsers();
-            SiteMaster master = (SiteMaster)Page.Master;
-            master.AddNotification(Page, "Add Successful", "A new user has been added to the system.");
+
         }
         protected void EditUser(User data)
         {
@@ -101,6 +117,8 @@ namespace TLC.Users
             reqEmail.Enabled = true;
             reqPassword.Enabled = false;
             txtPassword.Visible = false;
+            lblError.Visible = false;
+            txtEmail.CssClass = "form-control";
             chkIsAdmin.Checked = data.UserRole == Data.User.enumRole.Administrater;
         }
         protected void lnk_Command(object sender, CommandEventArgs e)
@@ -131,7 +149,7 @@ namespace TLC.Users
                 if (((SiteMaster)Page.Master).loggedUser != null && ((SiteMaster)Page.Master).loggedUser.UserId == user.UserId)
                 {
                     e.Item.FindControl("lnkRemove").Visible = false;
-                }                
+                }
             }
 
         }

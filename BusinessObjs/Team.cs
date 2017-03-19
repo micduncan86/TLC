@@ -27,7 +27,7 @@ namespace TLC.Data
         public User TeamLeader
         {
             get {
-                return new UserRepository().FindBy(TeamLeaderId);
+                return TeamLeaderId <= 0 ? new User() { UserId = -1, Email = "", UserName = "Not Assigned" } : new UserRepository().FindBy(TeamLeaderId);
             }
             private set { }
         }

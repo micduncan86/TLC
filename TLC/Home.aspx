@@ -52,7 +52,7 @@
     <div class="row">
         <div class="col-md-4">
             <div class="panel panel-default">
-                <input type="hidden" id="hdnTeamId" runat="server" />
+                <asp:HiddenField ID="hdnTeamId" runat="server" ClientIDMode="Static" />           
                 <div class="panel-heading">
                     <asp:TextBox ID="txtTeamName" runat="server" CssClass="form-control" Style="display: inline; font-size: 12px; height: 25px; width: 200px;"></asp:TextBox>
                     <asp:LinkButton ID="lnkUpdateTeamInfo" runat="server" CssClass="btn btn-xs btn-success pull-right" OnClick="lnkUpdateTeamInfo_Click">
@@ -66,11 +66,11 @@
                     </p>
                     <p>
                         Team Leader:
-                    <asp:Label ID="lblTeamLeader" runat="server"></asp:Label>
+                    <asp:Label ID="lblTeamLeader" runat="server"></asp:Label> <a href="#" onclick="return app.ChangeLeader($(this));" ><span class="glyphicon glyphicon-cog"></span></a>
                     </p>
                     <p>
                         Co Leader:
-                    <asp:Label ID="lblCoLeader" runat="server"></asp:Label>
+                    <asp:Label ID="lblCoLeader" runat="server"></asp:Label><a href="#"><span class="glyphicon glyphicon-cog"></span></a>
                     </p>
 
                     <p>
