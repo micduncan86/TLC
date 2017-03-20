@@ -16,7 +16,7 @@
     </h3>
     <hr />
     <p>
-        <asp:GridView ID="grdEvents" runat="server" AutoGenerateColumns="False" CssClass="table table-condensed" RowStyle-CssClass="row" HeaderStyle-CssClass="row" BorderWidth="0" DataKeyNames="EventId" ShowHeader="false" OnRowCommand="grdEvents_RowCommand">
+        <asp:GridView ID="grdEvents" runat="server" AutoGenerateColumns="False" CssClass="table table-condensed" RowStyle-CssClass="row" HeaderStyle-CssClass="row" BorderWidth="0" DataKeyNames="EventId" ShowHeader="false" OnRowCommand="grdEvents_RowCommand" >
             <Columns>
                 <asp:TemplateField ItemStyle-Width="90px">
                     <ItemTemplate>

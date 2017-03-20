@@ -68,7 +68,7 @@ namespace TLC.Teams
                 }
 
                 ddl.DataSource = datasource;
-                ddl.DataTextField = "Name";
+                ddl.DataTextField = "TeamName";
                 ddl.DataValueField = "TeamId";
 
                 ddl.DataBind();
