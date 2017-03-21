@@ -103,10 +103,10 @@
                             </button>
                             <ul class="dropdown-menu dropdown-menu-right" role="menu">
                                 <li role="presentation">
-                                    <asp:LinkButton ID="lnkAddEvent" runat="server" CommandName="Checkup">
+                                    <a href="#" id="lnkAddEvent">
                                         <span class="glyphicon glyphicon-plus btn btn-xs btn-success"></span>
                                         Add New Event
-                                    </asp:LinkButton>
+                                    </a> 
                                 </li>
                             </ul>
                         </div>
@@ -233,5 +233,12 @@
             </div>
         </div>
     </div>
-
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#lnkAddEvent").on("click", function (e) {
+                e.preventDefault();
+                window.location = "../teams/events.aspx?Id=" + $("#hdnTeamId").val();
+            });
+        });
+    </script>
 </asp:Content>

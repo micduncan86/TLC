@@ -18,7 +18,7 @@ namespace TLC.Data
         public bool Completed { get; set; }
         public bool Cancelled { get; set; }
         
-
+        
       [NotMapped]
       public string Status
         {

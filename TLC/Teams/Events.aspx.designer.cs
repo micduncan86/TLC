@@ -13,15 +13,6 @@ namespace TLC.Teams {
     public partial class Events {
         
         /// <summary>
-        /// ltrHeader control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ltrHeader;
-        
-        /// <summary>
         /// lnkAdd control.
         /// </summary>
         /// <remarks>

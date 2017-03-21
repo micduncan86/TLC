@@ -101,7 +101,11 @@ namespace TLC.Data
                     ((BaseEntity)entity.Entity).AddedDate = sqlDate;
                     ((BaseEntity)entity.Entity).AddedById = loginId;
                 }
-                if (((BaseEntity)entity.Entity).AddedById == -1)
+                if (((BaseEntity)entity.Entity).AddedDate == null)
+                {
+                    ((BaseEntity)entity.Entity).AddedDate = sqlDate;
+                }
+                if (((BaseEntity)entity.Entity).AddedById == -1 || ((BaseEntity)entity.Entity).AddedById == null)
                 {
                     ((BaseEntity)entity.Entity).AddedById = loginId;
                 }

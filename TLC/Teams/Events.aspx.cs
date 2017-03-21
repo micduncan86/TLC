@@ -84,6 +84,7 @@ namespace TLC.Teams
             {
                 case "Edit":
                     LoadEventModal(evntRepo.FindBy(eventId));
+                    e.Handled = true;
                     break;
                 case "Delete":
                     break;
