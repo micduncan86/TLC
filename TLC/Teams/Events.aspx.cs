@@ -12,8 +12,10 @@ namespace TLC.Teams
     {
         protected EventRepository evntRepo = new EventRepository();
         protected int teamId;
+        SiteMaster master = null;
         protected void Page_Load(object sender, EventArgs e)
         {
+            master = ((SiteMaster)Page.Master);
             hdfShowModal.Value = "0";
             //Temporarily using a querystring for filtering viewable teams.
             //end goal will be to read from logged in user and what access they have to.
@@ -87,6 +89,11 @@ namespace TLC.Teams
                     e.Handled = true;
                     break;
                 case "Delete":
+                    evntRepo.Delete(eventId);
+                    evntRepo.Save();
+                    master.AddNotification(Page, "Event Deleted", "You event has been removed.");
+                    e.Handled = true;
+                    LoadGrid();
                     break;
                 default:
                     break;

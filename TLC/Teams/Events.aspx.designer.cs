@@ -49,24 +49,6 @@ namespace TLC.Teams {
         protected global::System.Web.UI.WebControls.TextBox txtEventTitle;
         
         /// <summary>
-        /// txtEventDate control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtEventDate;
-        
-        /// <summary>
-        /// chkIsComplete control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkIsComplete;
-        
-        /// <summary>
         /// ddlTeam control.
         /// </summary>
         /// <remarks>
@@ -76,6 +58,24 @@ namespace TLC.Teams {
         protected global::System.Web.UI.WebControls.DropDownList ddlTeam;
         
         /// <summary>
+        /// txtEventDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtEventDate;
+        
+        /// <summary>
+        /// txtDescription control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtDescription;
+        
+        /// <summary>
         /// txtEventNotes control.
         /// </summary>
         /// <remarks>
@@ -83,6 +83,15 @@ namespace TLC.Teams {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtEventNotes;
+        
+        /// <summary>
+        /// chkIsComplete control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkIsComplete;
         
         /// <summary>
         /// lnkAddEvent control.

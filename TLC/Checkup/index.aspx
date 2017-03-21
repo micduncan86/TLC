@@ -4,7 +4,12 @@
 </asp:Content>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
-    <h3>Check Up History</h3>
+    <h3>Check Up History
+        <a class="btn btn-sm btn-info" Style="float: right; margin: 0 5px;" href="../home.aspx?TeamId=<% Response.Write(Request.Params.Get("TeamId")); %>">
+            <span class="glyphicon glyphicon-menu-left"></span>
+            Back to Team
+        </a>
+    </h3>
 
     <div class="row">
         <div class="col-md-12">
@@ -20,7 +25,7 @@
                         <asp:Button ID="btnAddCheckUp" ClientIDMode="Static" runat="server" Text="Add Check Up" CssClass="btn btn-sm btn-info" OnClick="btnAddCheckUp_Click" />
                     </div>                    
                 </div>
-                <div class="panel-body">
+                <div class="panel-body" style="min-height:400px; max-height:400px; overflow:auto;">
                     <asp:GridView ID="grdCheckUps" runat="server" DataKeyNames="CheckUpId" AutoGenerateColumns="false" CssClass="table table-striped table-hover" OnRowCommand="grdCheckUps_RowCommand">
                         <Columns>   
                             <asp:ButtonField CommandName="Edit" ControlStyle-CssClass="btn btn-xs btn-default" Text="<span class='glyphicon glyphicon-pencil'></span>" />
@@ -40,7 +45,6 @@
                     </asp:GridView>
                 </div>
             </div>
-            <a href="../Home.aspx" class="btn btn-sm btn-success">Back</a>
         </div>
     </div>
     <div id="modalCheckUp" class="modal fade" role="dialog">

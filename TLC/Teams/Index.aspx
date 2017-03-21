@@ -4,7 +4,7 @@
 </asp:Content>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
-    <h3>Teams        
+    <h3>Teams 
         <asp:LinkButton ID="lnkAdd" runat="server" CssClass="btn btn-sm btn-success" Style="float: right;" OnClick="lnkAdd_Click">
             <span class="glyphicon glyphicon-plus"></span>
             Add New Team

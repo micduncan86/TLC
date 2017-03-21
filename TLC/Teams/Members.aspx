@@ -6,6 +6,10 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <h3>
         <label style="max-width: 200px; text-overflow:clip; white-space:nowrap; overflow:hidden;"><asp:Literal ID="ltrHeader" runat="server"></asp:Literal></label>
+        <a class="btn btn-sm btn-info" Style="float: right; margin: 0 5px;" href="../home.aspx?TeamId=<% Response.Write(Request.Params.Get("Id")); %>">
+            <span class="glyphicon glyphicon-menu-left"></span>
+            Back to Team
+        </a>
         <asp:LinkButton ID="lnkAdd" runat="server" CssClass="btn btn-sm btn-success" Style="float: right;" OnClick="lnkAdd_Click">
             <span class="glyphicon glyphicon-plus"></span>
             Add New

@@ -210,8 +210,10 @@
                                         </button>
                                         <ul class="dropdown-menu" role="menu">
                                             <li role="presentation">
-                                                <a href='<%# Page.ResolveUrl("~/checkup/index.aspx?AddCheckup=1&MemberId=" + Eval("MemberId")) %>'><span class="glyphicon glyphicon-plus btn btn-xs btn-success"></span>Add Check Up</a>
-                                                <a href='<%# Page.ResolveUrl("~/checkup/index.aspx?MemberId=" + Eval("MemberId")) %>'><span class="glyphicon glyphicon-check btn btn-xs btn-info"></span>Check Up History</a>
+                                                <a href='<%# Page.ResolveUrl("~/checkup/index.aspx?AddCheckup=1&TeamId=" + Eval("TeamId") +"&MemberId=" + Eval("MemberId")) %>'><span class="glyphicon glyphicon-plus btn btn-xs btn-success"></span>Add Check Up</a>                                                
+                                            </li>
+                                            <li>
+                                                <a href='<%# Page.ResolveUrl("~/checkup/index.aspx?TeamId=" + Eval("TeamId") + "&MemberId=" + Eval("MemberId")) %>'><span class="glyphicon glyphicon-check btn btn-xs btn-info"></span>Check Up History</a>
                                             </li>
                                             <li role="presentation" class="divider"></li>
                                             <li role="presentation">

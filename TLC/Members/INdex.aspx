@@ -4,8 +4,12 @@
 </asp:Content>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
-    <h3 style="display: inline;">Members</h3>
-    <div style="padding: 5px; min-height: 45px;">
+    <h3 style="display: inline;">
+        Members         
+        <a class="btn btn-sm btn-info" Style="float: right; margin: 0 5px;" href="../home.aspx?TeamId=<% Response.Write(Request.Params.Get("TeamId")); %>">
+            <span class="glyphicon glyphicon-menu-left"></span>
+            Back to Team
+        </a>
         <div class="dropdown pull-right">
             <button class="btn btn-sm btn-info dropdown-toggle" type="button" data-toggle="dropdown">
                 I want to <span class="caret"></span>
@@ -24,18 +28,16 @@
                 </li>
             </ul>
         </div>
-        <div class="input-group input-group-sm pull-right">
+    </h3>  
+    <div class="input-group input-group-sm pull-right">
             <input type="text" id="txtsearch" runat="server" class="form-control" placeholder="Search for...">
             <span class="input-group-btn" style="width: unset;">
                 <asp:LinkButton ID="lnkSearch" runat="server" CssClass="btn btn-sm btn-secondary" OnClick="lnkSearch_Click">
                                 <span class="glyphicon glyphicon-search"></span>
                 </asp:LinkButton>
             </span>
-
-        </div>
-
-    </div>
-    <div>
+        </div>  
+    <div style="margin-top: 15px;">
         <div class="row">
             <div class="col-md-12">
                 <asp:ListView ID="lstMembers" runat="server" DataKeyNames="MemberId" GroupPlaceholderID="phGroup" ItemPlaceholderID="phItem" OnItemCommand="lstMembers_ItemCommand" OnItemDataBound="lstMembers_ItemDataBound1">

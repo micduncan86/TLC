@@ -6,7 +6,11 @@
 </asp:Content>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
-    <h3>Events        
+    <h3>Events 
+        <a class="btn btn-sm btn-info" style="float: right; margin: 0 5px;" href="../home.aspx?TeamId=<% Response.Write(Request.Params.Get("Id")); %>">
+            <span class="glyphicon glyphicon-menu-left"></span>
+            Back to Team
+        </a>
         <asp:LinkButton ID="lnkAdd" runat="server" CssClass="btn btn-sm btn-success" Style="float: right;" OnClick="lnkAdd_Click">
             <span class="glyphicon glyphicon-plus"></span>
             Add New Event
@@ -75,22 +79,23 @@
                         <div class="form-group">
                             <asp:TextBox runat="server" ID="txtEventTitle" CssClass="form-control" placeholder="Title" Style="max-width: none; width: 425px;"></asp:TextBox>
                         </div>
+                        <div class="pull-right">
+                            <asp:DropDownList ID="ddlTeam" runat="server" CssClass="form-control" Width="250px"></asp:DropDownList>
+                        </div>
                         <div class="form-group">
                             <div class="input-group date" data-provider="datepicker">
                                 <asp:TextBox ID="txtEventDate" runat="server" CssClass="form-control datepicker" data-date-format="mm/dd/yyyy" placeholder="Event Date"></asp:TextBox>
                             </div>
                         </div>
-                        <div class="form-group form-inline">
+                        <div class="form-group">
+                            <asp:TextBox ID="txtDescription" runat="server" TextMode="MultiLine" CssClass="form-control" Rows="3" placeholder="Description:"></asp:TextBox>
+                        </div>
+                        <div class="form-group">
+                            <asp:TextBox ID="txtEventNotes" runat="server" TextMode="MultiLine" CssClass="form-control" Rows="2" placeholder="Notes:"></asp:TextBox>
+                        </div>
+                         <div class="form-group form-inline">
                             <asp:CheckBox ID="chkIsComplete" runat="server" CssClass="" Text=" Is Event Complete?" />
                         </div>
-                        <div class="form-group">
-                            <label>Team Selection:</label>
-                            <asp:DropDownList ID="ddlTeam" runat="server" CssClass="form-control"></asp:DropDownList>
-                        </div>
-                        <div class="form-group">
-                            <asp:TextBox ID="txtEventNotes" runat="server" TextMode="MultiLine" CssClass="form-control" Rows="5" placeholder="Notes:"></asp:TextBox>
-                        </div>
-                        "
                     </div>
 
                 </div>
