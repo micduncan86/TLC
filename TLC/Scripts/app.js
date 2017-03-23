@@ -135,7 +135,7 @@
         }
     },
     gDialog: null,
-    GlobalDialog: function (Header, closeCallback) {
+    GlobalDialog: function (Header, afterOpen) {
         $(".modal.in").modal("hide");
         var div = $("<div>")
                 .attr("id", "bootModal")
@@ -157,26 +157,34 @@
 
         div.modal("show");
         app.gDialog = div;
+
+        if (afterOpen) {
+            div.on('shown.bs.modal', function (e) {
+                afterOpen();
+            });
+        }
         return div;
     }
 };
 
 var tlcEvent = {
     AddNew: function (DialogTitle) {
-        var n = app.GlobalDialog(DialogTitle, null);
-        tlcEvent.BuildForm(n.find(".modal-body"));
-        $(".datepicker").datepicker({
-            format: "mm/dd/yyyy",
-            startDate: "-1d"
+        var n = app.GlobalDialog(DialogTitle,function(){
+            $(".datepicker").datepicker({
+                format: "mm/dd/yyyy",
+                startDate: "-1d"
+            });
+        });
+        tlcEvent.BuildForm(n.find(".modal-body"), function () { 
         });
     },
-    BuildForm: function(dialogContentElement){
+    BuildForm: function(dialogContentElement,callback){
         var form = $("<div>").appendTo(dialogContentElement);
         var fields = [
             { Name: "Title", type: "text", style: "max-width: none; width: 425px;", class: "" },
             { Name: "Team", type: "select", style: "width: 250px;", class: "" },
             { Name: "Date", type: "text", style: "", class: "datepicker" },
-            {Name:"Description", type:"textarea", style:"",class:""},
+            { Name:"Description", type:"textarea", style:"",class:""},
             { Name: "Notes", type: "textarea", style: "", class: "" },
             { Name: "Complete", type: "checkbox", style: "", class: "" },
 
@@ -225,6 +233,9 @@ var tlcEvent = {
                       .appendTo(d);
                     break;
             }
-        });  
+        });
+        if (callback) {
+            callback();
+        }
     }
 };
