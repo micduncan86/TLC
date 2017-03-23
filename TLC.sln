@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TLC", "TLC\TLC.csproj", "{4
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TLC.Data", "BusinessObjs\TLC.Data.csproj", "{24CAA6D0-B331-452E-95FD-00F7C63BA079}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TLC.API", "TLC.API\TLC.API.csproj", "{B3C50AF8-EA1F-42AE-ADEE-FEEA61609DBC}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,10 +21,6 @@ Global
 		{24CAA6D0-B331-452E-95FD-00F7C63BA079}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{24CAA6D0-B331-452E-95FD-00F7C63BA079}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{24CAA6D0-B331-452E-95FD-00F7C63BA079}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B3C50AF8-EA1F-42AE-ADEE-FEEA61609DBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B3C50AF8-EA1F-42AE-ADEE-FEEA61609DBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B3C50AF8-EA1F-42AE-ADEE-FEEA61609DBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B3C50AF8-EA1F-42AE-ADEE-FEEA61609DBC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

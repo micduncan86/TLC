@@ -97,7 +97,6 @@
                             <asp:CheckBox ID="chkIsComplete" runat="server" CssClass="" Text=" Is Event Complete?" />
                         </div>
                     </div>
-
                 </div>
                 <div class="modal-footer">
                     <asp:LinkButton ID="lnkAddEvent" runat="server" CssClass="btn btn-sm btn-success" OnClick="lnkAddEvent_Click">

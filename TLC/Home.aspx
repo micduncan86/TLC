@@ -239,7 +239,8 @@
         $(document).ready(function () {
             $("#lnkAddEvent").on("click", function (e) {
                 e.preventDefault();
-                window.location = "../teams/events.aspx?Id=" + $("#hdnTeamId").val();
+                //window.location = "../teams/events.aspx?Id=" + $("#hdnTeamId").val();
+                tlcEvent.AddNew("Add New Event");
             });
         });
     </script>

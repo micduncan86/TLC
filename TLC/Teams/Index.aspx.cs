@@ -49,7 +49,6 @@ namespace TLC.Teams
                     case "Get":
                     case "get":
                         return client.GetAsync(path).Result;
-                        break;
                     case "Post":
                     case "post":
                         return client.PostAsJsonAsync(path, content).Result;
@@ -58,7 +57,6 @@ namespace TLC.Teams
                         return client.PutAsJsonAsync(path, content).Result;
                     default:
                         return null;
-                        break;
 
                 }
             }

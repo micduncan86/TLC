@@ -12,6 +12,9 @@ namespace TLC
         // For more information on Bundling, visit http://go.microsoft.com/fwlink/?LinkID=303951
         public static void RegisterBundles(BundleCollection bundles)
         {
+            bundles.UseCdn = true;
+                      
+
             bundles.Add(new ScriptBundle("~/bundles/WebFormsJs").Include(
                             "~/Scripts/WebForms/WebForms.js",
                             "~/Scripts/WebForms/WebUIValidation.js",
@@ -32,11 +35,29 @@ namespace TLC
             // Use the Development version of Modernizr to develop with and learn from. Then, when you’re
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
-                            "~/Scripts/modernizr-*"));
+                            "~/Scripts/modernizr-*"));            
+
+            ScriptManager.ScriptResourceMapping.AddDefinition(
+                "respond",
+                new ScriptResourceDefinition
+                {
+                    Path = "~/Scripts/respond.min.js",
+                    DebugPath = "~/Scripts/respond.js",
+                });
+
+            bundles.Add(new ScriptBundle("~/bundles/datetime").Include(
+               "~/Scripts/bootstrap-datepicker*"
+               ));
+            ScriptManager.ScriptResourceMapping.AddDefinition(
+               "datetime",
+               new ScriptResourceDefinition
+               {
+                   Path = "~/bundles/datetime",
+                   DebugPath = "~/bundles/datetime",
+               });
 
             bundles.Add(new ScriptBundle("~/bundles/appJs").Include(
-                "~/Scripts/app.js",
-                "~/Scripts/bootstrap-datepicker.js"
+                "~/Scripts/app.js"
                 ));
 
             ScriptManager.ScriptResourceMapping.AddDefinition(
@@ -47,13 +68,14 @@ namespace TLC
                     DebugPath = "~/bundles/appJs",
                 });
 
-            ScriptManager.ScriptResourceMapping.AddDefinition(
-                "respond",
-                new ScriptResourceDefinition
-                {
-                    Path = "~/Scripts/respond.min.js",
-                    DebugPath = "~/Scripts/respond.js",
-                });
+            bundles.Add(new StyleBundle("~/Content/css").Include(
+                "~/Content/bootstrap-datepicker.css",
+                "~/Content/bootstrap.css",
+                "~/Content/bootstrap.min.css",
+                "~/Content/Site.css"
+                ));
+
+            BundleTable.EnableOptimizations = false;
         }
     }
 }

@@ -255,12 +255,6 @@ namespace TLC.Data
                 );
             return rtn;
         }
-        private string returnHash(string password)
-        {
-            var encodeHash = FormsAuthentication.HashPasswordForStoringInConfigFile(password, "SHA1");
-            return Convert.ToBase64String(Encoding.Default.GetBytes(encodeHash));
-        }
-
         public User AddUser(string email, string password)
         {
             if (!EmailExists(email))
