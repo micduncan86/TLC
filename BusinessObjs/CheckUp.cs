@@ -18,13 +18,13 @@ namespace TLC.Data
         public bool RequiresAction { get; set; }
         public string Actions { get; set; }
         
-        [NotMapped]
-        public Member Member
-        {
-            get {
-                return new MemberRepository().FindBy(this.TeamMemberId);
-            }
-            private set { }
-        }
+        //[NotMapped]
+        //public Member Member
+        //{
+        //    get {
+        //        return new MemberRepository().FindBy(this.TeamMemberId);
+        //    }
+        //    private set { }
+        //}
     }
 }

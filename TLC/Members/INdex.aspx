@@ -15,12 +15,15 @@
                 I want to <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" role="menu">
+                 <% if (HttpContext.Current.User.IsInRole(TLC.Data.UserRepository.ReturnUserRole(TLC.Data.User.enumRole.Administrater)))
+                 { %>
                 <li role="presentation">
                     <asp:LinkButton ID="lnkAdd" runat="server" OnClick="lnkAdd_Click">
                             <span class="glyphicon glyphicon-user"></span> Add New Member
                     </asp:LinkButton>
                 </li>
                 <li role="presentation" class="divider"></li>
+                  <%} %>
                 <li role="presentation">
                     <a href="../export/members.aspx?type=xls" target="_blank">
                         <span class="glyphicon glyphicon-file"></span>Export To Excel
@@ -106,7 +109,7 @@
                                          Assign to Team
                                         </asp:LinkButton>
                                     </li>
-                                    <li role="presentation">
+                                    <li role="presentation" id="liEdit" runat="server">
                                         <asp:LinkButton ID="lnkEdit" runat="server" CommandName="Edit">
                                         <span class="glyphicon glyphicon-pencil btn btn-xs btn-info"></span>
                                          Edit
@@ -142,7 +145,7 @@
                                 <p><%# Eval("City") %>, <%# Eval("State") %> <%# Eval("ZipCode") %></p>
                                 <p><%# Eval("Phone") %></p>
                             </div>
-                            <a href="../home.aspx?TeamId=<%# Eval("Team.TeamId") %>" class="btn btn-xs btn-warning"><%# Eval("Team.TeamName") %></a>
+                            <asp:HyperLink ID="lnkTeamSummary" runat="server" CssClass="btn btn-xs btn-warning"></asp:HyperLink>                            
                         </td>
                         <td class="col-md-3 col-mobile">
                             <%# Eval("FullName") %>                    
@@ -153,7 +156,7 @@
                                 <%# Eval("Email") %></a>                 
                         </td>
                         <td class="col-md-3 col-mobile">
-                            <a href="../home.aspx?TeamId=<%# Eval("Team.TeamId") %>" class="btn btn-xs btn-warning"><%# Eval("Team.TeamName") %></a>
+                            <asp:HyperLink ID="lnkTeam" runat="server" CssClass="btn btn-xs btn-warning"></asp:HyperLink>                  
                         </td>
                         <td class="col-md-3 col-mobile">
                             <%# Eval("Address") %>

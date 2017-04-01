@@ -35,13 +35,13 @@ namespace TLC.Data
         [NotMapped]
         public string LatestCheckUpOutCome
         {
-            get
-            {
+            get            {
                 return this.CheckUps.Count > 0 ? this.CheckUps[0].Outcome : "";
             }
             private set { }
         }
         [NotMapped]
+        //public ICollection<CheckUp> CheckUps { get; set; }
         public List<CheckUp> CheckUps
         {
             get
@@ -51,23 +51,23 @@ namespace TLC.Data
             private set { }
         }
 
-        [NotMapped]
-        public Team Team
-        {
-            get
-            {
-                if (this.TeamId > 0)
-                {
-                    return new TeamRepository().FindBy(this.TeamId);
-                }
-                else
-                {
-                    return new Team("Not Assigned", "");
-                }
+        //[NotMapped]
+        //public Team Team
+        //{
+        //    get
+        //    {
+        //        if (this.TeamId > 0)
+        //        {
+        //            return new TeamRepository().FindBy(this.TeamId);
+        //        }
+        //        else
+        //        {
+        //            return new Team("Not Assigned", "");
+        //        }
 
-            }
-            private set { }
-        }
+        //    }
+        //    private set { }
+        //}
 
         #endregion
 

@@ -22,14 +22,18 @@
                     <label>Members:</label>
                     <asp:DropDownList ID="ddlMembers" ClientIDMode="Static" runat="server" CssClass="form-control" Width="150px"></asp:DropDownList>
                     <asp:Button ID="btnLoadCheckUps" runat="server" OnClick="btnLoadCheckUps_Click" Text="Load" CssClass="btn btn-sm btn-info" />
-                        <asp:Button ID="btnAddCheckUp" ClientIDMode="Static" runat="server" Text="Add Check Up" CssClass="btn btn-sm btn-info" OnClick="btnAddCheckUp_Click" />
+                        <asp:Button ID="btnAddCheckUp" ClientIDMode="Static" runat="server" Text="Add Check Up" CssClass="btn btn-sm btn-success" OnClick="btnAddCheckUp_Click" />
                     </div>                    
                 </div>
                 <div class="panel-body" style="min-height:400px; max-height:400px; overflow:auto;">
-                    <asp:GridView ID="grdCheckUps" runat="server" DataKeyNames="CheckUpId" AutoGenerateColumns="false" CssClass="table table-striped table-hover" OnRowCommand="grdCheckUps_RowCommand">
+                    <asp:GridView ID="grdCheckUps" runat="server" DataKeyNames="CheckUpId" AutoGenerateColumns="false" CssClass="table table-striped table-hover" OnRowCommand="grdCheckUps_RowCommand" OnRowDataBound="grdCheckUps_RowDataBound">
                         <Columns>   
-                            <asp:ButtonField CommandName="Edit" ControlStyle-CssClass="btn btn-xs btn-default" Text="<span class='glyphicon glyphicon-pencil'></span>" />
-                            <asp:BoundField DataField="Member.FullName" HeaderText="Member" Visible="false" />
+                            <asp:ButtonField CommandName="Edit" ControlStyle-CssClass="btn btn-xs btn-default" Text="<span class='glyphicon glyphicon-pencil'></span>" />                     
+                            <asp:TemplateField Visible="false" HeaderText="Member">
+                                <ItemTemplate>
+                                    <asp:Label ID="lblMember" runat="server" ></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
                             <asp:BoundField DataField="CheckUpDate" HeaderText="Date" DataFormatString="{0:d}" />
                             <asp:BoundField DataField="Method" HeaderText="Method" />
                             <asp:BoundField DataField="Outcome" HeaderText="Outcome" HeaderStyle-CssClass="col-mobile" ItemStyle-CssClass="col-mobile" />

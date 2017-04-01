@@ -21,13 +21,22 @@ namespace TLC.Data
         public string TeamNumber { get; set; }
 
         [NotMapped]
-        public List<Event> Events {
+
+        public ICollection<Event> Events
+        {
             get
             {
-                return new EventRepository().GetEventsByTeamId(TeamId);
+                return new EventRepository().GetEventsByTeamId(this.TeamId);
             }
+            set { }        
+        }
+        //public List<Event> Events {
+        //    get
+        //    {
+        //        return new EventRepository().GetEventsByTeamId(TeamId);
+        //    }
 
-            private set { } }
+        //    private set { } }
 
 
         [NotMapped]
@@ -51,7 +60,7 @@ namespace TLC.Data
         }
 
         [NotMapped]
-        public List<Member> Members
+        public ICollection<Member> Members
         {
 
             get

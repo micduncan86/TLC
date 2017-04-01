@@ -127,7 +127,13 @@ namespace TLC.Checkup
             }
             else
             {
-                ltrModalTitle.Text = "Add Check Up for " + data.Member.FullName;
+                var member = new MemberRepository().FindBy(data.TeamMemberId);
+                ltrModalTitle.Text = "";
+                if (member != null)
+                {
+                    ltrModalTitle.Text = "Edit Check Up for " + member.FullName;
+                }
+                
                 txtTeamId.Value = data.TeamId.ToString();
                 txtMemberId.Value = data.TeamMemberId.ToString();
                 txtOutcome.Text = data.Outcome;
@@ -191,6 +197,24 @@ namespace TLC.Checkup
 
             }
             e.Handled = true;
+        }
+
+        protected void grdCheckUps_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            MemberRepository provider = new MemberRepository();
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                Label ltrmember = e.Row.FindControl("lblMember") as Label;
+                CheckUp rowCheckUp = e.Row.DataItem as CheckUp;
+                if (ltrmember != null && rowCheckUp != null)
+                {
+                    Member checkupMember = provider.FindBy(rowCheckUp.TeamMemberId);
+                    if (checkupMember != null)
+                    {
+                        ltrmember.Text = checkupMember.FullName;
+                    }                    
+                }
+            }
         }
 
         protected void LoadMembers(int memberId = 0)
