@@ -63,7 +63,7 @@
                 <div class="panel-body" style="min-height: 125px; max-height: 125px;">
                     <p>
                         Team Number:
-                        <asp:TextBox ID="txtTeamNumber" runat="server" CssClass="form-control" Style="display: inline; width: 100px;"></asp:TextBox>
+                        <asp:TextBox ID="txtTeamNumber" runat="server" CssClass="form-control" Style="display: inline; width: 100px; height:25px;"></asp:TextBox>
                     </p>
                     <p>
                         Team Leader:
@@ -89,7 +89,7 @@
             </div>
         </div>
         <div class="col-md-8">
-            <div class="panel panel-default">
+            <div class="panel panel-default" id="divEvents">
                 <div class="panel-heading">
                     Events   
                     <span class="badge">
@@ -105,7 +105,7 @@
                                 <li role="presentation">
                                     <a href="#" id="lnkAddEvent">
                                         <span class="glyphicon glyphicon-plus btn btn-xs btn-success"></span>
-                                        Add New Event
+                                        Manage Events
                                     </a> 
                                 </li>
                             </ul>
@@ -119,10 +119,10 @@
                                 <table class="table table-striped table-hover">
                                     <thead>
                                         <tr>
-                                            <th class="col-xs-1"></th>
-                                            <th class="col-xs-2">Title</th>
                                             <th class="col-xs-2 col-mobile">Date</th>
+                                            <th class="col-xs-2">Title</th>                                            
                                             <th class="col-xs-7 col-mobile">Description</th>
+                                            <th class="col-xs-1 col-mobile">Status</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -139,11 +139,11 @@
                         <EmptyDataTemplate>
                             <strong>No Data</strong>
                         </EmptyDataTemplate>
-                        <ItemTemplate>
-                            <td class="col-xs-1"></td>
-                            <td class="col-xs-2"><%# Eval("Title") %></td>
-                            <td class="col-xs-2 col-mobile"><%# DateTime.Parse(Eval("EventDate").ToString()).ToShortDateString() %></td>
+                        <ItemTemplate>        
+                            <td class="col-xs-2 col-mobile"><%# Eval("EventDate", "{0:d}")%></td>
+                            <td class="col-xs-2"><%# Eval("Title") %></td>                            
                             <td class="col-xs-7 col-mobile"><%# Eval("Description") %></td>
+                            <td class="col-xs-7 col-mobile"><%# (bool)Eval("Completed") ? "Completed" : (bool)Eval("Cancelled") ? "Cancelled" : "Pending" %></td>
                         </ItemTemplate>
                     </asp:ListView>
                 </div>
@@ -239,9 +239,12 @@
         $(document).ready(function () {
             $("#lnkAddEvent").on("click", function (e) {
                 e.preventDefault();
-                //window.location = "../teams/events.aspx?Id=" + $("#hdnTeamId").val();
-                tlcEvent.AddNew("Add New Event");
+                window.location = "../teams/events.aspx?Id=" + $("#hdnTeamId").val();
+                //tlcEvent.AddNew("Add New Event");
             });
+
+            //tlcEvent.LoadEvents($("#hdnTeamId").val(),$("#divEvents").find(".panel-body"),null);
+ 
         });
     </script>
 </asp:Content>

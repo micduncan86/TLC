@@ -11,8 +11,9 @@ namespace TLC.Teams
     public partial class Events : System.Web.UI.Page
     {
         protected EventRepository evntRepo = new EventRepository();
+        protected TeamRepository teamManager = new TeamRepository();  
         protected int teamId;
-        SiteMaster master = null;
+        protected SiteMaster master = null;
         protected void Page_Load(object sender, EventArgs e)
         {
             master = ((SiteMaster)Page.Master);
@@ -36,8 +37,8 @@ namespace TLC.Teams
             {
                 datasource = teamId > 0 ? evntRepo.GetAll().Where(x => x.TeamId == teamId).ToList() : evntRepo.GetAll();
             }
-            grdEvents.DataSource = datasource;
-            grdEvents.DataBind();
+                        lstEvents.DataSource = datasource;
+            lstEvents.DataBind();
         }
 
         protected void lnkAdd_Click(object sender, EventArgs e)
@@ -56,6 +57,13 @@ namespace TLC.Teams
             txtEventDate.Text = myevent == null ? "" : myevent.EventDate.ToShortDateString();
             txtEventNotes.Text = myevent == null ? "" : myevent.Notes;
             chkIsComplete.Checked = myevent == null ? false : myevent.Completed;
+            chkIsCancelled.Checked = myevent == null ? false : myevent.Cancelled;
+
+            if (myevent != null && !myevent.Completed && !myevent.Cancelled)
+            {
+                chkIsPending.Checked = true;
+            }
+
             LoadTeams(ddlTeam, null);
             ddlTeam.SelectedIndex = myevent == null ? -1 : ddlTeam.Items.IndexOf(ddlTeam.Items.FindByValue(myevent.TeamId.ToString()));
         }
@@ -63,10 +71,17 @@ namespace TLC.Teams
         protected void LoadTeams(DropDownList ddl, object datasource = null)
         {
             if (ddl != null)
-            {
+            {                    
                 if (datasource == null)
                 {
-                    datasource = new TeamRepository().GetAll().ToList();
+                    if (User.IsInRole(UserRepository.ReturnUserRole(Data.User.enumRole.Administrater)))
+                    {
+                        datasource = teamManager.GetAll().ToList();
+                    }
+                    else
+                    {
+                        datasource = teamManager.GetAll().Where(x => x.TeamId == master.loggedUser.MyTeamId).ToList();
+                    }                 
                 }
 
                 ddl.DataSource = datasource;
@@ -76,12 +91,10 @@ namespace TLC.Teams
                 ddl.DataBind();
             }
         }
-
-        protected void grdEvents_RowCommand(object sender, GridViewCommandEventArgs e)
+        protected void lstEvents_ItemCommand(object sender, ListViewCommandEventArgs e)
         {
-            var grid = sender as GridView;
-            int rowIndex = Convert.ToInt32(e.CommandArgument);
-            int eventId = Convert.ToInt32(((GridView)sender).DataKeys[rowIndex][0]);
+            int rowIndex = e.Item.DataItemIndex;
+            int eventId = Convert.ToInt32(((ListView)sender).DataKeys[rowIndex].Value);
             switch (e.CommandName)
             {
                 case "Edit":
@@ -98,8 +111,9 @@ namespace TLC.Teams
                 default:
                     break;
             }
-        }
 
+        }
+        
         protected void lnkAddEvent_Click(object sender, EventArgs e)
         {
             var btn = sender as LinkButton;
@@ -111,9 +125,10 @@ namespace TLC.Teams
                 EventDate = Convert.ToDateTime(txtEventDate.Text),
                 Notes = txtEventNotes.Text,
                 Completed = chkIsComplete.Checked,
+                Cancelled = chkIsCancelled.Checked,
                 TeamId = ddlTeam.SelectedValue.Equals(string.Empty) ? 0 : Convert.ToInt32(ddlTeam.SelectedValue)
             };
-
+ 
             switch (btn.CommandName)
             {
                 case "New":

@@ -62,8 +62,12 @@ namespace TLC
                 txtTeamNumber.Text = data.TeamNumber;
                    lblTeamLeader.Text = data.TeamLeader != null ? data.TeamLeader.UserName : "Not Assigned";
                 lblCoLeader.Text = data.CoTeamLeader.UserName;
-                LoadEvents(data.Events);
-                LoadMembers(data.Members);
+                var Events = (List<TLC.Data.Event>)data.Events;
+
+                var Members = (List<TLC.Data.Member>)data.Members;
+
+                LoadEvents(Events);
+                LoadMembers(Members);
             }
             else
             {

@@ -22,7 +22,11 @@ namespace TLC.Users
             {
                 var user = UserManager.FindBy(UserId);
                 txtEmail.Text = user.Email;
-                txtOldPassword.Visible = false;
+
+                if (User.IsInRole(UserRepository.ReturnUserRole(Data.User.enumRole.Administrater)))
+                {
+                    txtOldPassword.Visible = false;
+                }
             }
         }
 
