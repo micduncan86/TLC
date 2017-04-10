@@ -48,6 +48,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.ReportViewer.WebForms, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System" />
@@ -215,6 +216,11 @@
     <Compile Include="Home.aspx.designer.cs">
       <DependentUpon>Home.aspx</DependentUpon>
     </Compile>
+    <Compile Include="MemberFollowUpDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MemberFollowUpDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Members\AddToTeam.aspx.cs">
       <DependentUpon>AddToTeam.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -238,12 +244,63 @@
     </Compile>
     <Compile Include="Models\team.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reports\RptMemberFollowUp.aspx.cs">
+      <DependentUpon>RptMemberFollowUp.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\RptMemberFollowUp.aspx.designer.cs">
+      <DependentUpon>RptMemberFollowUp.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\RptTeamList.aspx.cs">
+      <DependentUpon>RptTeamList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\RptTeamList.aspx.designer.cs">
+      <DependentUpon>RptTeamList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\RptTeamMonthlyReport.aspx.cs">
+      <DependentUpon>RptTeamMonthlyReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\RptTeamMonthlyReport.aspx.designer.cs">
+      <DependentUpon>RptTeamMonthlyReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\RptTeamRoster.aspx.cs">
+      <DependentUpon>RptTeamRoster.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\RptTeamRoster.aspx.designer.cs">
+      <DependentUpon>RptTeamRoster.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Site.Master.designer.cs">
       <DependentUpon>Site.Master</DependentUpon>
+    </Compile>
+    <Compile Include="TeamEventsDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TeamEventsDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="TeamListDataSet.cs">
+      <DependentUpon>TeamListDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="TeamListDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TeamListDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="TeamMemberCheckUpDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TeamMemberCheckUpDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="TeamRosterDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TeamRosterDataSet.xsd</DependentUpon>
     </Compile>
     <Compile Include="Teams\Events.aspx.cs">
       <DependentUpon>Events.aspx</DependentUpon>
@@ -315,6 +372,10 @@
     <Content Include="Members\AddToTeam.aspx" />
     <Content Include="Members\Index.aspx" />
     <Content Include="Members\new.aspx" />
+    <Content Include="Reports\RptMemberFollowUp.aspx" />
+    <Content Include="Reports\RptTeamList.aspx" />
+    <Content Include="Reports\RptTeamMonthlyReport.aspx" />
+    <Content Include="Reports\RptTeamRoster.aspx" />
     <Content Include="Scripts\app.js" />
     <Content Include="Scripts\bootstrap-datepicker.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -326,6 +387,17 @@
     <Content Include="App_Data\conn.local.config" />
     <Content Include="App_Data\conn.sandbox.config" />
     <Content Include="App_Data\conn.live.config" />
+    <Content Include="MemberFollowUpDataSet.xsc">
+      <DependentUpon>MemberFollowUpDataSet.xsd</DependentUpon>
+    </Content>
+    <None Include="MemberFollowUpDataSet.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>MemberFollowUpDataSet.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="MemberFollowUpDataSet.xss">
+      <DependentUpon>MemberFollowUpDataSet.xsd</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -370,6 +442,50 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <Content Include="TeamListDataSet.xsc">
+      <DependentUpon>TeamListDataSet.xsd</DependentUpon>
+    </Content>
+    <Content Include="TeamEventsDataSet.xsc">
+      <DependentUpon>TeamEventsDataSet.xsd</DependentUpon>
+    </Content>
+    <None Include="TeamEventsDataSet.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>TeamEventsDataSet.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="TeamEventsDataSet.xss">
+      <DependentUpon>TeamEventsDataSet.xsd</DependentUpon>
+    </Content>
+    <None Include="TeamListDataSet.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>TeamListDataSet.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="TeamListDataSet.xss">
+      <DependentUpon>TeamListDataSet.xsd</DependentUpon>
+    </Content>
+    <Content Include="TeamRosterDataSet.xsc">
+      <DependentUpon>TeamRosterDataSet.xsd</DependentUpon>
+    </Content>
+    <Content Include="TeamMemberCheckUpDataSet.xsc">
+      <DependentUpon>TeamMemberCheckUpDataSet.xsd</DependentUpon>
+    </Content>
+    <None Include="TeamMemberCheckUpDataSet.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>TeamMemberCheckUpDataSet.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="TeamMemberCheckUpDataSet.xss">
+      <DependentUpon>TeamMemberCheckUpDataSet.xsd</DependentUpon>
+    </Content>
+    <None Include="TeamRosterDataSet.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>TeamRosterDataSet.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="TeamRosterDataSet.xss">
+      <DependentUpon>TeamRosterDataSet.xsd</DependentUpon>
+    </Content>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -379,6 +495,13 @@
     </None>
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="RptMemberFollowUp.rdlc" />
+    <EmbeddedResource Include="RptTeamCheckUps.rdlc" />
+    <EmbeddedResource Include="RptTeamEvents.rdlc" />
+    <EmbeddedResource Include="RptTeamList.rdlc" />
+    <EmbeddedResource Include="RptTeamRoster.rdlc" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
