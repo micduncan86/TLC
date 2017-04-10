@@ -546,7 +546,9 @@
     <EmbeddedResource Include="RptMemberFollowUp.rdlc" />
     <EmbeddedResource Include="RptTeamCheckUps.rdlc" />
     <EmbeddedResource Include="RptTeamEvents.rdlc" />
-    <EmbeddedResource Include="RptTeamList.rdlc" />
+    <Content Include="RptTeamList.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <EmbeddedResource Include="RptTeamRoster.rdlc" />
   </ItemGroup>
   <PropertyGroup>
