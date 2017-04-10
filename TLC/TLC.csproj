@@ -314,12 +314,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>TeamEventsDataSet.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="TeamLeadersDataSet.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>TeamLeadersDataSet.xsd</DependentUpon>
-    </Compile>
+    </Compile>    
     <Compile Include="TeamListDataSet.cs">
       <DependentUpon>TeamListDataSet.xsd</DependentUpon>
     </Compile>
