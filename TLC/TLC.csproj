@@ -486,18 +486,7 @@
     </None>
     <Content Include="TeamEventsDataSet.xss">
       <DependentUpon>TeamEventsDataSet.xsd</DependentUpon>
-    </Content>
-    <Content Include="TeamLeadersDataSet.xsc">
-      <DependentUpon>TeamLeadersDataSet.xsd</DependentUpon>
-    </Content>
-    <None Include="TeamLeadersDataSet.xsd">
-      <SubType>Designer</SubType>
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>TeamLeadersDataSet.Designer.cs</LastGenOutput>
-    </None>
-    <Content Include="TeamLeadersDataSet.xss">
-      <DependentUpon>TeamLeadersDataSet.xsd</DependentUpon>
-    </Content>
+    </Content>    
     <None Include="TeamListDataSet.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
