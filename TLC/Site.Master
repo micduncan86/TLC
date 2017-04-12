@@ -119,9 +119,11 @@
                                     <div class="dropdown-menu" role="menu">
                                         <ul class="profile-dropdown-menu">
                                             <li role="presentation">
-                                                <a runat="server" href="~/Reports/RptTeamList.aspx">Team Roster</a>
+                                                <a runat="server" href="~/Reports/RptTeamList.aspx">Teams List</a>
                                             </li>
-                                            
+                                           <li role="presentation">
+                                                <a runat="server" href="~/Reports/RptTeamRoster.aspx">Teams Roster</a>
+                                            </li> 
 
                                         </ul>
                                     </div>
