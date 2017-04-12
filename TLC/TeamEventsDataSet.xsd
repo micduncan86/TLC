@@ -37,7 +37,7 @@
   <xs:element name="TeamEventsDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="TeamEventsDataSet" msprop:Generator_UserDSName="TeamEventsDataSet">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="RPT_TeamEvents" msprop:Generator_TableClassName="RPT_TeamEventsDataTable" msprop:Generator_TableVarName="tableRPT_TeamEvents" msprop:Generator_TablePropName="RPT_TeamEvents" msprop:Generator_RowDeletingName="RPT_TeamEventsRowDeleting" msprop:Generator_RowChangingName="RPT_TeamEventsRowChanging" msprop:Generator_RowEvHandlerName="RPT_TeamEventsRowChangeEventHandler" msprop:Generator_RowDeletedName="RPT_TeamEventsRowDeleted" msprop:Generator_UserTableName="RPT_TeamEvents" msprop:Generator_RowChangedName="RPT_TeamEventsRowChanged" msprop:Generator_RowEvArgName="RPT_TeamEventsRowChangeEvent" msprop:Generator_RowClassName="RPT_TeamEventsRow">
+        <xs:element name="RPT_TeamEvents" msprop:Generator_TableClassName="RPT_TeamEventsDataTable" msprop:Generator_TableVarName="tableRPT_TeamEvents" msprop:Generator_RowChangedName="RPT_TeamEventsRowChanged" msprop:Generator_TablePropName="RPT_TeamEvents" msprop:Generator_RowDeletingName="RPT_TeamEventsRowDeleting" msprop:Generator_RowChangingName="RPT_TeamEventsRowChanging" msprop:Generator_RowEvHandlerName="RPT_TeamEventsRowChangeEventHandler" msprop:Generator_RowDeletedName="RPT_TeamEventsRowDeleted" msprop:Generator_RowClassName="RPT_TeamEventsRow" msprop:Generator_UserTableName="RPT_TeamEvents" msprop:Generator_RowEvArgName="RPT_TeamEventsRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="TeamName" msprop:Generator_ColumnVarNameInTable="columnTeamName" msprop:Generator_ColumnPropNameInRow="TeamName" msprop:Generator_ColumnPropNameInTable="TeamNameColumn" msprop:Generator_UserColumnName="TeamName">
@@ -54,7 +54,7 @@
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="EventDate" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnEventDate" msprop:Generator_ColumnPropNameInRow="EventDate" msprop:Generator_ColumnPropNameInTable="EventDateColumn" msprop:Generator_UserColumnName="EventDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="EventDate" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnEventDate" msprop:Generator_ColumnPropNameInRow="EventDate" msprop:Generator_ColumnPropNameInTable="EventDateColumn" msprop:Generator_UserColumnName="EventDate" type="xs:string" minOccurs="0" />
               <xs:element name="EventDescription" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnEventDescription" msprop:Generator_ColumnPropNameInRow="EventDescription" msprop:Generator_ColumnPropNameInTable="EventDescriptionColumn" msprop:Generator_UserColumnName="EventDescription" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">

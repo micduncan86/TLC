@@ -247,10 +247,10 @@
     <Compile Include="Home.aspx.designer.cs">
       <DependentUpon>Home.aspx</DependentUpon>
     </Compile>
-    <Compile Include="4.Designer.cs">
+    <Compile Include="MemberFollowUpDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>4.xsd</DependentUpon>
+      <DependentUpon>MemberFollowUpDataSet.xsd</DependentUpon>
     </Compile>
     <Compile Include="Members\AddToTeam.aspx.cs">
       <DependentUpon>AddToTeam.aspx</DependentUpon>
@@ -281,6 +281,37 @@
     </Compile>
     <Compile Include="Reports\parameters.aspx.designer.cs">
       <DependentUpon>parameters.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\RptMemberFollowUp.aspx.cs">
+      <DependentUpon>RptMemberFollowUp.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\RptMemberFollowUp.aspx.designer.cs">
+      <DependentUpon>RptMemberFollowUp.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\RptTeamEvents.aspx.cs">
+      <DependentUpon>RptTeamEvents.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\RptTeamEvents.aspx.designer.cs">
+      <DependentUpon>RptTeamEvents.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\RptTeamList.aspx.cs">
+      <DependentUpon>RptTeamList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\RptTeamList.aspx.designer.cs">
+      <DependentUpon>RptTeamList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\RptTeamMonthlyReport.aspx.cs">
+      <DependentUpon>RptTeamMonthlyReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\RptTeamMonthlyReport.aspx.designer.cs">
+      <DependentUpon>RptTeamMonthlyReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\RptTeamRoster.aspx.cs">
+      <DependentUpon>RptTeamRoster.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\RptTeamRoster.aspx.designer.cs">
+      <DependentUpon>RptTeamRoster.aspx</DependentUpon>
     </Compile>
     <Compile Include="Reports\view.aspx.cs">
       <DependentUpon>view.aspx</DependentUpon>
@@ -313,9 +344,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>TeamMemberCheckUpDataSet.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="TeamRosterDataSet.cs">
-      <DependentUpon>TeamRosterDataSet.xsd</DependentUpon>
     </Compile>
     <Compile Include="TeamRosterDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -393,6 +421,11 @@
     <Content Include="Members\Index.aspx" />
     <Content Include="Members\new.aspx" />
     <Content Include="Reports\parameters.aspx" />
+    <Content Include="Reports\RptMemberFollowUp.aspx" />
+    <Content Include="Reports\RptTeamEvents.aspx" />
+    <Content Include="Reports\RptTeamList.aspx" />
+    <Content Include="Reports\RptTeamMonthlyReport.aspx" />
+    <Content Include="Reports\RptTeamRoster.aspx" />
     <Content Include="Reports\view.aspx" />
     <Content Include="Scripts\app.js" />
     <Content Include="Scripts\bootstrap-datepicker.js" />
@@ -405,16 +438,16 @@
     <Content Include="App_Data\conn.local.config" />
     <Content Include="App_Data\conn.sandbox.config" />
     <Content Include="App_Data\conn.live.config" />
-    <Content Include="4.xsc">
-      <DependentUpon>4.xsd</DependentUpon>
+    <Content Include="MemberFollowUpDataSet.xsc">
+      <DependentUpon>MemberFollowUpDataSet.xsd</DependentUpon>
     </Content>
-    <None Include="4.xsd">
+    <None Include="MemberFollowUpDataSet.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>4.Designer.cs</LastGenOutput>
+      <LastGenOutput>MemberFollowUpDataSet.Designer.cs</LastGenOutput>
     </None>
-    <Content Include="4.xss">
-      <DependentUpon>4.xsd</DependentUpon>
+    <Content Include="MemberFollowUpDataSet.xss">
+      <DependentUpon>MemberFollowUpDataSet.xsd</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -512,21 +545,27 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <Content Include="Reports\RptMemberFollowUp.rdlc">
+    <EmbeddedResource Include="Reports\RptMemberFollowUp.rdlc" />
+    <EmbeddedResource Include="Reports\RptTeamCheckUps.rdlc" />
+    <EmbeddedResource Include="Reports\RptTeamEvents.rdlc" />
+    <EmbeddedResource Include="Reports\RptTeamList.rdlc" />
+    <EmbeddedResource Include="Reports\RptTeamRoster.rdlc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="RptMemberFollowUp.rdlc">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Reports\RptTeamCheckUps.rdlc">
+    <Content Include="RptTeamCheckUps.rdlc">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Reports\RptTeamEvents.rdlc">
+    <Content Include="RptTeamEvents.rdlc">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Reports\RptTeamList.rdlc">
+    <Content Include="RptTeamList.rdlc">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Reports\RptTeamRoster.rdlc">
+    <Content Include="RptTeamRoster.rdlc">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
