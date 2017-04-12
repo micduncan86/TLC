@@ -344,7 +344,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>TeamMemberCheckUpDataSet.xsd</DependentUpon>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="TeamRosterDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -521,17 +520,14 @@
     </Content>
     <Content Include="TeamMemberCheckUpDataSet.xsc">
       <DependentUpon>TeamMemberCheckUpDataSet.xsd</DependentUpon>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TeamMemberCheckUpDataSet.xsd">
+    <None Include="TeamMemberCheckUpDataSet.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>TeamMemberCheckUpDataSet.Designer.cs</LastGenOutput>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    </None>
     <Content Include="TeamMemberCheckUpDataSet.xss">
       <DependentUpon>TeamMemberCheckUpDataSet.xsd</DependentUpon>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="TeamRosterDataSet.xsd">
       <SubType>Designer</SubType>
@@ -550,16 +546,36 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Reports\RptMemberFollowUp.rdlc" />
-    <EmbeddedResource Include="Reports\RptTeamCheckUps.rdlc" />
-    <EmbeddedResource Include="Reports\RptTeamEvents.rdlc" />
-    <EmbeddedResource Include="Reports\RptTeamList.rdlc" />
-    <EmbeddedResource Include="Reports\RptTeamRoster.rdlc" />
-    <EmbeddedResource Include="RptMemberFollowUp.rdlc" />
-    <EmbeddedResource Include="RptTeamCheckUps.rdlc" />
-    <EmbeddedResource Include="RptTeamEvents.rdlc" />
-    <EmbeddedResource Include="RptTeamList.rdlc" />
-    <EmbeddedResource Include="RptTeamRoster.rdlc" />
+    <Content Include="Reports\RptMemberFollowUp.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\RptTeamCheckUps.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\RptTeamEvents.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\RptTeamList.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\RptTeamRoster.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="RptMemberFollowUp.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="RptTeamCheckUps.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="RptTeamEvents.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="RptTeamList.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="RptTeamRoster.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
