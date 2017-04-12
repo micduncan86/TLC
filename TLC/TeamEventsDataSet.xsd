@@ -62,7 +62,7 @@
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="EventCompleted" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnEventCompleted" msprop:Generator_ColumnPropNameInRow="EventCompleted" msprop:Generator_ColumnPropNameInTable="EventCompletedColumn" msprop:Generator_UserColumnName="EventCompleted" type="xs:boolean" minOccurs="0" />
+              <xs:element name="EventCompleted" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnEventCompleted" msprop:Generator_ColumnPropNameInRow="EventCompleted" msprop:Generator_ColumnPropNameInTable="EventCompletedColumn" msprop:Generator_UserColumnName="EventCompleted" type="xs:string" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
