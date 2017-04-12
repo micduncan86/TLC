@@ -551,23 +551,11 @@
     <EmbeddedResource Include="Reports\RptTeamEvents.rdlc" />
     <EmbeddedResource Include="Reports\RptTeamList.rdlc" />
     <EmbeddedResource Include="Reports\RptTeamRoster.rdlc" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="RptMemberFollowUp.rdlc">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="RptTeamCheckUps.rdlc">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="RptTeamEvents.rdlc">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="RptTeamList.rdlc">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="RptTeamRoster.rdlc">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <EmbeddedResource Include="RptMemberFollowUp.rdlc" />
+    <EmbeddedResource Include="RptTeamCheckUps.rdlc" />
+    <EmbeddedResource Include="RptTeamEvents.rdlc" />
+    <EmbeddedResource Include="RptTeamList.rdlc" />
+    <EmbeddedResource Include="RptTeamRoster.rdlc" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
