@@ -344,6 +344,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>TeamMemberCheckUpDataSet.xsd</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="TeamRosterDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -520,14 +521,17 @@
     </Content>
     <Content Include="TeamMemberCheckUpDataSet.xsc">
       <DependentUpon>TeamMemberCheckUpDataSet.xsd</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="TeamMemberCheckUpDataSet.xsd">
+    <Content Include="TeamMemberCheckUpDataSet.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>TeamMemberCheckUpDataSet.Designer.cs</LastGenOutput>
-    </None>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="TeamMemberCheckUpDataSet.xss">
       <DependentUpon>TeamMemberCheckUpDataSet.xsd</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="TeamRosterDataSet.xsd">
       <SubType>Designer</SubType>

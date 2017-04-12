@@ -429,7 +429,7 @@ namespace TLC {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public RPT_TeamCheckUpsRow AddRPT_TeamCheckUpsRow(string TeamName, string TeamLeader, string FirstName, string LastName, System.DateTime CheckUpDate, string Method, string Outcome, string RequiresAction) {
+            public RPT_TeamCheckUpsRow AddRPT_TeamCheckUpsRow(string TeamName, string TeamLeader, string FirstName, string LastName, string CheckUpDate, string Method, string Outcome, string RequiresAction) {
                 RPT_TeamCheckUpsRow rowRPT_TeamCheckUpsRow = ((RPT_TeamCheckUpsRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         TeamName,
@@ -483,7 +483,7 @@ namespace TLC {
                 base.Columns.Add(this.columnFirstName);
                 this.columnLastName = new global::System.Data.DataColumn("LastName", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnLastName);
-                this.columnCheckUpDate = new global::System.Data.DataColumn("CheckUpDate", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
+                this.columnCheckUpDate = new global::System.Data.DataColumn("CheckUpDate", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnCheckUpDate);
                 this.columnMethod = new global::System.Data.DataColumn("Method", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnMethod);
@@ -703,10 +703,10 @@ namespace TLC {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public System.DateTime CheckUpDate {
+            public string CheckUpDate {
                 get {
                     try {
-                        return ((global::System.DateTime)(this[this.tableRPT_TeamCheckUps.CheckUpDateColumn]));
+                        return ((string)(this[this.tableRPT_TeamCheckUps.CheckUpDateColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
                         throw new global::System.Data.StrongTypingException("The value for column \'CheckUpDate\' in table \'RPT_TeamCheckUps\' is DBNull.", e);
