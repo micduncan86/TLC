@@ -122,9 +122,17 @@
                                                 <a runat="server" href="~/Reports/RptTeamList.aspx">Teams List</a>
                                             </li>
                                            <li role="presentation">
-                                                <a runat="server" href="~/Reports/RptTeamRoster.aspx">Teams Roster</a>
+                                                <a runat="server" href="~/Reports/RptTeamRoster.aspx">Team Rosters</a>
                                             </li> 
-
+                                            <li role="presentation">
+                                                <a runat="server" href="~/Reports/RptTeamEvents.aspx">Team Events</a>
+                                            </li> 
+                                             <li role="presentation">
+                                                <a runat="server" href="~/Reports/RptTeamMonthlyReport.aspx">Team Monthly Report</a>
+                                            </li> 
+                                            <li role="presentation">
+                                                <a runat="server" href="~/Reports/RptMemberFollowUp.aspx">Team Member Follow Up</a>
+                                            </li> 
                                         </ul>
                                     </div>
                                 </li>

@@ -10,7 +10,7 @@
 namespace TLC.Reports {
     
     
-    public partial class RptMemberFollowUp {
+    public partial class RptTeamEvents {
         
         /// <summary>
         /// ReportViewer1 control.
