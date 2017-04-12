@@ -399,7 +399,7 @@ namespace TLC {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public RPT_TeamEventsRow AddRPT_TeamEventsRow(string TeamName, string TeamLeader, System.DateTime EventDate, string EventDescription, bool EventCompleted) {
+            public RPT_TeamEventsRow AddRPT_TeamEventsRow(string TeamName, string TeamLeader, string EventDate, string EventDescription, bool EventCompleted) {
                 RPT_TeamEventsRow rowRPT_TeamEventsRow = ((RPT_TeamEventsRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         TeamName,
@@ -443,7 +443,7 @@ namespace TLC {
                 base.Columns.Add(this.columnTeamName);
                 this.columnTeamLeader = new global::System.Data.DataColumn("TeamLeader", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnTeamLeader);
-                this.columnEventDate = new global::System.Data.DataColumn("EventDate", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
+                this.columnEventDate = new global::System.Data.DataColumn("EventDate", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnEventDate);
                 this.columnEventDescription = new global::System.Data.DataColumn("EventDescription", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnEventDescription);
@@ -625,10 +625,10 @@ namespace TLC {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public System.DateTime EventDate {
+            public string EventDate {
                 get {
                     try {
-                        return ((global::System.DateTime)(this[this.tableRPT_TeamEvents.EventDateColumn]));
+                        return ((string)(this[this.tableRPT_TeamEvents.EventDateColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
                         throw new global::System.Data.StrongTypingException("The value for column \'EventDate\' in table \'RPT_TeamEvents\' is DBNull.", e);
