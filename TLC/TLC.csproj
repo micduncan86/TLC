@@ -282,6 +282,13 @@
     <Compile Include="Reports\RptMemberFollowUp.aspx.designer.cs">
       <DependentUpon>RptMemberFollowUp.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Reports\RptTeamEvents.aspx.cs">
+      <DependentUpon>RptTeamEvents.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\RptTeamEvents.aspx.designer.cs">
+      <DependentUpon>RptTeamEvents.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Reports\RptTeamList.aspx.cs">
       <DependentUpon>RptTeamList.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -404,6 +411,7 @@
     <Content Include="Members\Index.aspx" />
     <Content Include="Members\new.aspx" />
     <Content Include="Reports\RptMemberFollowUp.aspx" />
+    <Content Include="Reports\RptTeamEvents.aspx" />
     <Content Include="Reports\RptTeamList.aspx" />
     <Content Include="Reports\RptTeamMonthlyReport.aspx" />
     <Content Include="Reports\RptTeamRoster.aspx" />
