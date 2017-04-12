@@ -40,7 +40,7 @@
   <xs:element name="TeamMemberCheckUpDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="TeamMemberCheckUpDataSet" msprop:Generator_UserDSName="TeamMemberCheckUpDataSet">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="RPT_TeamCheckUps" msprop:Generator_TableClassName="RPT_TeamCheckUpsDataTable" msprop:Generator_TableVarName="tableRPT_TeamCheckUps" msprop:Generator_TablePropName="RPT_TeamCheckUps" msprop:Generator_RowDeletingName="RPT_TeamCheckUpsRowDeleting" msprop:Generator_RowChangingName="RPT_TeamCheckUpsRowChanging" msprop:Generator_RowEvHandlerName="RPT_TeamCheckUpsRowChangeEventHandler" msprop:Generator_RowDeletedName="RPT_TeamCheckUpsRowDeleted" msprop:Generator_UserTableName="RPT_TeamCheckUps" msprop:Generator_RowChangedName="RPT_TeamCheckUpsRowChanged" msprop:Generator_RowEvArgName="RPT_TeamCheckUpsRowChangeEvent" msprop:Generator_RowClassName="RPT_TeamCheckUpsRow">
+        <xs:element name="RPT_TeamCheckUps" msprop:Generator_TableClassName="RPT_TeamCheckUpsDataTable" msprop:Generator_TableVarName="tableRPT_TeamCheckUps" msprop:Generator_RowChangedName="RPT_TeamCheckUpsRowChanged" msprop:Generator_TablePropName="RPT_TeamCheckUps" msprop:Generator_RowDeletingName="RPT_TeamCheckUpsRowDeleting" msprop:Generator_RowChangingName="RPT_TeamCheckUpsRowChanging" msprop:Generator_RowEvHandlerName="RPT_TeamCheckUpsRowChangeEventHandler" msprop:Generator_RowDeletedName="RPT_TeamCheckUpsRowDeleted" msprop:Generator_RowClassName="RPT_TeamCheckUpsRow" msprop:Generator_UserTableName="RPT_TeamCheckUps" msprop:Generator_RowEvArgName="RPT_TeamCheckUpsRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="TeamName" msprop:Generator_ColumnVarNameInTable="columnTeamName" msprop:Generator_ColumnPropNameInRow="TeamName" msprop:Generator_ColumnPropNameInTable="TeamNameColumn" msprop:Generator_UserColumnName="TeamName">
@@ -71,7 +71,7 @@
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="CheckUpDate" msprop:Generator_ColumnVarNameInTable="columnCheckUpDate" msprop:Generator_ColumnPropNameInRow="CheckUpDate" msprop:Generator_ColumnPropNameInTable="CheckUpDateColumn" msprop:Generator_UserColumnName="CheckUpDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="CheckUpDate" msprop:Generator_ColumnVarNameInTable="columnCheckUpDate" msprop:Generator_ColumnPropNameInRow="CheckUpDate" msprop:Generator_ColumnPropNameInTable="CheckUpDateColumn" msprop:Generator_UserColumnName="CheckUpDate" type="xs:string" minOccurs="0" />
               <xs:element name="Method" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnMethod" msprop:Generator_ColumnPropNameInRow="Method" msprop:Generator_ColumnPropNameInTable="MethodColumn" msprop:Generator_UserColumnName="Method" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
