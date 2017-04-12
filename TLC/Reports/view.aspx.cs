@@ -32,7 +32,7 @@ namespace TLC.Reports
                 data.Value = TLC.Data.Reports.GetData(report.ReportType);
                 data.Name = "DataSet1";
                 ReportViewer1.LocalReport.DataSources.Add(data);
-                ReportViewer1.LocalReport.ReportPath = string.Format("../Reports/{0}.rdlc",report.ReportFile);                
+                ReportViewer1.LocalReport.ReportPath = string.Format("Reports/{0}.rdlc",report.ReportFile);                
 
             }            
             ReportViewer1.LocalReport.Refresh();
