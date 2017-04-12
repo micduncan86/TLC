@@ -117,11 +117,10 @@
                                         <span class="caret"></span>
                                     </a>
                                     <div class="dropdown-menu" role="menu">
-                                        <ul class="profile-dropdown-menu">
+                                        <ul class="profile-dropdown-menu">                                         
                                             <li role="presentation">
-                                                <a runat="server" href="~/Reports/RptTeamList.aspx">Team Roster</a>
+                                                <a runat="server" href="~/reports/parameters.aspx">Report Listing</a>
                                             </li>
-                                            
 
                                         </ul>
                                     </div>
