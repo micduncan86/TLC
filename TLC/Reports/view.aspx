@@ -20,7 +20,7 @@
     </form>
     <script type="text/javascript">
         $(document).ready(function () {
-            $("#ReportViewer1").height($(window).height() - 30);
+            $("#ReportViewer1").height($(window).height() - 30).css("min-height","500px");
         });
     </script>
 </body>
