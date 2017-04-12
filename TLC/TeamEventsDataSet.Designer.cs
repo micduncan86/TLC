@@ -399,7 +399,7 @@ namespace TLC {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public RPT_TeamEventsRow AddRPT_TeamEventsRow(string TeamName, string TeamLeader, string EventDate, string EventDescription, bool EventCompleted) {
+            public RPT_TeamEventsRow AddRPT_TeamEventsRow(string TeamName, string TeamLeader, string EventDate, string EventDescription, string EventCompleted) {
                 RPT_TeamEventsRow rowRPT_TeamEventsRow = ((RPT_TeamEventsRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         TeamName,
@@ -447,7 +447,7 @@ namespace TLC {
                 base.Columns.Add(this.columnEventDate);
                 this.columnEventDescription = new global::System.Data.DataColumn("EventDescription", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnEventDescription);
-                this.columnEventCompleted = new global::System.Data.DataColumn("EventCompleted", typeof(bool), null, global::System.Data.MappingType.Element);
+                this.columnEventCompleted = new global::System.Data.DataColumn("EventCompleted", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnEventCompleted);
                 this.columnTeamName.AllowDBNull = false;
                 this.columnTeamName.MaxLength = 50;
@@ -657,10 +657,10 @@ namespace TLC {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool EventCompleted {
+            public string EventCompleted {
                 get {
                     try {
-                        return ((bool)(this[this.tableRPT_TeamEvents.EventCompletedColumn]));
+                        return ((string)(this[this.tableRPT_TeamEvents.EventCompletedColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
                         throw new global::System.Data.StrongTypingException("The value for column \'EventCompleted\' in table \'RPT_TeamEvents\' is DBNull.", e);
