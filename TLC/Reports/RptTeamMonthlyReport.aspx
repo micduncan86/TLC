@@ -16,5 +16,5 @@
                 </DataSources>
             </LocalReport>
         </rsweb:ReportViewer>
-        <asp:ObjectDataSource ID="ObjectDataSource1" runat="server" SelectMethod="GetData" TypeName="TLC.TeamMemberCheckUpDataSetTableAdapters.RPT_TeamCheckUpsTableAdapter"></asp:ObjectDataSource>
+        <asp:ObjectDataSource ID="ObjectDataSource1" runat="server" SelectMethod="GetData" TypeName="TLC.TeamMemberCheckUpDataSetTableAdapters.RPT_TeamCheckUpsTableAdapter" OldValuesParameterFormatString="original_{0}"></asp:ObjectDataSource>
 </asp:Content>
