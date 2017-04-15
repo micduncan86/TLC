@@ -23,7 +23,9 @@ body {
     background-image: url("../images/logo.png");
     background-repeat: no-repeat;
     background-size: contain;
-    padding: 10% 0 !important;
+    width: 600px;
+    height: 250px;
+    margin: 0 auto;
 }
 
 .navbar-brand {

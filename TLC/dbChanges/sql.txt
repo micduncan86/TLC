@@ -222,3 +222,16 @@ IF NOT EXISTS(Select * From INFORMATION_SCHEMA.COLUMNS Where TABLE_NAME = 'Check
 BEGIN
 ALTER TABLE [Checkup] ADD [AddedById] int NOT NULL DEFAULT -1
 END;
+
+IF  NOT EXISTS (SELECT * FROM sys.objects 
+WHERE object_id = OBJECT_ID(N'[dbo].[Report]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[Reports]
+(
+	[ReportId] INT NOT NULL  IDENTITY, 
+    [Name] NVARCHAR(100) NOT NULL, 
+    [Description] NVARCHAR(350) NULL, 
+    [FileName] NVARCHAR(250) NULL, 
+    PRIMARY KEY ([ReportId], [Name])
+)
+END;

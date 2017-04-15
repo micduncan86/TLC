@@ -17,7 +17,7 @@ namespace TLC.Data
         void Save();
 
     }
-
+    public interface IReportRepository : IRepository<Report> { }
     public interface ICheckUpRepository : IRepository<CheckUp> { }
     public interface IEventRepository : IRepository<Event> { }
     public interface IMemberRepository : IRepository<Member> { }

@@ -8,11 +8,13 @@ using System.Web.UI.WebControls;
 using TLC.Data;
 
 namespace TLC.Reports
-{
+{    
     public partial class view : System.Web.UI.Page
     {
+        protected CacheManager cache;
         protected void Page_Load(object sender, EventArgs e)
         {
+            cache = new CacheManager();
             if (!Page.IsPostBack)
             {
                 string rptName = Request.Params.Get("Report");
@@ -25,14 +27,19 @@ namespace TLC.Reports
             ReportViewer1.LocalReport.DataSources.Clear();
 
 
-            var report = TLC.Data.Reports.GetReports().Where(x => x.Name == ReportName).FirstOrDefault();
+            var report = new ReportRepository().GetReportByName(ReportName);
             if (report != null)
             {
                 Microsoft.Reporting.WebForms.ReportDataSource data = new Microsoft.Reporting.WebForms.ReportDataSource();
-                data.Value = TLC.Data.Reports.GetData(report.ReportType);
+                ReportParameters rptParams = null; 
+                if (cache.CacheList.ContainsKey("rptParams"))
+                {
+                    rptParams = cache.CacheList["rptParams"] as ReportParameters;
+                }
+                data.Value = report.GetData(rptParams);
                 data.Name = "DataSet1";
                 ReportViewer1.LocalReport.DataSources.Add(data);
-                ReportViewer1.LocalReport.ReportPath = string.Format("Reports/{0}.rdlc",report.ReportFile);                
+                ReportViewer1.LocalReport.ReportPath = string.Format("Reports/{0}.rdlc",report.FileName);                
 
             }            
             ReportViewer1.LocalReport.Refresh();

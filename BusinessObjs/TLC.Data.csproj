@@ -20,6 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -53,13 +54,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseEntity.cs" />
+    <Compile Include="CacheManager.cs" />
     <Compile Include="CheckUp.cs" />
     <Compile Include="Email.cs" />
     <Compile Include="Event.cs" />
     <Compile Include="Interfaces.cs" />
     <Compile Include="Member.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Reports.cs" />
+    <Compile Include="Report.cs" />
+    <Compile Include="ReportParameters.cs" />
+    <Compile Include="ReportRepository.cs" />
     <Compile Include="Repository.cs" />
     <Compile Include="Team.cs" />
     <Compile Include="Token.cs" />

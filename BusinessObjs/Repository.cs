@@ -74,6 +74,7 @@ namespace TLC.Data
         public DbSet<Member> TeamMembers { get; set; }
         public DbSet<Token> Tokens { get; set; }
         public DbSet<CheckUp> CheckUps { get; set; }
+        public DbSet<Report> Reports { get; set; }
 
         protected void AddTimeStampsUser()
         {
@@ -118,7 +119,6 @@ namespace TLC.Data
     }
     public class MemberRepository : RepositoryBase<Member>, IMemberRepository
     {
-
         public List<Member> GetMembersByTeamId(int teamid)
         {
             return (from members in _dbSet
@@ -139,6 +139,8 @@ namespace TLC.Data
         }
 
     }
+    public partial class ReportRepository: RepositoryBase<Report>, IReportRepository
+    {        }
 
 
     public class TeamRepository : RepositoryBase<Team>, ITeamRepository

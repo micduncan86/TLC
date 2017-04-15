@@ -33,6 +33,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -166,13 +167,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="About.aspx.cs">
-      <DependentUpon>About.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="About.aspx.designer.cs">
-      <DependentUpon>About.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Account\Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -195,13 +189,6 @@
     </Compile>
     <Compile Include="Checkup\index.aspx.designer.cs">
       <DependentUpon>index.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Contact.aspx.cs">
-      <DependentUpon>Contact.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Contact.aspx.designer.cs">
-      <DependentUpon>Contact.aspx</DependentUpon>
     </Compile>
     <Compile Include="Controllers\TeamController.cs" />
     <Compile Include="Controllers\TeamMembersController.cs" />
@@ -284,6 +271,7 @@
     </Compile>
     <Compile Include="Reports\RptMemberFollowUp.aspx.cs">
       <DependentUpon>RptMemberFollowUp.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Reports\RptMemberFollowUp.aspx.designer.cs">
       <DependentUpon>RptMemberFollowUp.aspx</DependentUpon>
@@ -297,18 +285,21 @@
     </Compile>
     <Compile Include="Reports\RptTeamList.aspx.cs">
       <DependentUpon>RptTeamList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Reports\RptTeamList.aspx.designer.cs">
       <DependentUpon>RptTeamList.aspx</DependentUpon>
     </Compile>
     <Compile Include="Reports\RptTeamMonthlyReport.aspx.cs">
       <DependentUpon>RptTeamMonthlyReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Reports\RptTeamMonthlyReport.aspx.designer.cs">
       <DependentUpon>RptTeamMonthlyReport.aspx</DependentUpon>
     </Compile>
     <Compile Include="Reports\RptTeamRoster.aspx.cs">
       <DependentUpon>RptTeamRoster.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Reports\RptTeamRoster.aspx.designer.cs">
       <DependentUpon>RptTeamRoster.aspx</DependentUpon>
@@ -393,11 +384,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="About.aspx" />
     <Content Include="Account\Login.aspx" />
     <Content Include="Checkup\add.aspx" />
     <Content Include="Checkup\index.aspx" />
-    <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap-datepicker.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
