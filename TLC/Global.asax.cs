@@ -77,12 +77,22 @@ namespace TLC
                 {
                     if (User.Identity is FormsIdentity)
                     {
+                        CacheManager cache = new CacheManager();
                         FormsIdentity id = (FormsIdentity)User.Identity;
                         FormsAuthenticationTicket tkt = id.Ticket;
-                        var jSerializer = new System.Web.Script.Serialization.JavaScriptSerializer();
-                        var json = System.Text.Encoding.Default.GetString(Convert.FromBase64String(tkt.UserData));
-                        var lgn = jSerializer.Deserialize(json, new User().GetType());
-                        HttpContext.Current.User = new GenericPrincipal(id,((TLC.Data.User)lgn).Role.Split(','));                        
+                        TLC.Data.User lgn = null;
+                        if (!cache.CacheList.ContainsKey("LoggedInUser"))
+                        {
+                            var jSerializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+                            var json = System.Text.Encoding.Default.GetString(Convert.FromBase64String(tkt.UserData));
+                            lgn = jSerializer.Deserialize<TLC.Data.User>(json);
+                            cache.CacheList.Add("LoggedInUser", lgn);
+                        }
+                        else
+                        {
+                            lgn = cache.CacheList["LoggedInUser"] as TLC.Data.User;
+                        }             
+                        HttpContext.Current.User = new GenericPrincipal(id, lgn.Role.Split(','));                        
                     }
                 }
             }

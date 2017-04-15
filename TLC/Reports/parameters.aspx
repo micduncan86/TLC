@@ -13,30 +13,50 @@
                 <div class="panel-body">
                     <div class="form-group form-inline">
                         <label>Report Selection:</label>
-                        <asp:DropDownList ID="ddlReports" runat="server" CssClass="form-control"></asp:DropDownList>
+                        <asp:DropDownList ID="ddlReports" runat="server" CssClass="form-control" AutoPostBack="true" OnSelectedIndexChanged="ddlReports_SelectedIndexChanged"></asp:DropDownList>
                     </div>  
+                    <div id="divTeams" runat="server" class="form-group form-inline" visible="false">
+                        <label>Team Selection:</label>
+                        <asp:DropDownList ID="ddlTeams" runat="server" CssClass="form-control" AutoPostBack="true" OnSelectedIndexChanged="ddlTeams_SelectedIndexChanged"></asp:DropDownList>
+                    </div> 
+                    <div id="divMembers" runat="server" class="form-group form-inline" visible="false">
+                        <label>Member Selection:</label>
+                        <asp:DropDownList ID="ddlMembers" runat="server" CssClass="form-control"></asp:DropDownList>
+                    </div> 
+                    <div id="divDateRange" runat="server" class="form-group form-inline" visible="false">
+                        <label>Dates:</label>
+                        <label>From:</label>
+                        <asp:TextBox ID="txtFrom" runat="server" CssClass="form-control datepicker" data-date-format="mm/dd/yyyy" placeholder="From Date"></asp:TextBox>
+                        <label>To:</label>
+                        <asp:TextBox ID="txtTo" runat="server" CssClass="form-control datepicker" data-date-format="mm/dd/yyyy" placeholder="To Date"></asp:TextBox>
+                    </div> 
                     <div class="form-group">
-                        <button id="btnShow" class="btn btn-md btn-info">
+                        <asp:LinkButton ID="btnShow" runat="server" CssClass="btn btn-md btn-info" OnClick="btnShow_Click">
                             <span>Show Report</span>
-                        </button>
-                    </div>                  
+                        </asp:LinkButton>                        
+                    </div>                                       
                 </div>
             </div>
         </div>
     </div>
     <script type="text/javascript">
-        $(document).ready(function () {
-            $("#btnShow").on("click", function (e) {
+        function ShowReport(rptName) {
+            $(document).ready(function () {
                 var n = app.GlobalDialog.init("Report View", function () {
-                    var url = "../reports/view.aspx?Report=" + $("#MainContent_ddlReports").val();
+                    var url = "../reports/view.aspx?Report=" + rptName;
                     $(".modal-dialog").width($(window).width() * .9);
                     $(".modal-content").height($(window).height() * .9);
                     var container = n.find(".modal-body");
-                    var iframe = $("<iframe>").css("width", "100%").css("border","none")
+                    var iframe = $("<iframe>").css("width", "100%").css("border", "none")
                     .attr("src", url).appendTo(container);
                     iframe.height($(".modal-content").height() - 105);
                 });
-                e.preventDefault();
+            });            
+        }
+        $(document).ready(function () {
+            $(".datepicker").datepicker({
+                format: "mm/dd/yyyy",
+                orientation: "auto bottom"
             });
         });
     </script>
