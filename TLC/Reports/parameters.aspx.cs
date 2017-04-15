@@ -56,6 +56,7 @@ namespace TLC.Reports
         {
             divTeams.Visible = false;
             divMembers.Visible = false;
+            divDateRange.Visible = false;
             if (ddlReports.SelectedItem == null || String.IsNullOrWhiteSpace(ddlReports.SelectedItem.Text))
             {
                 return;

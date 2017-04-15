@@ -226,7 +226,7 @@ END;
 IF  NOT EXISTS (SELECT * FROM sys.objects 
 WHERE object_id = OBJECT_ID(N'[dbo].[Report]') AND type in (N'U'))
 BEGIN
-CREATE TABLE [dbo].[Reports]
+CREATE TABLE [dbo].[Report]
 (
 	[ReportId] INT NOT NULL  IDENTITY, 
     [Name] NVARCHAR(100) NOT NULL, 
@@ -235,3 +235,25 @@ CREATE TABLE [dbo].[Reports]
     PRIMARY KEY ([ReportId], [Name])
 )
 END;
+SET IDENTITY_INSERT [dbo].[Report] ON
+IF NOT EXISTS(Select * FROM [dbo].[Report] WHERE  [Report].[Name] = 'Team Roster')
+BEGIN
+INSERT INTO [dbo].[Report] ([ReportId], [Name], [Description], [FileName]) VALUES (1, N'Team Roster', NULL, N'RptTeamRoster')
+END
+IF NOT EXISTS(Select * FROM [dbo].[Report] WHERE  [Report].[Name] = 'Team List')
+BEGIN
+INSERT INTO [dbo].[Report] ([ReportId], [Name], [Description], [FileName]) VALUES (2, N'Team List', NULL, N'RptTeamList')
+END
+IF NOT EXISTS(Select * FROM [dbo].[Report] WHERE  [Report].[Name] = 'Team Events')
+BEGIN
+INSERT INTO [dbo].[Report] ([ReportId], [Name], [Description], [FileName]) VALUES (3, N'Team Events', NULL, N'RptTeamEvents')
+END
+IF NOT EXISTS(Select * FROM [dbo].[Report] WHERE  [Report].[Name] = 'Team Check Ups')
+BEGIN
+INSERT INTO [dbo].[Report] ([ReportId], [Name], [Description], [FileName]) VALUES (4, N'Team Check Ups', NULL, N'RptTeamCheckUps')
+END
+IF NOT EXISTS(Select * FROM [dbo].[Report] WHERE  [Report].[Name] = 'Team Follow Ups')
+BEGIN
+INSERT INTO [dbo].[Report] ([ReportId], [Name], [Description], [FileName]) VALUES (5, N'Member Follow Ups', NULL, N'RptMemberFollowUp')
+END
+SET IDENTITY_INSERT [dbo].[Report] OFF;
