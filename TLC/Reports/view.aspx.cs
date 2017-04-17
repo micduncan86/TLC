@@ -25,6 +25,11 @@ namespace TLC.Reports
         {
             ReportViewer1.ProcessingMode = Microsoft.Reporting.WebForms.ProcessingMode.Local;
             ReportViewer1.LocalReport.DataSources.Clear();
+            string reportmimeType = string.Empty;
+            string reportencoding = string.Empty;
+            string reportextension = string.Empty;
+            Microsoft.Reporting.WebForms.Warning[] warnings;
+            string[] streamIds;
 
 
             var report = new ReportRepository().GetReportByName(ReportName);
@@ -41,8 +46,16 @@ namespace TLC.Reports
                 ReportViewer1.LocalReport.DataSources.Add(data);
                 ReportViewer1.LocalReport.ReportPath = string.Format("Reports/{0}.rdlc",report.FileName);                
 
-            }            
-            ReportViewer1.LocalReport.Refresh();
+            }
+            byte[] reportPdf = ReportViewer1.LocalReport.Render("PDF", null, out reportmimeType, out reportencoding, out reportextension, out streamIds, out warnings);
+            Response.Buffer = true;
+            Response.Clear();      
+            Response.ContentType = reportmimeType;
+            Response.AddHeader("content-disposition", "attachment; filename=" + "reportPDF." + reportextension);
+            Response.OutputStream.Write(reportPdf, 0, reportPdf.Length);
+            Response.Flush();
+            Response.End();
+            //ReportViewer1.LocalReport.Refresh();
         }
     }
 }
