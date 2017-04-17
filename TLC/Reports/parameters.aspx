@@ -48,16 +48,16 @@
                     $(".modal-content").height($(window).height() * .9);
                     var container = n.find(".modal-body");
                     var url = "../reports/view.aspx?Report=" + rptName;
-                    var pdfObject = $("<object>").css("width", "100%")
+                    var pdfObject = $("<iframe>").css("width", "100%")
                         .css("border", "none")
-                        .attr("data", url)
-                        .attr("type", "application/pdf")
+                        .attr("src", url)
+                        //.attr("type", "application/pdf")
                         .height($(".modal-content").height() - 105)
                         .appendTo(container);
-                    $("<embed>")
-                        .attr("src", url)
-                        .attr("type", "application/pdf")
-                    .appendTo(pdfObject);     
+                    //$("<embed>")
+                    //    .attr("src", url)
+                    //    .attr("type", "application/pdf")
+                    //.appendTo(pdfObject);     
                 });
             });
         }
