@@ -47,15 +47,15 @@ namespace TLC.Reports
                 ReportViewer1.LocalReport.ReportPath = string.Format("Reports/{0}.rdlc",report.FileName);                
 
             }
-            byte[] reportPdf = ReportViewer1.LocalReport.Render("PDF", null, out reportmimeType, out reportencoding, out reportextension, out streamIds, out warnings);
-            Response.Buffer = true;
-            Response.Clear();      
-            Response.ContentType = reportmimeType;
-            Response.AddHeader("content-disposition", "attachment; filename=" + "reportPDF." + reportextension);
-            Response.OutputStream.Write(reportPdf, 0, reportPdf.Length);
-            Response.Flush();
-            Response.End();
-            //ReportViewer1.LocalReport.Refresh();
+            //byte[] reportPdf = ReportViewer1.LocalReport.Render("PDF", null, out reportmimeType, out reportencoding, out reportextension, out streamIds, out warnings);
+            //Response.Buffer = true;
+            //Response.Clear();      
+            //Response.ContentType = reportmimeType;
+            //Response.AddHeader("content-disposition", "attachment; filename=" + "reportPDF." + reportextension);
+            //Response.OutputStream.Write(reportPdf, 0, reportPdf.Length);
+            //Response.Flush();
+            //Response.End();
+            ReportViewer1.LocalReport.Refresh();
         }
     }
 }
