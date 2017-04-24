@@ -35,8 +35,22 @@ namespace TLC.Members
         {
             if (Equals(datasource, null))
             {
-                datasource = memberId > 0 ? memberRepo.GetAll().Where(x => x.MemberId == memberId).ToList() : memberRepo.GetAll();
+
+                if (User.IsInRole(TLC.Data.UserRepository.ReturnUserRole((Data.User.enumRole.Administrater))))
+                {
+                    datasource = memberRepo.GetAll();
+                }
+                else
+                {
+                    datasource = memberRepo.GetAll().Where(x => x.TeamId == _master.loggedUser.MyTeamId).ToList();
+                }
             }
+
+            if (memberId > 0)
+            {
+                datasource = ((List<Member>)datasource).Where(x => x.MemberId  == memberId).ToList();
+            }
+
             int teamId;
             if (int.TryParse(Request.Params.Get("TeamId"), out teamId))
             {

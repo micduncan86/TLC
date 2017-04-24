@@ -37,6 +37,11 @@
                             <asp:BoundField DataField="CheckUpDate" HeaderText="Date" DataFormatString="{0:d}" />
                             <asp:BoundField DataField="Method" HeaderText="Method" />
                             <asp:BoundField DataField="Outcome" HeaderText="Outcome" HeaderStyle-CssClass="col-mobile" ItemStyle-CssClass="col-mobile" />
+                            <asp:TemplateField  HeaderText="Follow Up?" HeaderStyle-CssClass="col-mobile" ItemStyle-CssClass="col-mobile">
+                                <ItemTemplate>
+                                    <label title='<%#  Eval("Actions") %>' style='cursor:<%# Convert.ToBoolean(Eval("RequiresAction")) ? "help" : "pointer" %>'><%# Convert.ToBoolean(Eval("RequiresAction")) ? "Yes" : "No" %></label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
                             <asp:TemplateField HeaderText="Last Modified" HeaderStyle-CssClass="col-mobile" ItemStyle-CssClass="col-mobile">
                                 <ItemTemplate>
                                     <label title='<%#  Eval("ModifiedDate") %>'><%# Eval("ModifiedBy") %></label>
@@ -108,6 +113,9 @@
             })
             if ($("#hdfShowModal").val() == "1") {
                 $("#modalCheckUp").modal("show");
+                if ($("#chkActionRequired").is(":checked")) {
+                    $("#MainContent_txtActions").show();
+                }
             }
             $("#ddlMembers").change(function () {
                 $("#btnAddCheckUp").toggle($(this).val() != "0");  

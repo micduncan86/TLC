@@ -194,7 +194,7 @@
                             </div>
                             <div class="form-group form-inline">
                                 <asp:TextBox runat="server" ID="txtNewMemberCity" CssClass="form-control" placeholder="City" Width="250"></asp:TextBox>
-                                <asp:TextBox runat="server" ID="txtNewMemberState" CssClass="form-control" placeholder="State" Width="50"></asp:TextBox>
+                                <asp:TextBox runat="server" ID="txtNewMemberState" CssClass="form-control" placeholder="State" Width="60"></asp:TextBox>
                                 <asp:TextBox runat="server" ID="txtNewMemberZipCode" CssClass="form-control" placeholder="Postal Code" Width="115"></asp:TextBox>
                             </div>
                             <div class="form-group" id="divteamselection" runat="server">

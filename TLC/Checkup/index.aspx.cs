@@ -22,6 +22,10 @@ namespace TLC.Checkup
             int.TryParse(Request.Params.Get("TeamId"), out teamId);
             if (!Page.IsPostBack)
             {
+                if (teamId == 0 && memberId == 0)
+                {
+                    Response.Redirect("~/Home.aspx");
+                }
                 teamId = teamId == 0 ? memberManager.FindBy(memberId).TeamId : teamId;
                 LoadTeams(teamId);
                 LoadMembers(memberId);
