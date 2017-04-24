@@ -65,6 +65,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -562,10 +563,33 @@
         <TablixRowHierarchy>
           <TablixMembers>
             <TablixMember>
+              <FixedData>true</FixedData>
               <KeepWithGroup>After</KeepWithGroup>
+              <RepeatOnNewPage>true</RepeatOnNewPage>
             </TablixMember>
             <TablixMember>
-              <Group Name="Details" />
+              <Group Name="Details">
+                <GroupExpressions>
+                  <GroupExpression>=Fields!TeamName.Value</GroupExpression>
+                </GroupExpressions>
+                <PageBreak>
+                  <BreakLocation>Between</BreakLocation>
+                </PageBreak>
+              </Group>
+              <SortExpressions>
+                <SortExpression>
+                  <Value>=Fields!TeamName.Value</Value>
+                </SortExpression>
+                <SortExpression>
+                  <Value>=Fields!LastName.Value</Value>
+                </SortExpression>
+                <SortExpression>
+                  <Value>=Fields!FirstName.Value</Value>
+                </SortExpression>
+                <SortExpression>
+                  <Value>=Fields!CheckUpDate.Value</Value>
+                </SortExpression>
+              </SortExpressions>
             </TablixMember>
           </TablixMembers>
         </TablixRowHierarchy>
