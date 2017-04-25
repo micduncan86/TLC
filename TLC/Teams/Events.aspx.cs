@@ -126,6 +126,7 @@ namespace TLC.Teams
                 Notes = txtEventNotes.Text,
                 Completed = chkIsComplete.Checked,
                 Cancelled = chkIsCancelled.Checked,
+                Description = txtDescription.Text,
                 TeamId = ddlTeam.SelectedValue.Equals(string.Empty) ? 0 : Convert.ToInt32(ddlTeam.SelectedValue)
             };
  
