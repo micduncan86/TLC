@@ -331,6 +331,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>TeamListDataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="TeamMemberCheckUpDataSet.cs">
+      <DependentUpon>TeamMemberCheckUpDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="TeamMemberCheckUpDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
