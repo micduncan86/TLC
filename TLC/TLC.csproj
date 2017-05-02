@@ -407,6 +407,7 @@
     <Content Include="images\bg.jpg" />
     <Content Include="images\church.jpg" />
     <Content Include="images\lifechurch.jpg" />
+    <Content Include="images\load_indicator.gif" />
     <Content Include="images\logo.png" />
     <Content Include="images\logo_icon.png" />
     <Content Include="Members\AddToTeam.aspx" />

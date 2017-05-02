@@ -48,7 +48,7 @@
                     </button>
                     <% if (HttpContext.Current.User.Identity.IsAuthenticated)
                         { %>
-                    <a class="navbar-brand" runat="server" href="~/Home"></a>
+                    <a class="navbar-brand" runat="server" href="~/Home" onclick=" var url = $(this).attr('href');app.ShowLoading(function(){window.location = url;}); return false;"></a>
                     <%} %>
                 </div>
                 <div class="navbar-collapse collapse">
@@ -56,34 +56,34 @@
                         <AnonymousTemplate>
                             <ul class="nav navbar-nav navbar-right">
                                 <li>
-                                    <a runat="server" href="~/Account/Login">Log in</a>
+                                    <a runat="server" href="~/Account/Login" onclick=" var url = $(this).attr('href');app.ShowLoading(function(){window.location = url;}); return false;">Log in</a>
                                 </li>
                             </ul>
                         </AnonymousTemplate>
                         <LoggedInTemplate>
                             <ul class="nav navbar-nav navbar-right">
                                 <li>
-                                    <a runat="server" href="~/Home">Home</a>
+                                    <a runat="server" href="~/Home" onclick=" var url = $(this).attr('href');app.ShowLoading(function(){window.location = url;}); return false;">Home</a>
                                 </li>
                                 <li class="dropdown">
                                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">Members <span class="caret"></span>
                                     </a>
                                     <ul class="dropdown-menu" role="menu">
                                         <li role="presentation">
-                                            <a runat="server" href="~/members/index"><span class="glyphicon glyphicon-th-list"></span> List All Members</a>
+                                            <a runat="server" href="~/members/index" onclick=" var url = $(this).attr('href');app.ShowLoading(function(){window.location = url;}); return false;"><span class="glyphicon glyphicon-th-list"></span> List All Members</a>
                                         </li>                                                                             
                                         <% if (HttpContext.Current.User.IsInRole("Administrater"))
                                                 { %>
                                         <li role="presentation" class="divider"></li>   
                                         <li role="presentation">
-                                            <a runat="server" href="~/members/index.aspx?Add=1">
+                                            <a runat="server" href="~/members/index.aspx?Add=1" onclick=" var url = $(this).attr('href');app.ShowLoading(function(){window.location = url;}); return false;">
                                                 <span class="glyphicon glyphicon-plus"></span>
                                                  Add New Member
                                             </a>
                                         </li>
                                         <li role="presentation" class="divider"></li>
                                         <li role="presentation">
-                                            <a runat="server" href="~/global/import.aspx">
+                                            <a runat="server" href="~/global/import.aspx" onclick=" var url = $(this).attr('href');app.ShowLoading(function(){window.location = url;}); return false;">
                                                 <span class="glyphicon glyphicon-file"></span>
                                                  Import Members from File
                                             </a>
@@ -99,11 +99,11 @@
                                     </a>
                                     <ul class="dropdown-menu" role="menu">
                                         <li role="presentation">
-                                            <a runat="server" href="~/teams/index"><span class="glyphicon glyphicon-th-list"></span> List Teams</a>
+                                            <a runat="server" href="~/teams/index" onclick=" var url = $(this).attr('href');app.ShowLoading(function(){window.location = url;}); return false;"><span class="glyphicon glyphicon-th-list"></span> List Teams</a>
                                         </li>
                                         <li role="presentation" class="divider"></li>
                                         <li role="presentation">
-                                            <a runat="server" href="~/teams/index.aspx?Add=1">
+                                            <a runat="server" href="~/teams/index.aspx?Add=1" onclick=" var url = $(this).attr('href');app.ShowLoading(function(){window.location = url;}); return false;">
                                                 <span class="glyphicon glyphicon-plus"></span> Add New Team
                                             </a>
                                         </li>
@@ -118,7 +118,7 @@
                                     </a>                                 
                                         <ul class="dropdown-menu" role="menu">
                                             <li role="presentation">
-                                                <a runat="server" href="~/Reports/parameters.aspx">Report List</a>
+                                                <a runat="server" href="~/Reports/parameters.aspx" onclick=" var url = $(this).attr('href');app.ShowLoading(function(){window.location = url;}); return false;">Report List</a>
                                             </li> 
                                             <li role="presentation" class="divider"></li>
                                         </ul>                                   
@@ -138,13 +138,13 @@
                                             <% if (HttpContext.Current.User.IsInRole("Administrater"))
                                                 { %>
                                             <li role="presentation">
-                                                <a runat="server" href="~/users/index">
+                                                <a runat="server" href="~/users/index" onclick=" var url = $(this).attr('href');app.ShowLoading(function(){window.location = url;}); return false;">
                                                     <span class="glyphicon glyphicon-th-list"></span>
                                                     List Users</a>
                                             </li>
                                             <%} %>
                                             <li role="presentation">
-                                                <a runat="server" href="~/users/changepassword.aspx">
+                                                <a runat="server" href="~/users/changepassword.aspx" onclick=" var url = $(this).attr('href');app.ShowLoading(function(){window.location = url;}); return false;">
                                                     <span class="glyphicon glyphicon-flash"></span>
                                                     Change Password</a>
                                             </li>

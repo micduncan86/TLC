@@ -12,7 +12,7 @@ namespace TLC
         {
             var settings = new FriendlyUrlSettings();
             settings.AutoRedirectMode = RedirectMode.Off;
-            routes.EnableFriendlyUrls(settings);
+            routes.EnableFriendlyUrls(settings);        
         }
     }
 }

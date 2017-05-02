@@ -71,31 +71,31 @@ namespace TLC
 
         protected void Application_AuthenticateRequest(Object sender, EventArgs e)
         {
-            if (User != null)
-            {
-                if (User.Identity.IsAuthenticated)
-                {
-                    if (User.Identity is FormsIdentity)
-                    {
-                        CacheManager cache = new CacheManager();
-                        FormsIdentity id = (FormsIdentity)User.Identity;
-                        FormsAuthenticationTicket tkt = id.Ticket;
-                        TLC.Data.User lgn = null;
-                        if (!cache.CacheList.ContainsKey("LoggedInUser"))
-                        {
-                            var jSerializer = new System.Web.Script.Serialization.JavaScriptSerializer();
-                            var json = System.Text.Encoding.Default.GetString(Convert.FromBase64String(tkt.UserData));
-                            lgn = jSerializer.Deserialize<TLC.Data.User>(json);
-                            cache.CacheList.Add("LoggedInUser", lgn);
-                        }
-                        else
-                        {
-                            lgn = cache.CacheList["LoggedInUser"] as TLC.Data.User;
-                        }             
-                        HttpContext.Current.User = new GenericPrincipal(id, lgn.Role.Split(','));                        
-                    }
-                }
-            }
+            //if (User != null)
+            //{
+            //    if (User.Identity.IsAuthenticated)
+            //    {
+            //        if (User.Identity is FormsIdentity)
+            //        {
+            //            CacheManager cache = new CacheManager();
+            //            FormsIdentity id = (FormsIdentity)User.Identity;
+            //            FormsAuthenticationTicket tkt = id.Ticket;
+            //            TLC.Data.User lgn = null;
+            //            if (!cache.CacheList.ContainsKey("LoggedInUser"))
+            //            {
+            //                var jSerializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+            //                var json = System.Text.Encoding.Default.GetString(Convert.FromBase64String(tkt.UserData));
+            //                lgn = jSerializer.Deserialize<TLC.Data.User>(json);
+            //                cache.CacheList.Add("LoggedInUser", lgn);
+            //            }
+            //            else
+            //            {
+            //                lgn = cache.CacheList["LoggedInUser"] as TLC.Data.User;
+            //            }             
+            //            HttpContext.Current.User = new GenericPrincipal(id, lgn.Role.Split(','));                        
+            //        }
+            //    }
+            //}
            
         }
 

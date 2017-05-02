@@ -37,6 +37,26 @@
             }
         });
     },
+    ShowLoading: function(onOpen){
+        var n = app.GlobalDialog.init("Loading...", function(){
+            if (onOpen) {
+                setTimeout(function () { onOpen();}, 350);
+            }
+        });
+        $("<img>").attr("src", "../images/load_indicator.gif").appendTo(n.find(".modal-body"));
+        $("<label>").css("padding","0 5px").html("Loading....").appendTo(n.find(".modal-body"));
+        n.find(".modal-dialog").width(150);
+        n.find(".modal-header").hide();
+        n.find(".modal-footer").hide();
+        n.css({
+            "position": "absolute",
+            "top": (($(window).height() + $(window).scrollTop()) * .5) + "px",
+            "left": "50%",
+            "margin-top": "-125px",
+            "margin-left": "-75px",
+        })
+
+    },
     ChangeLeader: function (ele) {
         if (ele) {
             app.GetTeamLeader(false, function (leaders) {

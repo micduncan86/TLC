@@ -21,8 +21,9 @@ namespace TLC.Account
             FormsAuthenticationTicket lgnTicket = new FormsAuthenticationTicket(1, login.UserName, DateTime.Now, DateTime.Now.AddSeconds((60 * 15)), true, Convert.ToBase64String(Encoding.Default.GetBytes(jSerializer.Serialize(login))));
             string encryptTicket = FormsAuthentication.Encrypt(lgnTicket);
             var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptTicket);
-            cookie.Expires = lgnTicket.Expiration;            
-            Response.Cookies.Add(cookie);            
+            cookie.Expires = lgnTicket.Expiration;
+            Response.Cookies.Add(cookie);      
+
         }
         protected void LogIn(object sender, EventArgs e)
         {
@@ -30,23 +31,28 @@ namespace TLC.Account
             {
                 var provider = new UserRepository();
                 //provider.AddUser(Email.Text, Password.Text);
-                    var login = provider.Authenticate(Email.Text, Password.Text);
-                    if (login != null)
-                    {
-                        Session.Add("mylogin", login);
-                        SetTicketAuth(login);
-                        if (Request.Url.Query.Contains("ReturnUrl"))
-                        {
-                            Response.Redirect(HttpUtility.ParseQueryString(Request.Url.Query).Get("ReturnUrl"));
-                        }
-                        else
-                        {
-                            Response.Redirect("~/Home.aspx");
-                        }
+                var login = provider.Authenticate(Email.Text, Password.Text);
+                if (login != null)
+                {
+                    Session.Add("mylogin", login);
+                    SetTicketAuth(login);
+                    var cache = new CacheManager();
+                    if (!cache.CacheList.ContainsKey("LoggedInUser"))
+                    {                        
+                        cache.CacheList.Add("LoggedInUser", login);
                     }
-                    ErrorMessage.Visible = true;
-                    FailureText.Text = "Combination of Username and Password did not match. Please try again.";
-                
+                    if (Request.Url.Query.Contains("ReturnUrl"))
+                    {
+                        Response.Redirect(HttpUtility.ParseQueryString(Request.Url.Query).Get("ReturnUrl"));
+                    }
+                    else
+                    {
+                        Response.Redirect("~/Home.aspx");
+                    }
+                }
+                ErrorMessage.Visible = true;
+                FailureText.Text = "Combination of Username and Password did not match. Please try again.";
+
 
 
             }

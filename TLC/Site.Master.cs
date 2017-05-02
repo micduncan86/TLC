@@ -79,6 +79,14 @@ namespace TLC
             //        throw new InvalidOperationException("Validation of Anti-XSRF token failed.");
             //    }
             //}
+            if (Equals(Session["mylogin"], null))
+            {
+                System.Web.Security.FormsAuthentication.SignOut();
+                System.Web.Security.FormsAuthentication.RedirectToLoginPage();
+                Response.Redirect(System.Web.Security.FormsAuthentication.LoginUrl);
+                return;
+            }
+
             if (HttpContext.Current.User.Identity.IsAuthenticated)
             {
                 if (HttpContext.Current.User.Identity is FormsIdentity)
@@ -100,6 +108,7 @@ namespace TLC
                             loggedUser = (TLC.Data.User)lgn;
                         }
                     }
+                    HttpContext.Current.User = new GenericPrincipal(id, loggedUser.Role.Split(','));
                 }
             }
         }

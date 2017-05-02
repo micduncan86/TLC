@@ -41,7 +41,7 @@
                     </li>
                 </GroupTemplate>
                 <ItemTemplate>
-                    <a href="home.aspx?TeamId=<%# Eval("TeamId") %>">
+                    <a href="home.aspx?TeamId=<%# Eval("TeamId") %>" onclick="app.ShowLoading(function(){ window.location = 'home.aspx?TeamId=<%# Eval("TeamId") %>';}); return false;">
                         <span class="glyphicon glyphicon-tasks btn btn-xs btn-info"></span>
                         <%# Eval("TeamName") %>
                     </a>
@@ -167,9 +167,9 @@
                             <ul class="dropdown-menu dropdown-menu-right" role="menu">
                                 <li role="presentation">
 
-                                    <a href="members/index.aspx?TeamId=<%  Response.Write(string.Format("{0}", hdnTeamId.Value)); %>"><span class="glyphicon glyphicon-plus btn btn-xs btn-success"></span>Add Member to Team</a>                                </li>
+                                    <a href="members/index.aspx?TeamId=<%  Response.Write(string.Format("{0}", hdnTeamId.Value)); %>" onclick="app.ShowLoading(function(){window.location = 'members/index.aspx?TeamId=<%  Response.Write(string.Format("{0}", hdnTeamId.Value)); %>';});return false;"><span class="glyphicon glyphicon-plus btn btn-xs btn-success"></span>Add Member to Team</a>                                </li>
                                 <li role="presentation">
-                                    <a href="Checkup/index.aspx?TeamId=<%  Response.Write(string.Format("{0}", hdnTeamId.Value)); %>"><span class="glyphicon glyphicon-search btn btn-xs btn-info"></span>View All Check Ups</a>
+                                    <a href="Checkup/index.aspx?TeamId=<%  Response.Write(string.Format("{0}", hdnTeamId.Value)); %>" onclick="app.ShowLoading(function(){window.location = 'Checkup/index.aspx?TeamId=<%  Response.Write(string.Format("{0}", hdnTeamId.Value)); %>';});return false;"><span class="glyphicon glyphicon-search btn btn-xs btn-info"></span>View All Check Ups</a>
                                 </li>
                             </ul>
                         </div>
@@ -210,10 +210,10 @@
                                         </button>
                                         <ul class="dropdown-menu" role="menu">
                                             <li role="presentation">
-                                                <a href='<%# Page.ResolveUrl("~/checkup/index.aspx?AddCheckup=1&TeamId=" + Eval("TeamId") +"&MemberId=" + Eval("MemberId")) %>'><span class="glyphicon glyphicon-plus btn btn-xs btn-success"></span>Add Check Up</a>                                                
+                                                <a href='<%# Page.ResolveUrl("~/checkup/index.aspx?AddCheckup=1&TeamId=" + Eval("TeamId") +"&MemberId=" + Eval("MemberId")) %>' onclick="var url = $(this).attr('href'); app.ShowLoading(function(){window.location = url;}); return false;"><span class="glyphicon glyphicon-plus btn btn-xs btn-success"></span>Add Check Up</a>                                                
                                             </li>
                                             <li>
-                                                <a href='<%# Page.ResolveUrl("~/checkup/index.aspx?TeamId=" + Eval("TeamId") + "&MemberId=" + Eval("MemberId")) %>'><span class="glyphicon glyphicon-check btn btn-xs btn-info"></span>Check Up History</a>
+                                                <a href='<%# Page.ResolveUrl("~/checkup/index.aspx?TeamId=" + Eval("TeamId") + "&MemberId=" + Eval("MemberId")) %>' onclick=" var url = $(this).attr('href');app.ShowLoading(function(){window.location = url;}); return false;"><span class="glyphicon glyphicon-check btn btn-xs btn-info"></span>Check Up History</a>
                                             </li>
                                             <li role="presentation" class="divider"></li>
                                             <li role="presentation">
@@ -239,7 +239,9 @@
         $(document).ready(function () {
             $("#lnkAddEvent").on("click", function (e) {
                 e.preventDefault();
-                window.location = "../teams/events.aspx?Id=" + $("#hdnTeamId").val();
+                app.ShowLoading(function () {
+                    window.location = "../teams/events.aspx?Id=" + $("#hdnTeamId").val();
+                });                
                 //tlcEvent.AddNew("Add New Event");
             });
 

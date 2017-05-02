@@ -26,7 +26,7 @@
                                     <thead>
                                         <tr>
                                             <th style="border-bottom: unset; border-right: 1px solid silver; min-width: 100px; width: 100px;"></th>
-                                            <th class="col-md-1 col-mobile" style="border-bottom: unset; border-right: 1px solid silver;">Date</th>
+                                            <th class="col-md-1 col-mobile-only" style="border-bottom: unset; border-right: 1px solid silver;">Date</th>
                                             <th class="col-md-2 col-mobile-only" style="border-bottom: unset; border-right: 1px solid silver;">Title</th>                                            
                                             <th class="col-md-4 col-mobile" style="border-bottom: unset; border-right: 1px solid silver;">Description</th>
                                             <th class="col-md-4 col-mobile" style="border-bottom: unset; border-right: 1px solid silver;">Notes</th>
@@ -47,8 +47,10 @@
                                     <thead>
                                         <tr>
                                             <th style="border-bottom: unset; border-right: 1px solid silver; min-width: 100px; width: 100px;"></th>
-                                            <th class="col-md-1 col-mobile" style="border-bottom: unset; border-right: 1px solid silver;">Date</th>
-                                            <th class="col-md-2 col-mobile" style="border-bottom: unset; border-right: 1px solid silver;">Title</th>                         
+                                             <th class="col-md-1 col-mobile" style="border-bottom: unset; border-right: 1px solid silver;">Date</th>                                            
+                                            <th class="col-md-1 col-mobile-only" style="border-bottom: unset; border-right: 1px solid silver;">Date</th>
+                                            <th class="col-md-2 col-mobile" style="border-bottom: unset; border-right: 1px solid silver;">Title</th>   
+                                            <th class="col-md-2 col-mobile-only" style="border-bottom: unset; border-right: 1px solid silver;">Title</th>                         
                                             <th class="col-md-4 col-mobile" style="border-bottom: unset; border-right: 1px solid silver;">Description</th>
                                             <th class="col-md-4 col-mobile" style="border-bottom: unset; border-right: 1px solid silver;">Notes</th>
                                             <th class="col-md-1 col-mobile" style="border-bottom: unset; border-right: 1px solid silver;">Status</th>
@@ -121,7 +123,13 @@
                         <td class="col-md-1 col-mobile">
                             <%# Eval("EventDate", "{0:d}") %>                    
                         </td>
+                        <td class="col-md-1 col-mobile-only">
+                            <%# Eval("EventDate", "{0:d}") %>                    
+                        </td>
                         <td class="col-md-2 col-mobile">
+                            <%# Eval("Title") %>                    
+                        </td>   
+                        <td class="col-md-2 col-mobile-only">
                             <%# Eval("Title") %>                    
                         </td>                        
                         <td class="col-md-4 col-mobile">

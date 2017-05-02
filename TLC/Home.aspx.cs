@@ -13,12 +13,6 @@ namespace TLC
         {
             if (!Page.IsPostBack)
             {
-                if (Equals(Session["mylogin"], null))
-                {
-                    System.Web.Security.FormsAuthentication.SignOut();
-                    System.Web.Security.FormsAuthentication.RedirectToLoginPage();
-                    return;
-                }
                 var mylogin = Session["mylogin"] as User;
                 if (User.IsInRole(UserRepository.ReturnUserRole(Data.User.enumRole.Administrater)))
                 {
@@ -28,9 +22,9 @@ namespace TLC
                 {
                     LoadTeams(mylogin.MyTeamId);
                 }
-                            
+
                 LoadTeam(null);
-                lstTeams.Visible = mylogin.UserRole == Data.User.enumRole.Administrater ? true : false;    
+                lstTeams.Visible = mylogin.UserRole == Data.User.enumRole.Administrater ? true : false;
             }
         }
         protected void LoadTeams(int teamid)
@@ -62,7 +56,7 @@ namespace TLC
                 txtTeamNumber.Text = data.TeamNumber;
                    lblTeamLeader.Text = data.TeamLeader != null ? data.TeamLeader.UserName : "Not Assigned";
                 lblCoLeader.Text = data.CoTeamLeader.UserName;
-                var Events = (List<TLC.Data.Event>)data.Events;
+                var Events = (List<TLC.Data.Event>)data.Events.OrderByDescending(x => x.EventDate).ToList();
 
                 var Members = (List<TLC.Data.Member>)data.Members;
 
