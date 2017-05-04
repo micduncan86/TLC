@@ -80,13 +80,13 @@
                                         </asp:LinkButton>
                                     </li>
                                     <li role="presentation">
-                                        <a href="../home.aspx?TeamId=<%# Eval("TeamId") %>">
+                                        <a href="../home.aspx?TeamId=<%# Eval("TeamId") %>" onclick=" var url = $(this).attr('href');app.ShowLoading(function(){window.location = url;}); return false;">
                                             <span class="glyphicon glyphicon-th-list btn btn-xs btn-info"></span>
                                             Member List
                                         </a>
                                     </li>
                                     <li role="presentation">
-                                        <a href='<%# "Events.aspx?Id=" + ((TLC.Data.Team)DataBinder.GetDataItem(Container)).TeamId %>'>
+                                        <a href='<%# "Events.aspx?Id=" + ((TLC.Data.Team)DataBinder.GetDataItem(Container)).TeamId %>' onclick=" var url = $(this).attr('href');app.ShowLoading(function(){window.location = url;}); return false;">
                                             <span class="glyphicon glyphicon-calendar btn btn-xs btn-info"></span>
                                             Events</a>
                                     </li>
@@ -120,7 +120,7 @@
                                     </li>
                                     <li role="presentation">
                                         <label>Members:</label>
-                                        <a href="../home.aspx?TeamId=<%# Eval("TeamId") %>" class="btn btn-xs btn-warning">
+                                        <a href="../home.aspx?TeamId=<%# Eval("TeamId") %>" onclick=" var url = $(this).attr('href');app.ShowLoading(function(){window.location = url;}); return false;" class="btn btn-xs btn-warning">
                                             <span class="glyphicon glyphicon-user"></span><%# Eval("Members.Count") %>
                                         </a>
                                     </li>

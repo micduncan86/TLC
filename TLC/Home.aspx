@@ -17,7 +17,7 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right" role="menu">
                             <li role="presentation" class="alert-info">
-                                <a href="Teams/index.aspx?Add=1"><span class="glyphicon glyphicon-plus btn btn-xs btn-success"></span>Add New Team</span> </a>
+                                <a href="Teams/index.aspx?Add=1" onclick=" var url = $(this).attr('href');app.ShowLoading(function(){window.location = url;}); return false;"><span class="glyphicon glyphicon-plus btn btn-xs btn-success"></span>Add New Team</span> </a>
                             </li>
                             <asp:PlaceHolder ID="phGroup" runat="server"></asp:PlaceHolder>
                         </ul>
@@ -30,7 +30,7 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right" role="menu">
                             <li role="presentation">
-                                <a href="Teams/index.aspx">Add New Team</a>
+                                <a href="Teams/index.aspx" onclick=" var url = $(this).attr('href');app.ShowLoading(function(){window.location = url;}); return false;">Add New Team</a>
                             </li>
                         </ul>
                     </div>

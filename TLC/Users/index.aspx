@@ -75,7 +75,7 @@
                                     </asp:LinkButton>
                                 </li>
                                 <li role="presentation">
-                                    <a title="Change Password" href="ChangePassword.aspx?UserId=<%# Eval("UserId") %>">
+                                    <a title="Change Password" href="ChangePassword.aspx?UserId=<%# Eval("UserId") %>" onclick=" var url = $(this).attr('href');app.ShowLoading(function(){window.location = url;}); return false;">
                                         <span class="glyphicon glyphicon-flash btn btn-xs btn-warning"></span>
                                         Change Password
                                     </a>

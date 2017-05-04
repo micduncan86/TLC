@@ -44,7 +44,7 @@
                     <asp:LinkButton ID="lnkAddCheckUp" runat="server" CssClass="btn btn-sm btn-success" OnClick="lnkAddCheckUp_Click">
                         <span class="glyphicon glyphicon-check"></span> Add Check Up
                     </asp:LinkButton>
-                    <a href="../Home.aspx" class="btn bnt-sm btn-info">Back</a>
+                    <a href="../Home.aspx" class="btn bnt-sm btn-info" onclick=" var url = $(this).attr('href');app.ShowLoading(function(){window.location = url;}); return false;">Back</a>
                 </div>
             </div>
         </div>

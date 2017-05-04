@@ -5,7 +5,7 @@
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <h3>Check Up History
-        <a class="btn btn-sm btn-info" Style="float: right; margin: 0 5px;" href="../home.aspx?TeamId=<% Response.Write(Request.Params.Get("TeamId")); %>">
+        <a class="btn btn-sm btn-info" Style="float: right; margin: 0 5px;" href="../home.aspx?TeamId=<% Response.Write(Request.Params.Get("TeamId")); %>" onclick=" var url = $(this).attr('href');app.ShowLoading(function(){window.location = url;}); return false;">
             <span class="glyphicon glyphicon-menu-left"></span>
             Back to Team
         </a>

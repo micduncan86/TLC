@@ -65,7 +65,7 @@
                 </div>
             </div>
             <asp:Button ID="btnAdd" runat="server" CssClass="btn btn-sm btn-success" OnClick="btnAdd_Click" Text="Add Members To Team" />
-            <a href='<%: "../home.aspx" + Request.Url.Query %>' class="btn btn-sm btn-primary">Back</a>
+            <a href='<%: "../home.aspx" + Request.Url.Query %>' onclick=" var url = $(this).attr('href');app.ShowLoading(function(){window.location = url;}); return false;" class="btn btn-sm btn-primary">Back</a>
         </div>
     </div>
 </asp:Content>

@@ -15,6 +15,9 @@
             }
         });
     },
+    BrowserDetect: function(){
+        return window.matchMedia("all and (max-width: 479px)").matches;
+    },
     SuccessAlert: function (alertTitle, alertMessage, callback) {
         app.Alert(alertTitle, alertMessage, "alert-success", callback)
     },
@@ -48,14 +51,18 @@
         n.find(".modal-dialog").width(150);
         n.find(".modal-header").hide();
         n.find(".modal-footer").hide();
+        var nTop = (($(window).height() + $(window).scrollTop()) * .5);
         n.css({
             "position": "absolute",
-            "top": (($(window).height() + $(window).scrollTop()) * .5) + "px",
-            "left": "50%",
-            "margin-top": "-125px",
-            "margin-left": "-75px",
-        })
-
+            "top": nTop + "px",
+            "margin-top": "-125px"           
+        });
+        if (app.BrowserDetect()) {
+            n.css({
+                "margin-left": "-75px",
+                "left": "50%"
+            });
+        }
     },
     ChangeLeader: function (ele) {
         if (ele) {
