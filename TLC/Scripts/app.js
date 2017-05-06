@@ -443,7 +443,7 @@ var tlcEvent = {
 };
 $(document).ready(function(){
     $("a").on("click",function(e){
-        app.ShowLoading();
+        app.ShowLoading(e);
     });
 });
 
