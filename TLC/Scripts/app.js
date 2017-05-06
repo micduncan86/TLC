@@ -1,4 +1,4 @@
-﻿var app = {
+var app = {
     teamLeaderList: null,
     selectedTeam: null,
     modalFunction: function (modalTitle, modalContent, modalButton, callback) {
@@ -425,6 +425,9 @@ var tlcEvent = {
 
         });
     }
+    $("a").on("click",function(e){
+        app.ShowLoading();
+    });
     //<div style="overflow-x: hidden; overflow-y: auto; height: 105px;">
     //                            <table class="table table-striped table-hover">
     //                                <thead>
