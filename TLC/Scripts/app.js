@@ -425,9 +425,6 @@ var tlcEvent = {
 
         });
     }
-    $("a").on("click",function(e){
-        app.ShowLoading();
-    });
     //<div style="overflow-x: hidden; overflow-y: auto; height: 105px;">
     //                            <table class="table table-striped table-hover">
     //                                <thead>
@@ -444,3 +441,6 @@ var tlcEvent = {
     //                            </table>
     //                        </div>
 };
+    $("a").on("click",function(e){
+        app.ShowLoading();
+    });
