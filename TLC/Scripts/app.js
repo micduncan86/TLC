@@ -441,6 +441,9 @@ var tlcEvent = {
     //                            </table>
     //                        </div>
 };
+$(document).ready(function(){
     $("a").on("click",function(e){
         app.ShowLoading();
     });
+});
+
