@@ -442,7 +442,7 @@ var tlcEvent = {
     //                        </div>
 };
 $(document).ready(function(){
-    $("a").on("click",function(e){
+    $(".body-content a").on("click",function(e){
         app.ShowLoading(e);
     });
 });
